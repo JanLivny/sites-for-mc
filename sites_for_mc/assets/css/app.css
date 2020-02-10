@@ -1,2 +1,18 @@
 body {
+	background: lightgray;
+}
+
+form {
+	margin: auto;
+	width: 30vw;
+}
+
+.main-heading{
+	margin:auto;
+	width:30vw;
+	text-align: center;
+	margin-bottom: 25px;
+}
+
+.submit-button {
 }
