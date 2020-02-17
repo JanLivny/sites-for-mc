@@ -5,6 +5,7 @@ body {
 form {
 	margin: auto;
 	width: 30vw;
+	text-align: center;
 }
 
 .main-heading{
@@ -15,4 +16,19 @@ form {
 }
 
 .submit-button {
+	width:100px;
+	height:30px;
+}
+
+.error-message {
+	margin-top:20px;
+	text-align: center;
+	color:red;
+	text-decoration: underline;
+}
+
+.signUp {
+	margin-top:30vh	;	
+	height:20vh;
+
 }

@@ -2,12 +2,17 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<h1 class="main-heading">Sign up</h1>
-<form method="post">
-	{% csrf_token %}
-	<input type="email" name="email" placeholder="Email">
-	<input type="password" name="password" placeholder="Password">
-	<input type="password" name="password_repeat" placeholder="Repeat Password">
-	<input type="submit" name="submit" value="Sign Up" class="submit-button">
-</form>
+<div class =' signUp'>
+
+	<h1 class="main-heading">Sign up</h1>
+	<form method="post">
+		{% csrf_token %}
+		<input type="email" name="email" placeholder="Email">
+		<input type="password" name="password" placeholder="Password">
+		<input type="password" name="password_repeat" placeholder="Repeat Password">
+		<input type="submit" name="submit" value="Sign Up" class="submit-button">
+	</form>
+	<p class='error-message'>{{ message }}<p>
+</div>
+
 {% endblock content %}
