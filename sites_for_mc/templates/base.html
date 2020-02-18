@@ -1,10 +1,15 @@
 {% load static from staticfiles %}
+{% load compress %}
 <!doctype html>
 <html>
 <head>
 	<title>Sites For Mc</title>
-	<link rel="stylesheet"  href="{% static '/css/foundation.css'%}">
-	<link rel="stylesheet"  href="{% static '/css/app.css'%}">
+	<!-- <link rel="stylesheet"  href="{% static '/css/foundation.css'%}">
+	<link rel="stylesheet"  href="{% static '/css/app.css'%}"> -->
+	{% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static '/css/main.scss' %}" />
+    {% endcompress %}
+
 </head>
 <body>
 

@@ -1,0 +1,83 @@
+body {
+	background: lightgray;
+}
+/* Form Styles */
+
+form {
+	margin: auto;
+	width: 30vw;
+	text-align: center;
+}
+
+.error-message {
+	margin-top:20px;
+	text-align: center;
+	color:red;
+	text-decoration: underline;
+}
+
+.submit-button {
+	width:100px;
+	height:30px;
+}
+
+/* Sign Up */
+
+.SignUp-heading{
+	margin:auto;
+	width:30vw;
+	text-align: center;
+	margin-bottom: 25px;
+}
+
+.SignUp {
+	margin-top:30vh	;	
+	height:20vh;
+	margin-top: 10%;
+
+}
+
+/* Sign In */
+
+.SignIn-box {
+	width:150px;
+	display: inline-block;
+	margin:0;
+	margin-right:10px
+
+}
+
+.SignIn {
+	display: inline-block;
+	display: flex;
+	align-items: center;
+	margin-right:5px;
+}
+
+.SignIn-form {
+	margin:0;
+	display: inline-block;
+	padding: 0;
+}
+
+.SignIn-heading {
+	display:inline;
+	vertical-align: middle;
+	margin:0;
+
+}
+
+/*Header*/
+
+.Main-heading {
+	display: inline;
+	margin: 0;
+	margin-left:10px;
+
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: gray solid 2px;
+}
