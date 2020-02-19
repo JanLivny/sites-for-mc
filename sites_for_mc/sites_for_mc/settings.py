@@ -25,7 +25,7 @@ SECRET_KEY = '#zm4utbp=m%caz(cnk4%64@svg8-wvwvqbs&bsaynl-0p(3xlp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [  ]
 
 
 # Application definition

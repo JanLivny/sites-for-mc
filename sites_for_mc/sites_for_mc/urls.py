@@ -16,12 +16,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from signin.views import home_view, authed_view
+from signin.views import home_view, dash_view
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
-    path('authed/', authed_view, name='authed')
+    path('dashboard/', dash_view, name='dashboard')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

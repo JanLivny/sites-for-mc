@@ -4,6 +4,6 @@ class RawUserForm(forms.Form):
 	password = forms.CharField()
 	password_repeat = forms.CharField()
 
-class RawsSignUpForm(forms.Form):
+class RawsSignInForm(forms.Form):
 	email = forms.CharField()
 	password = forms.CharField()
