@@ -14,7 +14,8 @@ $('.sortable').sortable().bind('sortupdate', function(e, ui) {
 function new_site() {
     var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value
     lis = $("li");
-    innerlist = []
+    name = $('.siteNameInput').val()
+    innerlist = [name]
     console.log(lis.length)
     for(let i = 0; i < lis.length; i++) {
         innerlist.push(lis[i].innerHTML)
