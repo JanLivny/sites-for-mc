@@ -47,7 +47,7 @@ form {
 
 }
 
-.SignIn {
+.horizontal-layout {
 	display: inline-block;
 	display: flex;
 	align-items: center;
@@ -84,4 +84,73 @@ header {
 	display: flex;
 	justify-content: space-between;
 	border-bottom: gray solid 2px;
+}
+
+/*#############################Dashboard###############################*/
+
+/*Navigation*/
+
+.nav-element{
+	padding: 0 10px;
+	color: black;
+}
+
+.nav-element:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+.dash-nav{
+	margin-right:10px;
+}
+
+.accordion {
+	width:60%;
+	margin:auto;
+	margin-top:50px;
+}
+
+.site-create-button {
+	padding: 20px;
+	border: solid black 4px;
+	display: block;
+	margin:auto;
+	margin-top:50px;
+	transition: all 0.4s ease 0s;
+	color:black;
+}
+
+button:hover {
+	color:lightgray;
+    background: black;
+	transition: all 0.4s ease 0s;
+	border-width:1px;
+}
+
+/*#############################Creator###############################*/
+
+.sortable {
+	width: 290px;
+	margin: auto;
+	margin-top:100px;
+}
+.sortable li {
+	text-align: center;
+	list-style: none;
+	border: 1px solid black;
+	background:lightgray;
+	color: black;
+	margin: 5px;
+	padding:5px 0;
+	height:	35px;
+}
+
+li.sortable-placeholder {
+	border: 1px dashed black;
+	background: none;
+}
+
+h1 {
+text-align: center;
+margin-top:30px;
 }

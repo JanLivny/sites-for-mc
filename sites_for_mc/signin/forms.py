@@ -7,3 +7,4 @@ class RawUserForm(forms.Form):
 class RawsSignInForm(forms.Form):
 	email = forms.CharField()
 	password = forms.CharField()
+

@@ -1,0 +1,17 @@
+  {% extends 'base.html' %} 
+
+{% block content %}
+<h1>Creator</h1>
+<ul class= 'sortable'>
+    <li>About</li>
+    <li>people</li>
+    <li>Contact Us</li>
+    <li>Heirarchy</li>
+    <li>Join</li>
+</ul>
+<span id= "csrf_span">
+  {% csrf_token %}
+</span>
+<button onclick="new_site()" class = 'site-create-button'>create new site</button>
+
+{% endblock content%}

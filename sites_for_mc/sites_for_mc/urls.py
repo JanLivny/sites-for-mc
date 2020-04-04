@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from signin.views import home_view
 from dashboard.views import dash_view
+from creator.views import creator_view
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
-    path('dashboard/', dash_view, name='dashboard')
+    path('dashboard/', dash_view, name='dashboard'),
+    path('creator/', creator_view, name='creator')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

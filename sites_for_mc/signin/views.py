@@ -14,6 +14,7 @@ def home_view(request, *args, **kwargs):
 	}
 
 	if request.method == "POST":
+#SIGN IN
 
 		if '_signIn' in request.POST:
 			print('sign in pressed')
@@ -31,6 +32,8 @@ def home_view(request, *args, **kwargs):
 					print('login error')
 			else:
 				print('invalid data')
+
+#SIGN UP
 		elif '_signUp' in request.POST:
 			form = RawUserForm(request.POST)
 			if form.is_valid():
@@ -38,11 +41,15 @@ def home_view(request, *args, **kwargs):
 				if cleanForm['password'] != cleanForm['password_repeat']:
 					my_context['message'] = 'Passwords must match'
 				else:
-					user = User.objects.create_user(cleanForm['email'],cleanForm['email'], cleanForm['password'])
-					user.save()
-					new_user = authenticate(username=cleanForm['email'],password=cleanForm['password'],)
-					login(request, new_user)
-					return redirect('dashboard/')
+					if User.objects.filter(email=cleanForm['email']).exists():
+						my_context['message'] = 'Email already in use. Try to sign in.'
+					else:
+						user = User.objects.create_user(cleanForm['email'],cleanForm['email'], cleanForm['password'])
+						user.save()
+						new_user = authenticate(username=cleanForm['email'],password=cleanForm['password'])
+						login(request, new_user)
+						return redirect('dashboard/')
+
 
 	return render(request,'home.html',my_context)
 
