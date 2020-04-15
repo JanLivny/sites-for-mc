@@ -29,6 +29,6 @@ function new_site() {
         success: () =>  console.log('ajax succes'),
         failure: () =>  console.log('ajax failure')
         })
-
+    
        
 };

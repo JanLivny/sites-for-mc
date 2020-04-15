@@ -2,14 +2,20 @@
 
 {% block content %}
 <h1>Creator</h1>
-<input class = "siteNameInput"type="text" placeholder="name">
+<input class = "siteNameInput" type="text" placeholder="name">
 <ul class= 'sortable'>
     <li>About</li>
-    <li>people</li>
+    <li>People</li>
     <li>Contact Us</li>
-    <li>Heirarchy</li>
     <li>Join</li>
+    <li>Gallery</li>
 </ul>
+
+<!-- <label class="activeCheckboxDiv">
+<input class='activeCheckbox' type="checkbox">
+Set as Active
+</label> -->
+
 <span id= "csrf_span">
   {% csrf_token %}
 </span>

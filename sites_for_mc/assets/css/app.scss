@@ -158,4 +158,19 @@ h1 {
 .siteNameInput {
 	width:280px;
 	margin:auto;
+	border: 1px solid black;
 }
+
+.activeCheckboxDiv {
+	margin:auto;	
+	width: 290px;
+	text-align: center;
+
+}
+
+.activeCheckboxDiv > * {
+display: inline-block;
+}
+
+
+
