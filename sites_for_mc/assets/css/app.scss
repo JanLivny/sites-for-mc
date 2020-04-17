@@ -83,7 +83,13 @@ form {
 header {
 	display: flex;
 	justify-content: space-between;
-	border-bottom: gray solid 2px;
+	background-color: black;
+	padding:0px 10px;	
+	text-align: center;
+	margin-bottom:30px;
+	color:lightgray;
+	border:none;
+	padding-left:10px;
 }
 
 /*#############################Dashboard###############################*/
@@ -92,12 +98,12 @@ header {
 
 .nav-element{
 	padding: 0 10px;
-	color: black;
+	color: lightgray;
 }
 
 .nav-element:hover {
 	text-decoration: underline;
-	color: black;
+	color:lightgray;
 }
 
 .dash-nav{
@@ -142,7 +148,9 @@ button:hover {
 	color: black;
 	margin: 5px;
 	padding:5px 0;
-	height:	35px;
+	height:	35px;	
+	text-align:center;
+	padding-left:30px;	
 }
 
 li.sortable-placeholder {
@@ -150,10 +158,6 @@ li.sortable-placeholder {
 	background: none;
 }
 
-h1 {
-	text-align: center;
-	margin-top:30px;
-}
 
 .siteNameInput {
 	width:280px;
@@ -169,8 +173,33 @@ h1 {
 }
 
 .activeCheckboxDiv > * {
-display: inline-block;
+	display: inline-block;
 }
 
+.creator-section-header {
+	text-align: center;
+	margin-bottom: 20px;
+}
 
+.element-edit-link{
+	margin-right:5px;	
+	float: right;
+	color:black;
+	font-size:15px;
+	font-style:italic;
+	width:25px;
+}
 
+.element-edit-link:hover{
+	text-decoration: underline;
+	color:black;
+}
+
+.editorDiv{
+	width: 290px;
+	margin: auto;
+}
+
+.user-site-input{
+	border:1px black solid;
+}

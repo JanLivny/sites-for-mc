@@ -1,24 +1,78 @@
   {% extends 'base.html' %} 
 
 {% block content %}
+<header class="creator-header">
 <h1>Creator</h1>
-<input class = "siteNameInput" type="text" placeholder="name">
-<ul class= 'sortable'>
-    <li>About</li>
-    <li>People</li>
-    <li>Contact Us</li>
-    <li>Join</li>
-    <li>Gallery</li>
-</ul>
+<nav class="horizontal-layout dash-nav">
+  <a class='nav-element' href = 'http://127.0.0.1:8000/'> Home </a>
+  <a class='nav-element' href = '#'> Dashboard</a>
+  <a class='nav-element' href = ''> Account </a> 
+</nav>
+</header>
 
-<!-- <label class="activeCheckboxDiv">
-<input class='activeCheckbox' type="checkbox">
-Set as Active
-</label> -->
+<div class="grid-x creatorWrapper">
 
-<span id= "csrf_span">
+  <div class="cell auto toolboxDiv">
+      <h2 class="creator-section-header">Toolbox</h2>
+  </div>
+
+  <div class="cell auto pageDiv">
+
+    <h2 class="creator-section-header">Page</h2>
+    <input class = "siteNameInput" type="text" placeholder="name">
+    <ul class= 'sortable'>
+      <li  >
+        About
+        <a onclick="editElem()" class='element-edit-link'>edit</a>
+      </li>
+      <li>
+        People
+        <a onclick="editElem()" class='element-edit-link'>edit</a>
+      </li>
+      <li>
+        Contact Us
+        <a onclick="editElem()" class='element-edit-link'>edit</a>
+      </li>
+      <li>
+        Join
+        <a onclick="editElem()" class='element-edit-link'>edit</a>
+      </li>
+      <li>
+        Gallery
+        <a onclick="editElem()" class='element-edit-link'>edit</a>
+      </li>
+    </ul>
+    <button onclick="new_site()" class = 'site-create-button'>create new site</button>
+
+  </div>
+
+
+  <div class="cell auto "> 
+    <div class="editorDiv">
+      <h2 class="creator-section-header">Editor</h2>
+
+      <label>first input:
+      <input class = "user-site-input" type="text">
+      </label>
+
+      <label>second input:
+      <input class = "user-site-input" type="text">
+      </label>
+
+      <label>second input:
+        <input class = "user-site-input" type="text">
+      </label>
+
+    </div>
+  </div>
+
+</div>
+
+<span id= "csrf_span" style="display: none;">
   {% csrf_token %}
 </span>
-<button onclick="new_site()" class = 'site-create-button'>create new site</button>
+
+
+
 
 {% endblock content%}
