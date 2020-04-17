@@ -17,15 +17,12 @@ def home_view(request, *args, **kwargs):
 #SIGN IN
 
 		if '_signIn' in request.POST:
-			print('sign in pressed')
 			signInForm = RawsSignInForm(request.POST)
 			if signInForm.is_valid():
-				print('sign in data valid')
 				cleanForm = signInForm.cleaned_data
 				new_user = authenticate(username=cleanForm['email'],password=cleanForm['password'],)
 				if new_user is not None:
 					login(request, new_user)
-					print('logged')
 					return redirect('dashboard/')
 				else:
 					my_context['message2'] = 'Wrong Username or Password'				

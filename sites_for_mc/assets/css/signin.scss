@@ -1,0 +1,63 @@
+
+/* Form Styles */
+
+
+.home-form {
+	margin: auto;
+	
+	text-align: center;
+}
+
+.submit-button {
+	width:100px;
+	height:30px;
+}
+
+/* Sign Up */
+
+.SignUp {
+	height:20vh;
+    width:290px;
+    margin:auto;
+    margin-top:100px;	
+
+}
+
+/* Sign In */
+
+.SignIn-box {
+	width:150px;
+	display: inline-block;
+	margin:0;
+	margin-right:10px
+
+}
+
+.horizontal-layout {
+	display: inline-block;
+	display: flex;
+	align-items: center;
+	margin-right:5px;
+}
+
+.SignIn-form {
+	margin:0;
+	display: inline-block;
+	padding: 0;
+}
+
+.SignIn-heading {
+	display:inline;
+    vertical-align: middle;
+    color:lightgray;
+    margin:0;
+	margin-right:5px;
+
+}
+
+.message2 {
+	margin-right:10px;
+}
+
+
+

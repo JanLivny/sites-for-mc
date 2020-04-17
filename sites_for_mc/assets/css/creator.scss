@@ -1,0 +1,74 @@
+// sortable
+
+.sortable {
+	width: 290px;
+	margin: auto;
+}
+.sortable li {
+	text-align: center;
+	list-style: none;
+	border: 1px solid black;
+	background:lightgray;
+	color: black;
+	margin: 5px;
+	padding:5px 0;
+	height:	35px;	
+	text-align:center;
+	padding-left:30px;	
+}
+
+li.sortable-placeholder {
+	border: 1px dashed black;
+	background: none;
+}
+
+//creator styles
+ 
+.creator-input {
+	width:280px;
+	margin:auto;
+	border: 1px solid black;
+}
+
+.element-edit-link{
+	margin-right:5px;	
+	float: right;
+	color:black;
+	font-size:15px;
+	font-style:italic;
+	width:25px;
+}
+
+.element-edit-link:hover{
+	text-decoration: underline;
+	color:black;
+}
+
+.creator-section{
+	width: 290px;
+	margin: auto;
+}
+
+.editorDiv .creator-input{
+	width: 100px;
+	
+}
+
+.editorDiv p {	
+	margin-bottom:0px;
+	line-height: 39px;	
+}
+
+.editor-element-info {
+	text-align:center;
+	font-style:italic;
+	border: dashed 1px black;
+}
+
+.editorDiv{
+	display: flex;
+	justify-content:space-between;	
+	width:220px;
+	margin:auto;
+	margin-bottom: 10px;		
+}

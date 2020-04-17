@@ -3,7 +3,7 @@
 {% block content %}
 <header class="creator-header">
 <h1>Creator</h1>
-<nav class="horizontal-layout dash-nav">
+<nav class="horizontal-layout  ">
   <a class='nav-element' href = 'http://127.0.0.1:8000/'> Home </a>
   <a class='nav-element' href = '#'> Dashboard</a>
   <a class='nav-element' href = ''> Account </a> 
@@ -13,14 +13,16 @@
 <div class="grid-x creatorWrapper">
 
   <div class="cell auto toolboxDiv">
-      <h2 class="creator-section-header">Toolbox</h2>
+  <div class="creator-section">
+      <h2>Toolbox</h2>
+  </div>
   </div>
 
   <div class="cell auto pageDiv">
 
-    <h2 class="creator-section-header">Page</h2>
-    <input class = "siteNameInput" type="text" placeholder="name">
-    <ul class= 'sortable'>
+    <h2>Page</h2>
+    <input class = "creator-input" type="text" placeholder="name">
+    <ul class= 'sortable creator-section'>
       <li  >
         About
         <a onclick="editElem()" class='element-edit-link'>edit</a>
@@ -48,20 +50,36 @@
 
 
   <div class="cell auto "> 
-    <div class="editorDiv">
-      <h2 class="creator-section-header">Editor</h2>
+    <h2>Editor</h2>
+    <div class="creator-section">
+      <p class="editor-element-info">You are editing the "Element" element</p>
+      <div class="editorDiv">
+        <p>first input:</p>
+        <div>
+          <input class = "creator-input" type="text">
+        </div>
+      </div>
 
-      <label>first input:
-      <input class = "user-site-input" type="text">
-      </label>
+      <div class="editorDiv">
+        <p>second input:</p>
+        <div>
+          <input class = "creator-input" type="text">
+        </div>
+      </div>
 
-      <label>second input:
-      <input class = "user-site-input" type="text">
-      </label>
+      <div class="editorDiv">
+        <p>third input:</p>
+        <div>
+          <input class = "creator-input" type="text">
+        </div>
+      </div>
 
-      <label>second input:
-        <input class = "user-site-input" type="text">
-      </label>
+      <div class="editorDiv">
+        <p>forth input:</p>
+        <div>
+          <input class = "creator-input" type="text">
+        </div>
+      </div>
 
     </div>
   </div>

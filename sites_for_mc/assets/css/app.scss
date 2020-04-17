@@ -1,12 +1,26 @@
 body {
 	background: lightgray;
 }
-/* Form Styles */
 
-form {
-	margin: auto;
-	width: 30vw;
+header {
+	display: flex;
+	justify-content: space-between;
+	background-color: black;
+	padding:0px 20px 0 10px;	
 	text-align: center;
+	margin-bottom:30px;
+
+}
+
+h1 {
+	display: inline;
+	margin: 0;
+	color:lightgray;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 30px;
 }
 
 .error-message {
@@ -15,86 +29,6 @@ form {
 	color:red;
 	text-decoration: underline;
 }
-
-.submit-button {
-	width:100px;
-	height:30px;
-}
-
-/* Sign Up */
-
-.SignUp-heading{
-	margin:auto;
-	width:30vw;
-	text-align: center;
-	margin-bottom: 25px;
-}
-
-.SignUp {
-	margin-top:30vh	;	
-	height:20vh;
-	margin-top: 10%;
-
-}
-
-/* Sign In */
-
-.SignIn-box {
-	width:150px;
-	display: inline-block;
-	margin:0;
-	margin-right:10px
-
-}
-
-.horizontal-layout {
-	display: inline-block;
-	display: flex;
-	align-items: center;
-	margin-right:5px;
-}
-
-.SignIn-form {
-	margin:0;
-	display: inline-block;
-	padding: 0;
-}
-
-.SignIn-heading {
-	display:inline;
-	vertical-align: middle;
-	margin:0;
-
-}
-
-.message2 {
-	margin-right:10px;
-}
-
-/*Header*/
-
-.Main-heading {
-	display: inline;
-	margin: 0;
-	margin-left:10px;
-
-}
-
-header {
-	display: flex;
-	justify-content: space-between;
-	background-color: black;
-	padding:0px 10px;	
-	text-align: center;
-	margin-bottom:30px;
-	color:lightgray;
-	border:none;
-	padding-left:10px;
-}
-
-/*#############################Dashboard###############################*/
-
-/*Navigation*/
 
 .nav-element{
 	padding: 0 10px;
@@ -106,15 +40,6 @@ header {
 	color:lightgray;
 }
 
-.dash-nav{
-	margin-right:10px;
-}
-
-.accordion {
-	width:60%;
-	margin:auto;
-	margin-top:50px;
-}
 
 .site-create-button {
 	padding: 20px;
@@ -133,73 +58,4 @@ button:hover {
 	border-width:1px;
 }
 
-/*#############################Creator###############################*/
-
-.sortable {
-	width: 290px;
-	margin: auto;
-	margin-top:20px;
-}
-.sortable li {
-	text-align: center;
-	list-style: none;
-	border: 1px solid black;
-	background:lightgray;
-	color: black;
-	margin: 5px;
-	padding:5px 0;
-	height:	35px;	
-	text-align:center;
-	padding-left:30px;	
-}
-
-li.sortable-placeholder {
-	border: 1px dashed black;
-	background: none;
-}
-
-
-.siteNameInput {
-	width:280px;
-	margin:auto;
-	border: 1px solid black;
-}
-
-.activeCheckboxDiv {
-	margin:auto;	
-	width: 290px;
-	text-align: center;
-
-}
-
-.activeCheckboxDiv > * {
-	display: inline-block;
-}
-
-.creator-section-header {
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.element-edit-link{
-	margin-right:5px;	
-	float: right;
-	color:black;
-	font-size:15px;
-	font-style:italic;
-	width:25px;
-}
-
-.element-edit-link:hover{
-	text-decoration: underline;
-	color:black;
-}
-
-.editorDiv{
-	width: 290px;
-	margin: auto;
-}
-
-.user-site-input{
-	border:1px black solid;
-}
+	
