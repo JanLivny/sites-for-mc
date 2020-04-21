@@ -1,33 +1,58 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from creator.models import site, block_type, block
 import ast 
+import json
 # Create your views here.
 
 def creator_view(request, *args, **kwargs):
-	my_context ={
-	}
 	if request.user.is_authenticated:
+		my_context ={}
+#get primary block to display in creator
+		primary_block_dict = {}
+		primary_blocks = block_type.objects.filter(primary=True)
+		counter = 0
+		for x in primary_blocks:
+			primary_block_dict["block_"+ str(counter)]=x.type_name.replace("-"," ").capitalize()
+			counter+=1
+		my_context["primary_block"]=primary_block_dict
+#if recieved ajax POST request	
+		if request.method == "POST":
+			post_data = request.POST
+#if edit was pressed on one of the elements
+			if 'parentText' in post_data:
+				parent_type = post_data['parentText'].replace(" ","-").lower()
+				parent_fields = block_type.objects.get(type_name=parent_type).fields.split()
+				field_counter=0
+				field_dict={}
+				for field in parent_fields:
+					field_dict["field_"+str(field_counter)] = field
+					field_counter +=1
+				return HttpResponse(json.dumps(field_dict))
+#if new site is to be created
+			else:
+				current_user = request.user
+				elem_arr = post_data.getlist('innerlist[]')
+				content_arr = ast.literal_eval(post_data.get('inputValues'))
+				#get site name				
+				name = elem_arr.pop(0).strip().replace(" ","-").lower()
+				#make elments into elem string
+				elem_string = " "
+				for elem in elem_arr:
+					#create elem string
+					elem = str(elem).strip().replace(" ","-").lower()
+					elem_string += elem
+					elem_string += " " 
+					#add content
+					content_dict = {}
+					fields = block_type.objects.get(type_name=elem).fields.split()
+					for field in fields:
+						content_dict[field] = content_arr[elem][field]
+					content_dict=str(content_dict)
+					block(content=content_dict, owner_site=name, block_type=elem).save()
 
-		if request.method == "POST":	
-			current_user = request.user
-			elem_arr = request.POST.getlist('innerlist[]')
-			content_arr = "[test value]"
-			name = elem_arr.pop(0).strip().replace(" ","-")
-
-			elem_string = " "
-			for x in elem_arr:
-				x = str(x).strip().replace(" ","-").lower()
-				elem_string += x
-				elem_string += " " 
-				content_dict = {}
-				fields = block_type.objects.get(type_name=x).fields.split()
-				for field in fields:
-					content_dict[field] = content_arr
-				content_dict=str(content_dict)
-				block(content=content_dict, owner_site= name, block_type=x).save()
-
-			newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
-			newsite.save()
+				newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
+				newsite.save()
+#set context
 		return render(request,'creator.html',my_context)
 	else:
 		return redirect('http://127.0.0.1:8000/')

@@ -37,6 +37,7 @@ li.sortable-placeholder {
 	font-size:15px;
 	font-style:italic;
 	width:25px;
+	height:100%;
 }
 
 .element-edit-link:hover{
@@ -59,7 +60,7 @@ li.sortable-placeholder {
 	line-height: 39px;	
 }
 
-.editor-element-info {
+.editor-element-p {
 	text-align:center;
 	font-style:italic;
 	border: dashed 1px black;
@@ -71,4 +72,11 @@ li.sortable-placeholder {
 	width:220px;
 	margin:auto;
 	margin-bottom: 10px;		
+}
+
+.confirm-edit-link {
+	margin: auto;
+	width:50px;
+	display: block;
+	margin-top:30px;
 }
