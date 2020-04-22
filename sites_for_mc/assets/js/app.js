@@ -1,5 +1,8 @@
 $(document).foundation()
+
 $('.sortable').sortable()
+$(".editor-div").hide()
+
 var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value
 inputValues = {}
 
@@ -13,6 +16,11 @@ $('.sortable').sortable().bind('sortupdate', function(e, ui) {
 });
 
 $( ".element-edit-link" ).on( "click",function() {
+
+    $(".editor-div").show()
+    $(".not-editing-message").hide()
+    $(".edit-input").val('')
+
     let parentText = $(this).parent().contents().get(0).nodeValue.trim()
     $.ajax({
         headers: {'X-CSRFToken':csrf_token},

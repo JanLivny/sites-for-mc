@@ -4,8 +4,8 @@
 <header class="creator-header">
 <h1>Creator</h1>
 <nav class="horizontal-layout  ">
-  <a class='nav-element' href = 'http://127.0.0.1:8000/'> Home </a>
-  <a class='nav-element' href = '#'> Dashboard</a>
+  <a class='nav-element' href = '#'> My site </a>
+  <a class='nav-element' href = 'http://127.0.0.1:8000/dashboard'> Dashboard</a>
   <a class='nav-element' href = ''> Account </a> 
 </nav>
 </header>
@@ -51,7 +51,8 @@
 
   <div class="cell auto "> 
     <h2>Editor</h2>
-    <div class="creator-section">
+    <p class="not-editing-message">You are currently not editing an element.</br>Press edit to do so. </p>
+    <div class="creator-section editor-div">
       <p class="editor-element-p">You are editing the<span class="editor-element-info"></span>element</p>
       <div class="editorDiv">
         <p class="field"></p>
@@ -85,7 +86,13 @@
   {% csrf_token %}
 </span>
 
-
+<div class="popup">
+  <div class="popup-content"></div>
+  <div>
+    <a>Cancel</a>
+    <a>Continue</a>
+  </div>
+</div>
 
 
 {% endblock content%}
