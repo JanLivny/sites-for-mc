@@ -1,7 +1,7 @@
 // sortable
 
 .sortable {
-	width: 290px;
+	width: 360px;
 	margin: auto;
 }
 .sortable li {
@@ -10,11 +10,12 @@
 	border: 1px solid black;
 	background:lightgray;
 	color: black;
-	margin: 5px;
+	margin: 5px 0;
 	padding:5px 0;
-	height:	35px;	
+	height:	44px;	
 	text-align:center;
-	padding-left:30px;	
+	padding-left:40px;	
+	font-size: 19px;
 }
 
 li.sortable-placeholder {
@@ -25,19 +26,19 @@ li.sortable-placeholder {
 //creator styles
  
 .creator-input {
-	width:280px;
+	width:360px;
 	margin:auto;
 	border: 1px solid black;
+	height:44px;
 }
 
 .element-edit-link{
-	margin-right:5px;	
+	margin-right:10px;	
 	float: right;
 	color:black;
-	font-size:15px;
 	font-style:italic;
-	width:25px;
 	height:100%;
+	width:30px;
 }
 
 .element-edit-link:hover{
@@ -46,24 +47,29 @@ li.sortable-placeholder {
 }
 
 .creator-section{
-	width: 290px;
+	width: 360px;
 	margin: auto;
 }
 
 .editorDiv .creator-input{
-	width: 100px;
+	width: 130px;
 	
 }
 
 .editorDiv p {	
 	margin-bottom:0px;
-	line-height: 39px;	
+	line-height: 39px;
+	font-size: 20px;	
 }
 
 .editor-element-p {
 	text-align:center;
 	font-style:italic;
 	border: dashed 1px black;
+	height:44px;
+	font-size:20px;
+	line-height:44px;
+	margin-bottom:15px;
 }
 
 .editorDiv{
@@ -76,41 +82,60 @@ li.sortable-placeholder {
 
 .confirm-edit-link {
 	margin: auto;
-	width:50px;
+	width:100px;
 	display: block;
-	margin-top:30px;
+	margin-top:50px;
+	font-size:20px;	
+	text-align: center;
+	
 }
 
 .not-editing-message {
 	font-style: italic;
-	width: 290px;
+	width: 360px;
 	margin: auto;
 	text-align: center;
 	margin-top: 130px;
+	font-size:20px;
 }
 /* popup -styles */
 
 .popup {
     width: 25%;
-    height:150px;
-    margin:auto;
+    height:200px;
+	margin:auto;
+	color:lightgray;	
     border: 4px solid black;
-    background: lightgray;
+	background: black;
     position: absolute;
     top:0;
     left:0;
     right: 0;
-	bottom: 101px;
-	display: none;
+	bottom:0;
 }
 
-.popup div {
-	display:flex;
-	justify-content: space-between;
-	width:50%;
+.popup-links{
+	text-align: center;
 	margin: auto;
+	width:200px;
 }
 
+.popup-link {
+	color:lightgray;
+} 
+
+.popup-link:hover {
+	color:lightgray;
+}
 .popup-content{
-	height:80%;
+	height:60%;
+	width:80%;
+	margin:auto;
+	text-align: center;
+}
+
+.popup p {
+	font-size:20px;
+	text-decoration: underline;
+	text-align:center;
 }

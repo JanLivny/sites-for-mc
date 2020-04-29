@@ -16,11 +16,13 @@ h1 {
 	display: inline;
 	margin: 0;
 	color:lightgray;
+	font-size:60px;
 }
 
 h2 {
 	text-align: center;
 	margin-bottom: 30px;
+	font-size: 50px;
 }
 
 .error-message {
@@ -33,6 +35,7 @@ h2 {
 .nav-element{
 	padding: 0 10px;
 	color: lightgray;
+	font-size:20px;
 }
 
 .nav-element:hover {
@@ -42,13 +45,14 @@ h2 {
 
 
 .site-create-button {
-	padding: 20px;
+	padding: 25px;
 	border: solid black 4px;
 	display: block;
 	margin:auto;
 	margin-top:50px;
 	transition: all 0.4s ease 0s;
 	color:black;
+	font-size:20px;
 }
 
 button:hover {

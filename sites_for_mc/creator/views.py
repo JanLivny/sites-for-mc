@@ -35,23 +35,32 @@ def creator_view(request, *args, **kwargs):
 				content_arr = ast.literal_eval(post_data.get('inputValues'))
 				#get site name				
 				name = elem_arr.pop(0).strip().replace(" ","-").lower()
+				if site.objects.filter(name=name).exists():
+					return HttpResponse('0')
+				elif name == "":
+					return HttpResponse("1")
 				#make elments into elem string
-				elem_string = " "
-				for elem in elem_arr:
-					#create elem string
-					elem = str(elem).strip().replace(" ","-").lower()
-					elem_string += elem
-					elem_string += " " 
-					#add content
-					content_dict = {}
-					fields = block_type.objects.get(type_name=elem).fields.split()
-					for field in fields:
-						content_dict[field] = content_arr[elem][field]
-					content_dict=str(content_dict)
-					block(content=content_dict, owner_site=name, block_type=elem).save()
+				else:
+					elem_string = " "
+					for elem in elem_arr:
+						#create elem string
+						elem = str(elem).strip().replace(" ","-").lower()
+						elem_string += elem
+						elem_string += " " 
+						#add content
+						content_dict = {}
+						fields = block_type.objects.get(type_name=elem).fields.split()
+						for field in fields:
+							try:
+								content_dict[field] = content_arr[elem][field]
+							except:
+								content_dict[field] = ""
+						content_dict=str(content_dict)
+						block(content=content_dict, owner_site=name, block_type=elem).save()
 
-				newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
-				newsite.save()
+					newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
+					newsite.save()
+					return HttpResponse(["2 ",name])
 #set context
 		return render(request,'creator.html',my_context)
 	else:
