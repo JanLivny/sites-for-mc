@@ -23,28 +23,28 @@
     <h2>Page</h2>
     <input class = "creator-input site-name-input" type="text" placeholder="name">
     <ul class= 'sortable creator-section'>
-      <li>
+      <li class='editor-li'>
         {{primary_block.block_0}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li>
+      <li class='editor-li'>
         {{primary_block.block_1}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li>
+      <li class='editor-li'>
         {{primary_block.block_2}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li>
+      <li class='editor-li'>
         {{primary_block.block_3}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li>
+      <li class='editor-li'>
         {{primary_block.block_4}}
         <a class='element-edit-link'>edit</a>
       </li>
     </ul>
-    <button onclick="new_site()" class = 'site-create-button'>create new site</button>
+    <button class = 'site-create-button big-button'>create new site</button>
 
   </div>
 
@@ -81,18 +81,5 @@
   </div>
 
 </div>
-
-<span id= "csrf_span" style="display: none;">
-  {% csrf_token %}
-</span>
-
-<div class="popup">
-  <p>Alert</p>
-  <div class="popup-content"></div>
-  <div class="popup-links">
-    <a class="popup-confirm popup-link">Continue</a>
-  </div>
-</div>
-
 
 {% endblock content%}

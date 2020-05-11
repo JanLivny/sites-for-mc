@@ -51,10 +51,11 @@ def creator_view(request, *args, **kwargs):
 						content_dict = {}
 						fields = block_type.objects.get(type_name=elem).fields.split()
 						for field in fields:
-							try:
+							try: 
 								content_dict[field] = content_arr[elem][field]
 							except:
 								content_dict[field] = ""
+								
 						content_dict=str(content_dict)
 						block(content=content_dict, owner_site=name, block_type=elem).save()
 

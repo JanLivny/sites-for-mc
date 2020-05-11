@@ -14,10 +14,23 @@
 {% block content %}
 replace me
 {% endblock content%}
+<div class="popup">
+    <p>Alert</p>
+    <div class="popup-content"></div>
+    <div class="popup-links">
+      <a class="popup-confirm popup-link">Continue</a>
+      <a class="popup-cancel popup-link">Cancel</a>
+    </div>
+</div>
+
+<span id= "csrf_span" style="display: none;">
+    {% csrf_token %}
+</span>
+
 </div>
 <script src="{% static  'js/jquery.js' %}"></script>
 <script src="{% static  'js/foundation.js' %}"></script>
 <script src="{% static 'js/jquery.sortable.js' %}"></script>
-<script src="{% static  'js/app.js' %}"></script>
+<script type="module" src="{% static  'js/app.js' %}"></script>
 </body>
 </html>

@@ -1,5 +1,82 @@
+//accordion
 .accordion {
 	width:60%;
 	margin:auto;
 	margin-top:50px;
+	
+}
+
+.accordion-title {
+	font-size: 20px;
+}
+
+.accordion-title{
+	color:black
+}
+
+.accordion-content{
+	height: 315px;
+}
+
+//dash styles
+
+//quick edit
+.dash-columb {
+	text-align: center;
+}
+
+.dash-editor{
+	margin-top:15px;
+	width:200px;
+}
+
+.dash-editor li{
+	height:25px;
+	font-size:10px;
+	text-align:center;
+	
+}
+
+.dash-edit-buttons > *{
+	display: block;
+}
+
+//manage
+.radio-div {
+	// background: lightgray;
+	display: flex;
+	justify-content: space-between;
+	width: 200px;
+	margin:auto;
+}
+
+.radio-div input{
+	margin:0px;
+	margin-top:6px;
+}
+
+.radio-div label {
+	display: flex;
+	justify-content: space-between;
+	width:45%;
+}
+.public-radio-div{
+	margin-top:15px;
+}
+
+.all-switches {
+height: 145px;
+}
+
+//info
+	
+.info-columb p{
+	margin:0;
+	margin-bottom:5px;
+	
+}
+
+.info-div{
+	text-align:left;
+	margin-top:15px;
 }
