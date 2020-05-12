@@ -4,7 +4,6 @@ import * as utils from "./utils.js"
 import * as edit from "./edit.js"
 import * as quickEdit from "./quick-edit.js"
 
-
 //setup
 var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
 
@@ -13,7 +12,6 @@ var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value
 
 
 $(document).foundation()
-$(".popup").hide()
 $('.sortable').sortable()
 $(".editor-div").hide()
 
@@ -42,5 +40,10 @@ $(".accordion-title").on( "click", quickEdit.queryElems)
 //send quick edited elems
 $(".dash-edit-confirm").on( "click", quickEdit.updateElems)
 
+//go to full editor
+$(".full-editor-link").on("click", quickEdit.fullEditor)
+
 //delete site
 $(".dash-delete").on("click", quickEdit.deleteSite)
+
+

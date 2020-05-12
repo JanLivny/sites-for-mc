@@ -6,10 +6,10 @@ export function sortLi() {
     li.detach().sort();
     ul.append(li);
 }
-export function redirect() {
-    location.href = 'http://127.0.0.1:8000/dashboard/'
+export function redirect(location) {
+    var link = 'http://127.0.0.1:8000/'+location+'/'
+    window.location.href = link
 }
-
 
 export  function formatDB(text) {
  text = text.trim().replace(" ", "-").toLowerCase()

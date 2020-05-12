@@ -33,7 +33,7 @@ export function new_site(inputValues) {
             }
             else if(data[0]=="2"){
                 site_url = "http://127.0.0.1:8000/creator/"+data[1]
-                utils.popup(()=>{utils.redirect()},()=>{},false,
+                utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,
                 "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link' onclick='redirect()'>"+site_url+"</a>")
             }
             else{

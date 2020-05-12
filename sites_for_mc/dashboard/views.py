@@ -24,7 +24,6 @@ def dash_view(request, *args, **kwargs):
 		}
 		if request.method == "POST":
 			post_data = request.POST
-			print(post_data)
 			if 'targetText' in post_data:
 				site_name = post_data.getlist('targetText')[0]
 				target_elements = site.objects.get(name=site_name).elements

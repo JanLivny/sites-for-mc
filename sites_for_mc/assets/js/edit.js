@@ -1,5 +1,6 @@
 export var inputValues={}
 
+export function changeInputValues(val) {inputValues=val}
 export function getFields() {
     var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
     $(".editor-div").show()

@@ -18,18 +18,33 @@ def creator_view(request, *args, **kwargs):
 #if recieved ajax POST request	
 		if request.method == "POST":
 			post_data = request.POST
+			# print(post_data)
+#check for edit mode
+			edit = False
+			if 'statusData[]' in post_data:
+				statusData = post_data.getlist('statusData[]') 
+				edit_site_name= statusData[0]
+				edit = True
+				#create block data dict for site that is beeing edited
+				edit_data_dict = {}
+				edit_data_arr=block.objects.filter(owner_site=edit_site_name)
+				for edit_site_block in edit_data_arr:
+					edit_data_dict[edit_site_block.block_type] = ast.literal_eval(edit_site_block.content)
+				print(edit_data_dict)
+				return HttpResponse(str(json.dumps(edit_data_dict)))
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
 				parent_type = post_data['parentText'].replace(" ","-").lower()
 				parent_fields = block_type.objects.get(type_name=parent_type).fields.split()
 				field_counter=0
 				field_dict={}
+				
 				for field in parent_fields:
 					field_dict["field_"+str(field_counter)] = field
 					field_counter +=1
 				return HttpResponse(json.dumps(field_dict))
 #if new site is to be created
-			else:
+			elif 'innerlist[]' in post_data:
 				current_user = request.user
 				elem_arr = post_data.getlist('innerlist[]')
 				content_arr = ast.literal_eval(post_data.get('inputValues'))
@@ -62,6 +77,7 @@ def creator_view(request, *args, **kwargs):
 					newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
 					newsite.save()
 					return HttpResponse(["2 ",name])
+
 #set context
 		return render(request,'creator.html',my_context)
 	else:

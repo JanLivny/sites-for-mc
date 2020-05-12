@@ -1,5 +1,6 @@
 import * as newsite from "./newsite.js"
 import * as utils from "./utils.js"
+import * as edit from "./edit.js"
 
 var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
 
@@ -60,4 +61,22 @@ export function deleteSite() {
     },()=>{},true,"Are you sure you want to delete</br>"+delName + " ?")
     
 
+}
+
+export function fullEditor() {
+    var target = $(event.target)
+    var statusData = [target.attr('name')]
+    $.ajax({
+        headers: {'X-CSRFToken':csrf_token},    
+        type: "POST",
+        url: "http://127.0.0.1:8000/creator/",
+        data: {statusData},
+        success: (data) => {
+           edit.changeInputValues(JSON.parse(data.replace(/'/g,"\"")))
+           console.log(edit.inputValues)
+        },
+        failure: () =>  console.log('ajax failure')
+        })
+    
+    utils.redirect("creator")
 }
