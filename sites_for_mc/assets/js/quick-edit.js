@@ -65,18 +65,8 @@ export function deleteSite() {
 
 export function fullEditor() {
     var target = $(event.target)
-    var statusData = [target.attr('name')]
-    $.ajax({
-        headers: {'X-CSRFToken':csrf_token},    
-        type: "POST",
-        url: "http://127.0.0.1:8000/creator/",
-        data: {statusData},
-        success: (data) => {
-           edit.changeInputValues(JSON.parse(data.replace(/'/g,"\"")))
-           console.log(edit.inputValues)
-        },
-        failure: () =>  console.log('ajax failure')
-        })
+    var statusData = target.attr('name')
+  
     
-    utils.redirect("creator")
+    utils.redirect("editor/"+statusData)
 }

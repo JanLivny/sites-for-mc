@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
-from creator.models import site, block_type, block
+from creator.models import site, block_type, block, site_data_table
+from datetime import date
 import ast 
 import json
 # Create your views here.
-
-def creator_view(request, *args, **kwargs):
+def creator_view(request, my_context = {}, *args, **kwargs):
+	print(my_context)
 	if request.user.is_authenticated:
-		my_context ={}
 #get primary block to display in creator
 		primary_block_dict = {}
 		primary_blocks = block_type.objects.filter(primary=True)
@@ -19,37 +19,19 @@ def creator_view(request, *args, **kwargs):
 		if request.method == "POST":
 			post_data = request.POST
 			# print(post_data)
-#check for edit mode
-			edit = False
-			if 'statusData[]' in post_data:
-				statusData = post_data.getlist('statusData[]') 
-				edit_site_name= statusData[0]
-				edit = True
-				#create block data dict for site that is beeing edited
-				edit_data_dict = {}
-				edit_data_arr=block.objects.filter(owner_site=edit_site_name)
-				for edit_site_block in edit_data_arr:
-					edit_data_dict[edit_site_block.block_type] = ast.literal_eval(edit_site_block.content)
-				print(edit_data_dict)
-				return HttpResponse(str(json.dumps(edit_data_dict)))
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
-				parent_type = post_data['parentText'].replace(" ","-").lower()
-				parent_fields = block_type.objects.get(type_name=parent_type).fields.split()
-				field_counter=0
-				field_dict={}
-				
-				for field in parent_fields:
-					field_dict["field_"+str(field_counter)] = field
-					field_counter +=1
-				return HttpResponse(json.dumps(field_dict))
+				parent_type = post_data['parentText']
+				parent_fields = block_type.objects.get(type_name=parent_type).fields
+				return HttpResponse(parent_fields)
 #if new site is to be created
 			elif 'innerlist[]' in post_data:
 				current_user = request.user
 				elem_arr = post_data.getlist('innerlist[]')
 				content_arr = ast.literal_eval(post_data.get('inputValues'))
 				#get site name				
-				name = elem_arr.pop(0).strip().replace(" ","-").lower()
+				real_name = elem_arr.pop(0)
+				name = real_name.strip().replace(" ","-").lower()
 				if site.objects.filter(name=name).exists():
 					return HttpResponse('0')
 				elif name == "":
@@ -76,9 +58,14 @@ def creator_view(request, *args, **kwargs):
 
 					newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
 					newsite.save()
+				#make annex model
+					today  = date.today()
+					adress = "http://127.0.0.1:8000/creator/" + name
+					site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
 					return HttpResponse(["2 ",name])
 
 #set context
+		print(my_context)
 		return render(request,'creator.html',my_context)
 	else:
 		return redirect('http://127.0.0.1:8000/')
@@ -101,3 +88,11 @@ def page_view(request,site_name):
 		"content": content
 	}
 	return render(request,'user_page.html',my_context)
+
+
+def editor_view(request, site_name):
+	values=block.objects.filter(owner_site=site_name)
+	value_dict={}
+	for value_block in values:
+		value_dict[value_block.block_type]=ast.literal_eval(value_block.content)
+	return(creator_view(request,{"value_dict":json.dumps(value_dict)}))
