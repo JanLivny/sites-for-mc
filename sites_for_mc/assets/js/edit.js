@@ -1,7 +1,20 @@
 import * as utils from "./utils.js"
 // import * as quickEdit from "./quick-edit.js" 
 // import { collectElems } from "./newsite.js"
-export var inputValues= JSON.parse($("#value-dict-span").text())
+
+//prep all values for editor
+if(window.location.href.includes("editor") ){
+    var edit = true
+    var tempInputValues= JSON.parse($("#value-dict-span").text())
+    $(".page-header").text("Editor")
+    $(".site-create-button").text("Save changes")
+}
+else{
+    var edit = false
+    var tempInputValues= {}
+} 
+export var inputValues = tempInputValues
+
 
 export function getFields() {
     var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
@@ -23,7 +36,9 @@ export function getFields() {
 
             for(let i = 0; i < field_slots.length; i++){
                   $(field_slots[i]).text(fields[i])
-                  $(field_inputs[i]).val(inputValues[parentText][fields[i]])  
+                  if (edit) {
+                     $(field_inputs[i]).val(inputValues[parentText][fields[i]])  
+                  }
                 }
 
             $(".editor-element-info").text(" " + parentText +" ")

@@ -4,8 +4,10 @@ from datetime import date
 import ast 
 import json
 # Create your views here.
-def creator_view(request, my_context = {}, *args, **kwargs):
-	print(my_context)
+def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
+	my_context = {}
+	my_context["value_dict"]=value_dict
+	my_context["name"]=name
 	if request.user.is_authenticated:
 #get primary block to display in creator
 		primary_block_dict = {}
@@ -26,18 +28,28 @@ def creator_view(request, my_context = {}, *args, **kwargs):
 				return HttpResponse(parent_fields)
 #if new site is to be created
 			elif 'innerlist[]' in post_data:
+				create = True
+				edit = False
 				current_user = request.user
 				elem_arr = post_data.getlist('innerlist[]')
 				content_arr = ast.literal_eval(post_data.get('inputValues'))
 				#get site name				
 				real_name = elem_arr.pop(0)
 				name = real_name.strip().replace(" ","-").lower()
+				#if name duped
 				if site.objects.filter(name=name).exists():
-					return HttpResponse('0')
+					#if name is already in use by user edit protocol
+					if site.objects.get(name=name).owner == str(current_user):
+						edit = True
+					else:
+						create = False
+						return HttpResponse('0')
+				#if empty name
 				elif name == "":
-					return HttpResponse("1")
-				#make elments into elem string
-				else:
+					create = False
+					return HttpResponse('1')
+				#if site has to be created
+				if create:
 					elem_string = " "
 					for elem in elem_arr:
 						#create elem string
@@ -52,20 +64,33 @@ def creator_view(request, my_context = {}, *args, **kwargs):
 								content_dict[field] = content_arr[elem][field]
 							except:
 								content_dict[field] = ""
-								
+						
 						content_dict=str(content_dict)
-						block(content=content_dict, owner_site=name, block_type=elem).save()
-
-					newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
-					newsite.save()
+						#try to edit block if error create block
+						if edit:
+							edit_block=block.objects.get(owner_site = name, block_type=elem)
+							edit_block.content = content_dict
+							edit_block.save()
+						else:
+								block(content=content_dict, owner_site=name, block_type=elem).save()
+					#try to edit site if error create site
+					if edit:
+						edit_site = site.objects.get(name = name)
+						edit_site.elements = elem_string
+						edit_site.save()
+					else:
+						newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
+						newsite.save()
 				#make annex model
 					today  = date.today()
 					adress = "http://127.0.0.1:8000/creator/" + name
 					site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
-					return HttpResponse(["2 ",name])
+					print(edit)
+					if edit:
+						return HttpResponse(['3 ',name])
+					else:
+						return HttpResponse(["2 ",name])
 
-#set context
-		print(my_context)
 		return render(request,'creator.html',my_context)
 	else:
 		return redirect('http://127.0.0.1:8000/')
@@ -94,5 +119,5 @@ def editor_view(request, site_name):
 	values=block.objects.filter(owner_site=site_name)
 	value_dict={}
 	for value_block in values:
-		value_dict[value_block.block_type]=ast.literal_eval(value_block.content)
-	return(creator_view(request,{"value_dict":json.dumps(value_dict)}))
+		value_dict[value_block.block_type]=ast.literal_eval(value_block.content)		
+	return(creator_view(request,json.dumps(value_dict),site_name))

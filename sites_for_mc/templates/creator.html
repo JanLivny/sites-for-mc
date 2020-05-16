@@ -2,7 +2,7 @@
 
 {% block content %}
 <header class="creator-header">
-<h1>Creator</h1>
+<h1 class="page-header">Creator</h1>
 <nav class="horizontal-layout  ">
   <a class='nav-element' href = '#'> My site </a>
   <a class='nav-element' href = 'http://127.0.0.1:8000/dashboard'> Dashboard</a>
@@ -21,7 +21,7 @@
   <div class="cell auto pageDiv">
 
     <h2>Page</h2>
-    <input class = "creator-input site-name-input" type="text" placeholder="name">
+    <input class = "creator-input site-name-input" type="text" placeholder="name" value = {{name}}>
     <ul class= 'sortable creator-section'>
       <li class='editor-li'>
         {{primary_block.block_0}}

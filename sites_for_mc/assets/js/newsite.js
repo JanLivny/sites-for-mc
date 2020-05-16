@@ -1,5 +1,5 @@
 import * as utils from "./utils.js"
-var inputValues = {}
+var inputValues = {}            
 var site_url = ""
 
 export function collectElems(lisClass) {
@@ -24,7 +24,7 @@ export function new_site(inputValues) {
         data: {innerlist, inputValues},
         success: (data) =>  {
             data = data.split(" ")
-
+            console.log(data)
             if (data[0]=="0"){
                 utils.popup(()=>{},()=>{},false,"Site name already in use please try again.")
             }
@@ -35,6 +35,9 @@ export function new_site(inputValues) {
                 site_url = "http://127.0.0.1:8000/creator/"+data[1]
                 utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,
                 "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link' onclick='redirect()'>"+site_url+"</a>")
+            }
+            else if(data[0]=="3"){
+                utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,"Changes to " + data[1] + " have been succesfully saved")
             }
             else{
                 utils.popup(()=>{},()=>{},false,"There has been an error creating your site, please try again.")
