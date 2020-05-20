@@ -1,23 +1,32 @@
   {% extends 'base.html' %} 
 
 {% block content %}
-<div class = "block1">
-<p>{{content.block1}}.</p>
-</div>
-
-<div class = "block2">
-<p>{{content.block2}}.</p>
-</div>
-
-<div class = "block3">
-<p>{{content.block3}}.</p>
-</div>
-
-<div class = "block4">
-<p>{{content.block4}}.</p>
-</div>
-
-<div class = "block5">
-<p>{{content.block5}}.</p>
+<div class="user-body">
+<body id="top">
+  <div class="wrapper">
+    <header>
+      <h1 class="page-header">{{content.name}}</h1>
+      <nav class="horizontal-layout  ">
+        <a href="#about" class="nav-element">{{content.block0.0}}</a>
+        <a href="#internship" class="nav-element">{{content.block1.0}}</a>
+        <a href="#heirarchy" class="nav-element">{{content.block2.0}}</a>
+        <a href="#gallery" class="nav-element">{{content.block3.0}}</a>
+        <a href="#gallery" class="nav-element">{{content.block4.0}}</a>
+      </nav>
+    </header>
+    
+    <h4 class="user-section-header ">{{content.block0.0}}</h4>
+    <p class="user-block-text">{{content.block0.1}}.</p>
+    <h4 class="user-section-header ">{{content.block1.0}}</h4>   
+    <p class="user-block-text">{{content.block1.1}}.</p>
+    <h4 class="user-section-header ">{{content.block2.0}}</h4>
+    <p class="user-block-text">{{content.block2.1}}.</p>
+    <h4 class="user-section-header ">{{content.block3.0}}</h4>
+    <p class="user-block-text">{{content.block3.1}}.</p>
+    <h4 class="user-section-header ">{{content.block4.0}}</h4>
+    <p class="user-block-text">{{content.block4.1}}.</p>
 </div>
 {% endblock content%}
+
+ 
+     

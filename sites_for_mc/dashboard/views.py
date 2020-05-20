@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404, HttpResponse
-from creator.models import site, block_type, block
+from creator.models import site, block_type, block, site_data_table
+import json
 # Create your views here.
 
 def dash_view(request, *args, **kwargs):
@@ -25,9 +26,21 @@ def dash_view(request, *args, **kwargs):
 		if request.method == "POST":
 			post_data = request.POST
 			if 'targetText' in post_data:
+				#get elems
 				site_name = post_data.getlist('targetText')[0]
 				target_elements = site.objects.get(name=site_name).elements
-				return HttpResponse(target_elements)
+				#get extra info 
+				bonus_site_data = site_data_table.objects.get(owner_site=site_name)
+				data_arr= [
+					bonus_site_data.real_name,
+					bonus_site_data.adress,
+					bonus_site_data.date_created,
+					bonus_site_data.owner,
+					bonus_site_data.views,
+					target_elements
+				]
+				return HttpResponse(str(data_arr))
+
 			elif 'updatedElems[]' in post_data:
 				elem_arr = post_data.getlist('updatedElems[]')
 				name= elem_arr.pop()
@@ -43,7 +56,7 @@ def dash_view(request, *args, **kwargs):
 				del_site_name = post_data.getlist('delName')[0]
 				site.objects.get(name=del_site_name).delete()
 				block.objects.filter(owner_site=del_site_name).delete()
-			
+				site_data_table.objects.filter(owner_site=del_site_name).delete()
 
 		return render(request,'dashboard.html',my_context)
 	else:

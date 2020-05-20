@@ -1,5 +1,5 @@
 body {
-	background: lightgray;
+	background: white ;
 }
 
 header {
@@ -15,7 +15,7 @@ header {
 h1 {
 	display: inline;
 	margin: 0;
-	color:lightgray;
+	color:white;
 	font-size:60px;
 }
 
@@ -34,13 +34,13 @@ h2 {
 
 .nav-element{
 	padding: 0 10px;
-	color: lightgray;
+	color: white;
 	font-size:20px;
 }
 
 .nav-element:hover {
 	text-decoration: underline;
-	color:lightgray;
+	color:white;
 }
 
 
@@ -67,7 +67,7 @@ h2 {
 }
 
 button:hover {
-	color:lightgray;
+	color:white;
     background: black;
 	transition: all 0.4s ease 0s;
 	border-width:1px;

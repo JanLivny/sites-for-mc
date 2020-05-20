@@ -77,6 +77,12 @@ height: 145px;
 }
 
 .info-div{
-	text-align:left;
 	margin-top:15px;
+}
+
+.info-div p {
+	display: flex;
+	justify-content: space-between;
+	width:100%;
+	// white-space: nowrap;
 }

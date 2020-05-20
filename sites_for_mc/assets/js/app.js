@@ -46,4 +46,5 @@ $(".full-editor-link").on("click", quickEdit.fullEditor)
 //delete site
 $(".dash-delete").on("click", quickEdit.deleteSite)
 
-
+//prompt max sites reached
+$(".dash-create-site-button").on("click", quickEdit.checkSiteAmount)

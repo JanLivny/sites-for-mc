@@ -23,6 +23,6 @@ class site_data_table(models.Model):
 	owner_site = models.CharField(max_length=30)
 	real_name = models.CharField(max_length=30)
 	adress = models.URLField(max_length=200)
-	date_created = models.DateField()
+	date_created = models.CharField(max_length=20)
 	owner = models.TextField()
 	views = models.IntegerField()

@@ -49,11 +49,11 @@
 			<div class="cell auto dash-columb info-columb">
 				<h4>Info</h4>
 				<div class="info-div">
-					<p>Name:</p>
-					<p>Adress:</p>
-					<p>Date created:</p>
-					<p>Owner:</p>
-					<p>Number of Visits:</p>
+					<p><span>Name:</span><span class="site-data-span"></span></p>
+					<p><span>Adress:</span><span class="site-data-span"></span></p>
+					<p><span>Date created:</span><span class="site-data-span"></span></p>
+					<p><span>Owner:</span><span class="site-data-span"></span></p>
+					<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
 				</div>
 			</div>
 		</div>
@@ -78,21 +78,21 @@
 				  </ul>
 				<div class="dash-edit-buttons">
 					<button class="small-button dash-edit-confirm">CONFIRM</button>
-					<a>Full Editor</a>
+					<a class="full-editor-link" name={{user_sites.site_1}}>Full Editor</a>
 				</div>
 			</div>
 			<div class="cell auto dash-columb">
 				<h4>Manage</h4>
 				<div class="all-switches">
-					<h4>get data</h4>
+					<h5>get data</h5>
 					<div class="public-radio-div radio-div">
-						<label class="radio-container"><span>Public</span><input name="public-selector"type="radio"></label>			
-						<label class="radio-container"><input name="public-selector"type="radio"><span>Public</span></label>
+						<label class="radio-container"><span>On</span><input name="public-selector"type="radio"></label>			
+						<label class="radio-container"><input name="public-selector"type="radio"><span>Off</span></label>
 					</div>
-					<h4>get data</h4>
+					<h5>get data</h5>
 					<div class="radio-div">
-						<label class="radio-container"><span>[option 1]</span><input name="public-selector"type="radio"></label>			
-						<label class="radio-container"><input disabled name="public-selector"type="radio"><span>[option 2]</span></label>
+						<label class="radio-container"><span>On</span><input disabled name="public-selector"type="radio"></label>			
+						<label class="radio-container"><input disabled name="public-selector"type="radio"><span>Off</span></label>
 					</div>
 				</div>
 				<button class="small-button dash-delete" name={{user_sites.site_1}}>DELETE</button>
@@ -100,11 +100,11 @@
 			<div class="cell auto dash-columb info-columb">
 				<h4>Info</h4>
 				<div class="info-div">
-					<p>Name:</p>
-					<p>Adress:</p>
-					<p>Date created:</p>
-					<p>Owner:</p>
-					<p>Number of Visits:</p>
+					<p><span>Name:</span><span class="site-data-span"></span></p>
+					<p><span>Adress:</span><span class="site-data-span"></span></p>
+					<p><span>Date created:</span><span class="site-data-span"></span></p>
+					<p><span>Owner:</span><span class="site-data-span"></span></p>
+					<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
 				</div>
 			</div>
 		</div>
@@ -115,26 +115,149 @@
 	<li class="accordion-item " data-accordion-item>
 		<a href="#" class="accordion-title">{{user_sites.site_2}}</a>
 		<div class="accordion-content" data-tab-content>
-		This is empty drawer, create more sites too fill it in.
+			<div class="grid-x">
+				<div class="cell auto dash-columb">
+					<h4>Quick Edit</h4>
+					<ul class='sortable dash-editor'>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+					  </ul>
+					<div class="dash-edit-buttons">
+						<button class="small-button dash-edit-confirm">CONFIRM</button>
+						<a class="full-editor-link" name={{user_sites.site_2}}>Full Editor</a>
+					</div>
+				</div>
+				<div class="cell auto dash-columb">
+					<h4>Manage</h4>
+					<div class="all-switches">
+						<h5>get data</h5>
+						<div class="public-radio-div radio-div">
+							<label class="radio-container"><span>On</span><input name="public-selector"type="radio"></label>			
+							<label class="radio-container"><input name="public-selector"type="radio"><span>Off</span></label>
+						</div>
+						<h5>get data</h5>
+						<div class="radio-div">
+							<label class="radio-container"><span>On</span><input disabled name="public-selector"type="radio"></label>			
+							<label class="radio-container"><input disabled name="public-selector"type="radio"><span>Off</span></label>
+						</div>
+					</div>
+					<button class="small-button dash-delete" name={{user_sites.site_2}}>DELETE</button>
+				</div>
+				<div class="cell auto dash-columb info-columb">
+					<h4>Info</h4>
+					<div class="info-div">
+						<p><span>Name:</span><span class="site-data-span"></span></p>
+						<p><span>Adress:</span><span class="site-data-span"></span></p>
+						<p><span>Date created:</span><span class="site-data-span"></span></p>
+						<p><span>Owner:</span><span class="site-data-span"></span></p>
+						<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</li>
 
 	<li class="accordion-item " data-accordion-item>
 		<a href="#" class="accordion-title">{{user_sites.site_3}}</a>
 		<div class="accordion-content" data-tab-content>
-			This is empty drawer, create more sites too fill it in.
+			<div class="grid-x">
+				<div class="cell auto dash-columb">
+					<h4>Quick Edit</h4>
+					<ul class='sortable dash-editor'>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+					  </ul>
+					<div class="dash-edit-buttons">
+						<button class="small-button dash-edit-confirm">CONFIRM</button>
+						<a class="full-editor-link" name={{user_sites.site_3}}>Full Editor</a>
+					</div>
+				</div>
+				<div class="cell auto dash-columb">
+					<h4>Manage</h4>
+					<div class="all-switches">
+						<h5>get data</h5>
+						<div class="public-radio-div radio-div">
+							<label class="radio-container"><span>On</span><input name="public-selector"type="radio"></label>			
+							<label class="radio-container"><input name="public-selector"type="radio"><span>Off</span></label>
+						</div>
+						<h5>get data</h5>
+						<div class="radio-div">
+							<label class="radio-container"><span>On</span><input disabled name="public-selector"type="radio"></label>			
+							<label class="radio-container"><input disabled name="public-selector"type="radio"><span>Off</span></label>
+						</div>
+					</div>
+					<button class="small-button dash-delete" name={{user_sites.site_3}}>DELETE</button>
+				</div>
+				<div class="cell auto dash-columb info-columb">
+					<h4>Info</h4>
+					<div class="info-div">
+						<p><span>Name:</span><span class="site-data-span"></span></p>
+						<p><span>Adress:</span><span class="site-data-span"></span></p>
+						<p><span>Date created:</span><span class="site-data-span"></span></p>
+						<p><span>Owner:</span><span class="site-data-span"></span></p>
+						<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</li>
 
 	<li class="accordion-item " data-accordion-item>
 		<a href="#" class="accordion-title">{{user_sites.site_4}}</a>
 		<div class="accordion-content" data-tab-content>
-			This is empty drawer, create more sites too fill it in.
+			<div class="grid-x">
+				<div class="cell auto dash-columb">
+					<h4>Quick Edit</h4>
+					<ul class='sortable dash-editor'>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+						<li class="quick-edit-elem-li editor-li"></li>
+					  </ul>
+					<div class="dash-edit-buttons">
+						<button class="small-button dash-edit-confirm">CONFIRM</button>
+						<a class="full-editor-link" name={{user_sites.site_4}}>Full Editor</a>
+					</div>
+				</div>
+				<div class="cell auto dash-columb">
+					<h4>Manage</h4>
+					<div class="all-switches">
+						<h5>get data</h5>
+						<div class="public-radio-div radio-div">
+							<label class="radio-container"><span>On</span><input name="public-selector"type="radio"></label>			
+							<label class="radio-container"><input name="public-selector"type="radio"><span>Off</span></label>
+						</div>
+						<h5>get data</h5>
+						<div class="radio-div">
+							<label class="radio-container"><span>On</span><input disabled name="public-selector"type="radio"></label>			
+							<label class="radio-container"><input disabled name="public-selector"type="radio"><span>Off</span></label>
+						</div>
+					</div>
+					<button class="small-button dash-delete" name={{user_sites.site_4}}>DELETE</button>
+				</div>
+				<div class="cell auto dash-columb info-columb">
+					<h4>Info</h4>
+					<div class="info-div">
+						<p><span>Name:</span><span class="site-data-span"></span></p>
+						<p><span>Adress:</span><span class="site-data-span"></span></p>
+						<p><span>Date created:</span><span class="site-data-span"></span></p>
+						<p><span>Owner:</span><span class="site-data-span"></span></p>
+						<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</li>
 
 </ul>
 
 <span>{{data_dict}}</span>
-<a href = 'http://127.0.0.1:8000/creator/'><button  class = 'big-button'>create new site</button></a>
+<button  class = 'big-button dash-create-site-button'>create new site</button>
 {% endblock content %}

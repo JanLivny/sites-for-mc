@@ -14,17 +14,18 @@ export function queryElems() {
             url: "http://127.0.0.1:8000/dashboard/",
             data: {targetText},
             success: (data) =>  {
-                var siteElems = data.trim().split(" ")
+                data = eval(data)
+                var siteElems = data.pop().trim().split(" ")
                 var editElems = $(target).siblings().find(".quick-edit-elem-li")
+                var site_data_fields = $(target).siblings().find(".site-data-span")
                 for(let i = 0; i <  5; i++) {
                     $(editElems[i]).text(siteElems[i])
-                }
-            }
+                    $(site_data_fields[i]).text(data[i])
+            }}
         })}
     else {
         $(event.target).siblings(".accordion-content").text("This is empty drawer, create more sites too fill it in.")
     }
-    return target
 }
 
 export function updateElems() {
@@ -69,4 +70,19 @@ export function fullEditor() {
   
     
     utils.redirect("editor/"+statusData)
+}
+
+export function checkSiteAmount() {
+    var numOfSites = 0
+    var titles = $('.accordion-title')
+    
+    for(let i = 0; i < titles.length; i++){
+        if ($(titles[i]).text() != "Empty drawer") { numOfSites++}
+    }
+     if (numOfSites == 5) {
+        utils.popup(()=>{},()=>{},false,"You may not create additional sites</br> as you have reached the limit of 5.")
+    }
+    else{
+        utils.redirect("creator")
+    }   
 }

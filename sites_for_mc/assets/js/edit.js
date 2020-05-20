@@ -8,6 +8,7 @@ if(window.location.href.includes("editor") ){
     var tempInputValues= JSON.parse($("#value-dict-span").text())
     $(".page-header").text("Editor")
     $(".site-create-button").text("Save changes")
+    $(".site-name-input").attr('readonly', true);
 }
 else{
     var edit = false

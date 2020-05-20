@@ -81,11 +81,10 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 					else:
 						newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
 						newsite.save()
+						site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
 				#make annex model
 					today  = date.today()
-					adress = "http://127.0.0.1:8000/creator/" + name
-					site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
-					print(edit)
+					adress = "http://127.0.0.1:8000/creator/" + name					
 					if edit:
 						return HttpResponse(['3 ',name])
 					else:
@@ -98,16 +97,24 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 
 def page_view(request,site_name):
 	site_object = get_object_or_404(site,name=site_name)
+
+	site_data = site_data_table.objects.get(owner_site=site_name)
+	site_real_name = site_data.real_name
+	site_data.views += 1
+	site_data.save()
+		
 	elem_arr = site_object.elements.split()
-	content = {}
-	block_num = 1
+	
+	content = {"name":site_real_name}
+	block_num = 0
 	for element in elem_arr:
 		block_content = ast.literal_eval(block.objects.get(owner_site=site_name, block_type=element).content)
 		template = ast.literal_eval(block_type.objects.get(type_name=element).template)	
 		elem_text = ""
+		elem_name = elem_arr[block_num].replace("-"," ").capitalize()
 		for key in block_content.keys():
 			elem_text+= template["pre_"+key] + block_content[key]
-		content["block"+str(block_num)]=elem_text
+		content["block"+str(block_num)]=[elem_name,elem_text]
 		block_num += 1 
 	my_context ={
 		"content": content
