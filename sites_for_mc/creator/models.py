@@ -26,3 +26,7 @@ class site_data_table(models.Model):
 	date_created = models.CharField(max_length=20)
 	owner = models.TextField()
 	views = models.IntegerField()
+
+class image(models.Model):
+	tag = models.CharField(max_length=30)
+	image = models.ImageField(max_length=30)

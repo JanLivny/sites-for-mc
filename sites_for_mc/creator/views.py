@@ -20,7 +20,10 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 #if recieved ajax POST request	
 		if request.method == "POST":
 			post_data = request.POST
-			# print(post_data)
+			post_files = request.FILES
+			print(post_files)
+			print("####################")
+			print(post_data)
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
 				parent_type = post_data['parentText']
@@ -81,10 +84,11 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 					else:
 						newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
 						newsite.save()
+						today  = date.today()
+						adress = "http://127.0.0.1:8000/creator/" + name
 						site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
 				#make annex model
-					today  = date.today()
-					adress = "http://127.0.0.1:8000/creator/" + name					
+										
 					if edit:
 						return HttpResponse(['3 ',name])
 					else:

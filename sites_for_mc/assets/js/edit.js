@@ -16,6 +16,9 @@ else{
 } 
 export var inputValues = tempInputValues
 
+$(".creator-input").change(()=>{
+  $(event.target).siblings("label").text($(event.target).val().split("\\").pop())
+})
 
 export function getFields() {
     var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
@@ -30,13 +33,13 @@ export function getFields() {
         url: "http://127.0.0.1:8000/creator/",
         data: {parentText},
         success: (data) => {
-            
-            var fields = data.split(" ")
+            data = JSON.parse(data)
+            var fields = Object.keys(data)
             var field_slots = $(".field")
             var field_inputs =  $(".edit-input")
-
             for(let i = 0; i < field_slots.length; i++){
                   $(field_slots[i]).text(fields[i])
+                  utils.inputChanger( $(field_inputs[i]),data[fields[i]])
                   if (edit) {
                      $(field_inputs[i]).val(inputValues[parentText][fields[i]])  
                   }

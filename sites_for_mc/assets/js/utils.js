@@ -38,3 +38,16 @@ export function popup(confirm,cancel,options,modalText) {
         }
             
     }
+
+export function inputChanger(inputElem,type) {
+    $(inputElem).attr("type",type)
+    $(inputElem).show()
+    $(inputElem).siblings("label").hide()
+    if (type == "text") {
+    }
+    else if (type == "file"){
+        $(inputElem).siblings("label").show()
+        $(inputElem).hide()
+    }
+
+}

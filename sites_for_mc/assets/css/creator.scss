@@ -52,7 +52,7 @@
 .editorDiv{
 	display: flex;
 	justify-content:space-between;	
-	width:220px;
+	width:100%;
 	margin:auto;
 	margin-bottom: 10px;		
 }
@@ -74,4 +74,19 @@
 	text-align: center;
 	margin-top: 130px;
 	font-size:20px;
+}
+
+//selct filez
+.edit-input + label {
+	border:1px solid black;
+	height: 44px;
+	line-height: 44px;
+	width:200px;
+	text-align: center;
+}
+
+.edit-input + label:hover {
+	color:white;
+	background: black;
+	cursor: pointer;
 }
