@@ -56,9 +56,33 @@ export function confirmEdits() {
     var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
     var currentInputs = {}
     var activeFields = $(".field")
+    var sendFiles = false
     $(".edit-input").map((pos,input) => {
+        if($(input).attr("type") == "text"){
        currentInputs[$(activeFields[pos]).text()] = $(input).val() 
+        }
+        else if($(input).attr("type") && $(input).val() != "") {
+            console.log($(input).val())
+            var formData = new FormData();
+            var files = $(input)[0].files[0] 
+            formData.append('image',files);   
+            sendFiles = true
+            if(sendFiles){
+                $.ajax({
+                    headers: {'X-CSRFToken':csrf_token},
+                    type: "POST",
+                    url: "http://127.0.0.1:8000/creator/",
+                    data: formData,
+                    contentType:false,
+                    processData: false,
+                    succes:()=>{console.log("succes")},              
+                    failure: ()=>{console.log("failure ")}
+                })
+            }
+        }
     })
+    
+
    inputValues[$(".editor-element-info").text().trim().replace(" ", "-").toLowerCase()] = currentInputs
    $(".confirm-edit-link").text("Confirmed")
    console.log(inputValues)

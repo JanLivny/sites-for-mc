@@ -3,7 +3,7 @@
 {% block content %}
 <div class="user-body">
 <body id="top">
-  <div class="wrapper">
+  <div class="user-wrapper">
     <header>
       <h1 class="page-header">{{content.name}}</h1>
       <nav class="horizontal-layout  ">
@@ -15,18 +15,23 @@
       </nav>
     </header>
     
+   
     <h4 class="user-section-header ">{{content.block0.0}}</h4>
-    <p class="user-block-text">{{content.block0.1}}.</p>
+      <p class="user-block-text">{{content.block0.1}}.</p>
+      <img class="user-image"src="{{image_urls}}">
     <h4 class="user-section-header ">{{content.block1.0}}</h4>   
-    <p class="user-block-text">{{content.block1.1}}.</p>
+      <p class="user-block-text">{{content.block1.1}}.</p>
     <h4 class="user-section-header ">{{content.block2.0}}</h4>
-    <p class="user-block-text">{{content.block2.1}}.</p>
+     <p class="user-block-text">{{content.block2.1}}.</p>
     <h4 class="user-section-header ">{{content.block3.0}}</h4>
-    <p class="user-block-text">{{content.block3.1}}.</p>
+      <p class="user-block-text">{{content.block3.1}}.</p>
     <h4 class="user-section-header ">{{content.block4.0}}</h4>
-    <p class="user-block-text">{{content.block4.1}}.</p>
+      <p class="user-block-text">{{content.block4.1}}.</p>
+   
 </div>
 {% endblock content%}
+
+
 
  
      

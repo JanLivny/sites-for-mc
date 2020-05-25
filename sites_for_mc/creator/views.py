@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
-from creator.models import site, block_type, block, site_data_table
+from creator.models import site, block_type, block, site_data_table, image
 from datetime import date
 import ast 
 import json
@@ -19,11 +19,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 		my_context["primary_block"]=primary_block_dict
 #if recieved ajax POST request	
 		if request.method == "POST":
-			post_data = request.POST
-			post_files = request.FILES
-			print(post_files)
-			print("####################")
-			print(post_data)
+			post_data = request.POST	
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
 				parent_type = post_data['parentText']
@@ -93,6 +89,11 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						return HttpResponse(['3 ',name])
 					else:
 						return HttpResponse(["2 ",name])
+			#handle Imagez
+			else:
+				file = request.FILES['image']
+				image(tag="image_3", image=file).save()				
+				print(file)
 
 		return render(request,'creator.html',my_context)
 	else:
@@ -108,9 +109,11 @@ def page_view(request,site_name):
 	site_data.save()
 		
 	elem_arr = site_object.elements.split()
-	
+	images = image.objects.filter(tag="image_3")
+	image_urls = images[0].image.url
 	content = {"name":site_real_name}
 	block_num = 0
+
 	for element in elem_arr:
 		block_content = ast.literal_eval(block.objects.get(owner_site=site_name, block_type=element).content)
 		template = ast.literal_eval(block_type.objects.get(type_name=element).template)	
@@ -121,7 +124,8 @@ def page_view(request,site_name):
 		content["block"+str(block_num)]=[elem_name,elem_text]
 		block_num += 1 
 	my_context ={
-		"content": content
+		"content": content,
+		"image_urls": image_urls
 	}
 	return render(request,'user_page.html',my_context)
 
