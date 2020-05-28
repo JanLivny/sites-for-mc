@@ -11,7 +11,7 @@ export function collectElems(lisClass) {
     return innerlist
 }
 
-export function new_site(inputValues) { 
+export function new_site(inputValues, files) { 
     var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
     inputValues = JSON.stringify(inputValues)
     var name = $('.site-name-input').val()
@@ -32,9 +32,29 @@ export function new_site(inputValues) {
                 utils.popup(()=>{},()=>{},false,"You have not entered a site name, please enter one and try again.")
             }
             else if(data[0]=="2"){
-                site_url = "http://127.0.0.1:8000/creator/"+data[1]
-                utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,
-                "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link' onclick='redirect()'>"+site_url+"</a>")
+                var sendFormData = new FormData()
+                for (let entry of files.entries()) {
+                    console.log(name)
+                    var file = entry[1]
+                    var tag =$.parseJSON(entry[0])
+                    tag.unshift(name)
+                    tag = JSON.stringify(tag)
+                    sendFormData.append(tag,file)
+                }
+                $.ajax({    
+                    headers: {'X-CSRFToken':csrf_token},
+                    type: "POST",
+                    url: "http://127.0.0.1:8000/creator/",
+                    data: sendFormData,
+                    contentType:false,
+                    processData: false,
+                    success: (data) =>  {
+                        site_url = "http://127.0.0.1:8000/creator/"+data[1]
+                        utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,
+                        "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link' onclick='redirect()'>"+site_url+"</a>")
+                    },
+                    failure: ()=>utils.popup(()=>{},()=>{},false,"There has been an error creating your site, please try again.")
+                })
             }
             else if(data[0]=="3"){
                 utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,"Changes to " + data[1] + " have been succesfully saved")

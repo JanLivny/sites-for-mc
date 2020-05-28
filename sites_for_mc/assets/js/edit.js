@@ -14,7 +14,10 @@ else{
     var edit = false
     var tempInputValues= {}
 } 
+
 export var inputValues = tempInputValues
+
+export var formData = new FormData();
 
 $(".creator-input").change(()=>{
   $(event.target).siblings("label").text($(event.target).val().split("\\").pop())
@@ -57,28 +60,20 @@ export function confirmEdits() {
     var currentInputs = {}
     var activeFields = $(".field")
     var sendFiles = false
+    var activeElem = utils.formatDB($(".editor-element-info").text())
     $(".edit-input").map((pos,input) => {
-        if($(input).attr("type") == "text"){
-       currentInputs[$(activeFields[pos]).text()] = $(input).val() 
-        }
-        else if($(input).attr("type") && $(input).val() != "") {
-            console.log($(input).val())
-            var formData = new FormData();
-            var files = $(input)[0].files[0] 
-            formData.append('image',files);   
-            sendFiles = true
-            if(sendFiles){
-                $.ajax({
-                    headers: {'X-CSRFToken':csrf_token},
-                    type: "POST",
-                    url: "http://127.0.0.1:8000/creator/",
-                    data: formData,
-                    contentType:false,
-                    processData: false,
-                    succes:()=>{console.log("succes")},              
-                    failure: ()=>{console.log("failure ")}
-                })
+       
+        if($(input).attr("type")=="file" && $(input).val() != "") {
+                console.log($(input).val())
+                var files = $(input)[0].files[0]
+                var name =  $(input).siblings("label").text().split("\\").pop().trim() 
+                var image_tag =JSON.stringify([activeElem ,$(activeFields[pos]).text(),name])
+                console.log(image_tag)
+                formData.append(image_tag,files);   
+                currentInputs[$(activeFields[pos]).text()] = image_tag
             }
+        else{
+            currentInputs[$(activeFields[pos]).text()] = $(input).val() 
         }
     })
     

@@ -28,5 +28,8 @@ class site_data_table(models.Model):
 	views = models.IntegerField()
 
 class image(models.Model):
-	tag = models.CharField(max_length=30)
-	image = models.ImageField(max_length=30)
+	owner_site = models.CharField(max_length=30)
+	element = models.CharField(max_length=30)
+	field = models.CharField(max_length=30)
+	name =  models.CharField(max_length=100)
+	image = models.ImageField()

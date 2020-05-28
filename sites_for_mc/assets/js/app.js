@@ -28,7 +28,7 @@ $( ".confirm-edit-link" ).on( "click",()=>{edit.confirmEdits()})
 $(".edit-input").on( "click",() => $(".confirm-edit-link").text("Confirm"));
 
 //new site
-$( ".site-create-button" ).on( "click",()=> {newsite.new_site(edit.inputValues)})
+$( ".site-create-button" ).on( "click",()=> {newsite.new_site(edit.inputValues, edit.formData)})
 
 
 //DASHBOARD

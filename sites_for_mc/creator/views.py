@@ -20,6 +20,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 #if recieved ajax POST request	
 		if request.method == "POST":
 			post_data = request.POST	
+			name = ''
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
 				parent_type = post_data['parentText']
@@ -57,7 +58,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						elem_string += " " 
 						#add content
 						content_dict = {}
-						fields = block_type.objects.get(type_name=elem).fields.split()
+						fields = ast.literal_eval(block_type.objects.get(type_name=elem).fields).keys()
 						for field in fields:
 							try: 
 								content_dict[field] = content_arr[elem][field]
@@ -65,24 +66,25 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 								content_dict[field] = ""
 						
 						content_dict=str(content_dict)
+						print(content_dict)
 						#try to edit block if error create block
-						if edit:
-							edit_block=block.objects.get(owner_site = name, block_type=elem)
-							edit_block.content = content_dict
-							edit_block.save()
-						else:
-								block(content=content_dict, owner_site=name, block_type=elem).save()
-					#try to edit site if error create site
-					if edit:
-						edit_site = site.objects.get(name = name)
-						edit_site.elements = elem_string
-						edit_site.save()
-					else:
-						newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
-						newsite.save()
-						today  = date.today()
-						adress = "http://127.0.0.1:8000/creator/" + name
-						site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
+					# 	if edit:
+					# 		edit_block=block.objects.get(owner_site = name, block_type=elem)
+					# 		edit_block.content = content_dict
+					# 		edit_block.save()
+					# 	else:
+					# 			block(content=content_dict, owner_site=name, block_type=elem).save()
+					# #try to edit site if error create site
+					# if edit:
+					# 	edit_site = site.objects.get(name = name)
+					# 	edit_site.elements = elem_string
+					# 	edit_site.save()
+					# else:
+					# 	newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
+					# 	newsite.save()
+					# 	today  = date.today()
+					# 	adress = "http://127.0.0.1:8000/creator/" + name
+					# 	site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
 				#make annex model
 										
 					if edit:
@@ -90,10 +92,17 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 					else:
 						return HttpResponse(["2 ",name])
 			#handle Imagez
-			else:
-				file = request.FILES['image']
-				image(tag="image_3", image=file).save()				
-				print(file)
+			elif bool(request.FILES):
+				file_dict = request.FILES
+				print(file_dict)
+				image_keys = file_dict.keys()
+				print(image_keys)
+				print(name)
+				for key in image_keys:
+					#temp fix look into in the future maybe?
+					p_key = eval(key.replace("%22","'"))
+					print(p_key)
+					image(owner_site=p_key[0],element=p_key[1],field=p_key[2],name = p_key[3], image=file_dict[key]).save()
 
 		return render(request,'creator.html',my_context)
 	else:
@@ -118,7 +127,7 @@ def page_view(request,site_name):
 		block_content = ast.literal_eval(block.objects.get(owner_site=site_name, block_type=element).content)
 		template = ast.literal_eval(block_type.objects.get(type_name=element).template)	
 		elem_text = ""
-		elem_name = elem_arr[block_num].replace("-"," ").capitalize()
+		elem_name = elem_arr[block_num].replace("-"," ").capitalize() 
 		for key in block_content.keys():
 			elem_text+= template["pre_"+key] + block_content[key]
 		content["block"+str(block_num)]=[elem_name,elem_text]
