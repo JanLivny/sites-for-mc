@@ -32,6 +32,7 @@ export function new_site(inputValues, files) {
                 utils.popup(()=>{},()=>{},false,"You have not entered a site name, please enter one and try again.")
             }
             else if(data[0]=="2"){
+                
                 var sendFormData = new FormData()
                 for (let entry of files.entries()) {
                     console.log(name)
@@ -41,6 +42,7 @@ export function new_site(inputValues, files) {
                     tag = JSON.stringify(tag)
                     sendFormData.append(tag,file)
                 }
+
                 $.ajax({    
                     headers: {'X-CSRFToken':csrf_token},
                     type: "POST",

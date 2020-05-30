@@ -68,23 +68,23 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						content_dict=str(content_dict)
 						print(content_dict)
 						#try to edit block if error create block
-					# 	if edit:
-					# 		edit_block=block.objects.get(owner_site = name, block_type=elem)
-					# 		edit_block.content = content_dict
-					# 		edit_block.save()
-					# 	else:
-					# 			block(content=content_dict, owner_site=name, block_type=elem).save()
-					# #try to edit site if error create site
-					# if edit:
-					# 	edit_site = site.objects.get(name = name)
-					# 	edit_site.elements = elem_string
-					# 	edit_site.save()
-					# else:
-					# 	newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
-					# 	newsite.save()
-					# 	today  = date.today()
-					# 	adress = "http://127.0.0.1:8000/creator/" + name
-					# 	site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
+						if edit:
+							edit_block=block.objects.get(owner_site = name, block_type=elem)
+							edit_block.content = content_dict
+							edit_block.save()
+						else:
+								block(content=content_dict, owner_site=name, block_type=elem).save()
+					#if edit edit site
+					if edit:
+						edit_site = site.objects.get(name = name)
+						edit_site.elements = elem_string
+						edit_site.save()
+					else:
+						newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
+						newsite.save()
+						today  = date.today()
+						adress = "http://127.0.0.1:8000/creator/" + name
+						site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
 				#make annex model
 										
 					if edit:
@@ -118,23 +118,41 @@ def page_view(request,site_name):
 	site_data.save()
 		
 	elem_arr = site_object.elements.split()
-	images = image.objects.filter(tag="image_3")
-	image_urls = images[0].image.url
 	content = {"name":site_real_name}
 	block_num = 0
+	images = {}
 
 	for element in elem_arr:
 		block_content = ast.literal_eval(block.objects.get(owner_site=site_name, block_type=element).content)
-		template = ast.literal_eval(block_type.objects.get(type_name=element).template)	
+		block_type_data =block_type.objects.get(type_name=element)
+		template =  ast.literal_eval(block_type_data.template)
+		fields = ast.literal_eval(block_type_data.fields)
 		elem_text = ""
-		elem_name = elem_arr[block_num].replace("-"," ").capitalize() 
-		for key in block_content.keys():
-			elem_text+= template["pre_"+key] + block_content[key]
+		elem_name = element.replace("-"," ").capitalize() 
+		image_html = ""
+		for field_text in block_content.keys():
+			if fields[field_text] == "text":
+				elem_text+= template["pre_"+field_text] + block_content[field_text]
+			else:
+
+				image_set= image.objects.filter(
+					owner_site=site_name, 
+					element=element, 
+					field=field_text)
+				if image_set.exists():
+					image_url = image_set[0].image.url
+					image_html += ("<img src='"+image_url+"' class='user-image'>")
+				else:
+					print("ddwd")
+					#pass 
+
+		images["block"+str(block_num)] = image_html
 		content["block"+str(block_num)]=[elem_name,elem_text]
 		block_num += 1 
+
 	my_context ={
 		"content": content,
-		"image_urls": image_urls
+		"images": images
 	}
 	return render(request,'user_page.html',my_context)
 

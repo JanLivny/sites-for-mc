@@ -1,6 +1,8 @@
   {% extends 'base.html' %} 
 
 {% block content %}
+{% autoescape off %}
+
 <div class="user-body">
 <body id="top">
   <div class="user-wrapper">
@@ -15,20 +17,37 @@
       </nav>
     </header>
     
-   
-    <h4 class="user-section-header ">{{content.block0.0}}</h4>
+    <div id = "block-1">
+      <h4 class="user-section-header ">{{content.block0.0}}</h4>
       <p class="user-block-text">{{content.block0.1}}.</p>
-      <img class="user-image"src="{{image_urls}}">
-    <h4 class="user-section-header ">{{content.block1.0}}</h4>   
+    </div>
+
+    <div id = "block-2">
+      <h4 class="user-section-header ">{{content.block1.0}}</h4>   
       <p class="user-block-text">{{content.block1.1}}.</p>
-    <h4 class="user-section-header ">{{content.block2.0}}</h4>
-     <p class="user-block-text">{{content.block2.1}}.</p>
-    <h4 class="user-section-header ">{{content.block3.0}}</h4>
+    </div>
+
+    <div id = "block-3">
+      <h4 class="user-section-header ">{{content.block2.0}}</h4>
+      <p class="user-block-text">{{content.block2.1}}.</p>
+    </div>
+
+    <div id = "block-4">
+      <h4 class="user-section-header ">{{content.block3.0}}</h4>
       <p class="user-block-text">{{content.block3.1}}.</p>
-    <h4 class="user-section-header ">{{content.block4.0}}</h4>
+    </div>
+
+    <div id = "block-5">
+      <h4 class="user-section-header ">{{content.block4.0}}</h4>
       <p class="user-block-text">{{content.block4.1}}.</p>
-   
+      <div class="user-image-div">
+        {{images.block4}}
+      </div>
+    </div>
 </div>
+
+{% endautoescape %}
+
 {% endblock content%}
 
 
