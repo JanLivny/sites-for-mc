@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from creator.models import site, block_type, block, site_data_table, image
 from datetime import date
 import ast 
@@ -9,6 +9,10 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 	my_context["value_dict"]=value_dict
 	my_context["name"]=name
 	if request.user.is_authenticated:
+		print(site.objects.filter(owner=request.user).count())
+		if site.objects.filter(owner=request.user).count() >= 5:
+			return redirect("http://127.0.0.1:8000/dashboard")
+
 #get primary block to display in creator
 		primary_block_dict = {}
 		primary_blocks = block_type.objects.filter(primary=True)
@@ -66,14 +70,13 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 								content_dict[field] = ""
 						
 						content_dict=str(content_dict)
-						print(content_dict)
 						#try to edit block if error create block
 						if edit:
 							edit_block=block.objects.get(owner_site = name, block_type=elem)
 							edit_block.content = content_dict
 							edit_block.save()
 						else:
-								block(content=content_dict, owner_site=name, block_type=elem).save()
+							block(content=content_dict, owner_site=name, block_type=elem).save()
 					#if edit edit site
 					if edit:
 						edit_site = site.objects.get(name = name)
@@ -93,16 +96,30 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						return HttpResponse(["2 ",name])
 			#handle Imagez
 			elif bool(request.FILES):
+				print("imagez")
 				file_dict = request.FILES
-				print(file_dict)
 				image_keys = file_dict.keys()
-				print(image_keys)
-				print(name)
 				for key in image_keys:
+					print("bazinga")
 					#temp fix look into in the future maybe?
 					p_key = eval(key.replace("%22","'"))
-					print(p_key)
-					image(owner_site=p_key[0],element=p_key[1],field=p_key[2],name = p_key[3], image=file_dict[key]).save()
+					# solve with exists()
+					image_obj = image.objects.filter(owner_site=p_key[0],element=p_key[1],field=p_key[2])
+					if image_obj.exists():
+						print(file_dict)
+						image_obj = image.objects.get(owner_site=p_key[0],element=p_key[1],field=p_key[2])
+						image_obj.name = p_key[3]
+						image_obj.image = file_dict[key]
+						image_obj.save()
+						print("#######################image updated####################################")
+						print(p_key)
+					else:
+						print("#######################image created####################################")
+						print(p_key)
+						image(owner_site=p_key[0],element=p_key[1],field=p_key[2],name = p_key[3], image=file_dict[key]).save()
+
+			else:
+				print("dwdwddwwd")
 
 		return render(request,'creator.html',my_context)
 	else:
@@ -130,21 +147,25 @@ def page_view(request,site_name):
 		elem_text = ""
 		elem_name = element.replace("-"," ").capitalize() 
 		image_html = ""
+		all_images = True
 		for field_text in block_content.keys():
 			if fields[field_text] == "text":
 				elem_text+= template["pre_"+field_text] + block_content[field_text]
+				all_images = False
 			else:
-
 				image_set= image.objects.filter(
 					owner_site=site_name, 
 					element=element, 
 					field=field_text)
+
 				if image_set.exists():
+					print(image_set[0].name)
 					image_url = image_set[0].image.url
 					image_html += ("<img src='"+image_url+"' class='user-image'>")
-				else:
-					print("ddwd")
-					#pass 
+				
+
+		if not all_images:
+				elem_text += template["final"]
 
 		images["block"+str(block_num)] = image_html
 		content["block"+str(block_num)]=[elem_name,elem_text]

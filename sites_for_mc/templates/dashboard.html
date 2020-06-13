@@ -33,28 +33,36 @@
 			<div class="cell auto dash-columb">
 				<h4>Manage</h4>
 				<div class="all-switches">
-					<h5>get data</h5>
-					<div class="public-radio-div radio-div">
-						<label class="radio-container"><span>On</span><input name="public-selector"type="radio"></label>			
-						<label class="radio-container"><input name="public-selector"type="radio"><span>Off</span></label>
+					<div class="switch-div">
+						<span class="switch-tag">Public</span>
+						<span class="switch tiny dash-switch">
+							<input class="switch-input" id="public-switch" type="checkbox" name="exampleSwitch">
+							<label class="switch-paddle" for="public-switch"></label>
+						</span>
+						<span class="switch-tag">Private</span>
 					</div>
-					<h5>get data</h5>
-					<div class="radio-div">
-						<label class="radio-container"><span>On</span><input disabled name="public-selector"type="radio"></label>			
-						<label class="radio-container"><input disabled name="public-selector"type="radio"><span>Off</span></label>
+					<div class="switch-div">
+						<span class="switch-tag">Public</span>
+						<span class="switch tiny dash-switch">
+							<input class="switch-input" id="placeholder-switch" type="checkbox" name="exampleSwitch">
+							<label class="switch-paddle" for="placeholder-switch"></label>
+						</span>
+						<span class="switch-tag">Private</span>
 					</div>
 				</div>
+				<button class="small-button download-code-button" name={{user_sites.site_0}}>DOWNLOAD CODE</button>
 				<button class="small-button dash-delete" name={{user_sites.site_0}}>DELETE</button>
 			</div>
 			<div class="cell auto dash-columb info-columb">
 				<h4>Info</h4>
 				<div class="info-div">
 					<p><span>Name:</span><span class="site-data-span"></span></p>
-					<p><span>Adress:</span><span class="site-data-span"></span></p>
+					<p><span>Adress:</span><span  class="adress-span"><span class="site-data-span"></span><a>view</a></span></p>
 					<p><span>Date created:</span><span class="site-data-span"></span></p>
 					<p><span>Owner:</span><span class="site-data-span"></span></p>
 					<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
 				</div>
+				<a href={{user_site_urls.site_0}} class="small-button visit-link" target="_blank">VISIT</a>
 			</div>
 		</div>
 		
@@ -101,19 +109,19 @@
 				<h4>Info</h4>
 				<div class="info-div">
 					<p><span>Name:</span><span class="site-data-span"></span></p>
-					<p><span>Adress:</span><span class="site-data-span"></span></p>
+					<p><span>Adress:</span><span  class="adress-span"><span class="site-data-span"></span><a>view</a></span></p>
 					<p><span>Date created:</span><span class="site-data-span"></span></p>
 					<p><span>Owner:</span><span class="site-data-span"></span></p>
 					<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
 				</div>
+				<a href={{user_site_urls.site_1}} class="small-button visit-link" target="_blank">VISIT</a>
 			</div>
-		</div>
-		
+		</div>	
 	  </div>
 	</li>
 
 	<li class="accordion-item " data-accordion-item>
-		<a href="#" class="accordion-title">{{user_sites.site_2}}</a>
+		<a class="accordion-title">{{user_sites.site_2}}</a>
 		<div class="accordion-content" data-tab-content>
 			<div class="grid-x">
 				<div class="cell auto dash-columb">
@@ -150,11 +158,12 @@
 					<h4>Info</h4>
 					<div class="info-div">
 						<p><span>Name:</span><span class="site-data-span"></span></p>
-						<p><span>Adress:</span><span class="site-data-span"></span></p>
+						<p><span>Adress:</span><span  class="adress-span"><span class="site-data-span"></span><a>view</a></span></p>
 						<p><span>Date created:</span><span class="site-data-span"></span></p>
 						<p><span>Owner:</span><span class="site-data-span"></span></p>
 						<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
 					</div>
+					<a href={{user_site_urls.site_2}} class="small-button visit-link" target="_blank">VISIT</a>
 				</div>
 			</div>
 		</div>
@@ -198,11 +207,12 @@
 					<h4>Info</h4>
 					<div class="info-div">
 						<p><span>Name:</span><span class="site-data-span"></span></p>
-						<p><span>Adress:</span><span class="site-data-span"></span></p>
+						<p><span>Adress:</span><span  class="adress-span"><span class="site-data-span"></span><a>view</a></span></p>
 						<p><span>Date created:</span><span class="site-data-span"></span></p>
 						<p><span>Owner:</span><span class="site-data-span"></span></p>
 						<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
 					</div>
+					<a href={{user_site_urls.site_3}} class="small-button visit-link" target="_blank">VISIT</a>
 				</div>
 			</div>
 		</div>
@@ -246,11 +256,12 @@
 					<h4>Info</h4>
 					<div class="info-div">
 						<p><span>Name:</span><span class="site-data-span"></span></p>
-						<p><span>Adress:</span><span class="site-data-span"></span></p>
+						<p><span>Adress:</span><span  class="adress-span"><span class="site-data-span"></span><a>view</a></span></p>
 						<p><span>Date created:</span><span class="site-data-span"></span></p>
 						<p><span>Owner:</span><span class="site-data-span"></span></p>
 						<p><span>Number of Visits:</span><span class="site-data-span"></span></p>
 					</div>
+					<a href={{user_site_urls.site_4}} class="small-button visit-link" target="_blank">VISIT</a>
 				</div>
 			</div>
 		</div>

@@ -25,14 +25,19 @@ export function new_site(inputValues, files) {
         success: (data) =>  {
             data = data.split(" ")
             console.log(data)
+
             if (data[0]=="0"){
                 utils.popup(()=>{},()=>{},false,"Site name already in use please try again.")
             }
             else if(data[0]=="1"){
                 utils.popup(()=>{},()=>{},false,"You have not entered a site name, please enter one and try again.")
             }
-            else if(data[0]=="2"){
-                
+            else if (data[0]=="4"){
+                //forbiden characters
+            }
+            else if (data[0]=="2" || data[0] == "3") {
+                var notif_data = data
+                site_url = "http://127.0.0.1:8000/creator/"+data[1]
                 var sendFormData = new FormData()
                 for (let entry of files.entries()) {
                     console.log(name)
@@ -43,6 +48,8 @@ export function new_site(inputValues, files) {
                     sendFormData.append(tag,file)
                 }
 
+                console.log(sendFormData)
+
                 $.ajax({    
                     headers: {'X-CSRFToken':csrf_token},
                     type: "POST",
@@ -51,16 +58,18 @@ export function new_site(inputValues, files) {
                     contentType:false,
                     processData: false,
                     success: (data) =>  {
-                        site_url = "http://127.0.0.1:8000/creator/"+data[1]
-                        utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,
-                        "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link' onclick='redirect()'>"+site_url+"</a>")
+                        if(notif_data[0]=="2"){
+                            utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,
+                            "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link' onclick='redirect()'>"+site_url+"</a>")
+                        }
+                        else if(notif_data[0]=="3"){
+                            utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,"Changes to " + data[1] + " have been succesfully saved")
+                        }
                     },
                     failure: ()=>utils.popup(()=>{},()=>{},false,"There has been an error creating your site, please try again.")
                 })
             }
-            else if(data[0]=="3"){
-                utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,"Changes to " + data[1] + " have been succesfully saved")
-            }
+
             else{
                 utils.popup(()=>{},()=>{},false,"There has been an error creating your site, please try again.")
                 

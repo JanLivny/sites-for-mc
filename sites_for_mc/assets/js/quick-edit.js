@@ -3,6 +3,7 @@ import * as utils from "./utils.js"
 import * as edit from "./edit.js"
 
 var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
+var base_url = "http://127.0.0.1:8000"
 
 export function queryElems() {
     var targetText = $(event.target).text()
@@ -18,9 +19,10 @@ export function queryElems() {
                 var siteElems = data.pop().trim().split(" ")
                 var editElems = $(target).siblings().find(".quick-edit-elem-li")
                 var site_data_fields = $(target).siblings().find(".site-data-span")
+                data[1]= data[1].split('/')[0]+"//[...]/"+data[1].split('/').pop()
                 for(let i = 0; i <  5; i++) {
                     $(editElems[i]).text(siteElems[i])
-                    $(site_data_fields[i]).text(data[i])
+                    $(site_data_fields[i]).text(data[i])                   
             }}
         })}
     else {
@@ -85,4 +87,10 @@ export function checkSiteAmount() {
     else{
         utils.redirect("creator")
     }   
+}
+
+export function showAdress() {
+    var shortAdress = $(".adress-span span").text().split("/")
+    var adress = base_url +"/creator/"+ shortAdress.pop()
+    utils.popup(()=>{},()=>{},false,adress)
 }

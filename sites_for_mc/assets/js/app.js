@@ -7,7 +7,6 @@ import * as quickEdit from "./quick-edit.js"
 //setup
 var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
 
-
 //CREATOR
 
 
@@ -48,3 +47,8 @@ $(".dash-delete").on("click", quickEdit.deleteSite)
 
 //prompt max sites reached
 $(".dash-create-site-button").on("click", quickEdit.checkSiteAmount)
+
+//show full adress 
+
+$(".adress-span a").on("click",   quickEdit.showAdress)
+

@@ -31,16 +31,26 @@
 }
 
 .dash-editor li{
-	height:25px;
-	font-size:10px;
-	text-align:center;
-	
+	height:25px;	
+	text-align: center;
+	font-size: 16px;
+	padding:5px 0px 5px 0px;
+	line-height: 15px;
 }
 
 .dash-edit-buttons > *{
 	display: block;
 }
 
+.dash-edit-confirm {
+	margin-top: 20px;
+}
+
+.download-code-button {
+	margin:auto;
+	margin-top:8px;
+	margin-bottom:20px;
+}
 //manage
 .radio-div {
 	// background: lightgray;
@@ -65,7 +75,7 @@
 }
 
 .all-switches {
-height: 145px;
+	height: 145px;
 }
 
 //info
@@ -84,5 +94,46 @@ height: 145px;
 	display: flex;
 	justify-content: space-between;
 	width:100%;
-	// white-space: nowrap;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.adress-span span{
+	width:200px;
+	text-align: right;
+	margin-right: 5px;
+}
+
+.adress-span {
+	display: flex;
+	justify-content: space-between;
+}
+
+.visit-link {
+	width: 75px;
+	display: block;
+	height: 28px;
+	padding:0;
+}
+
+.visit-link:hover {
+	text-decoration: none;
+	background: black;
+	color:white;
+	transition: all 0.4s ease 0s;
+		
+}
+
+.switch-tag {
+	display: inline-block;
+}
+
+.switch-div {
+	padding: 10px;	
+	
+}
+
+.all-switches {
+	padding-bottom: 0px;
+	height:115px;
 }

@@ -17,10 +17,13 @@ else{
 
 export var inputValues = tempInputValues
 
+// update file upload labels
 export var formData = new FormData();
 
 $(".creator-input").change(()=>{
-  $(event.target).siblings("label").text($(event.target).val().split("\\").pop())
+    if($(event.target).attr("type") =="file") {
+        $(event.target).siblings("label").text($(event.target).val().split("\\").pop())
+    }
 })
 
 export function getFields() {
@@ -38,13 +41,21 @@ export function getFields() {
         success: (data) => {
             data = JSON.parse(data)
             var fields = Object.keys(data)
-            var field_slots = $(".field")
-            var field_inputs =  $(".edit-input")
-            for(let i = 0; i < field_slots.length; i++){
-                  $(field_slots[i]).text(fields[i])
-                  utils.inputChanger( $(field_inputs[i]),data[fields[i]])
+            var fieldSlots = $(".field")
+            var fieldInputs =  $(".edit-input")
+            for(let i = 0; i < fieldSlots.length; i++){
+                  $(fieldSlots[i]).text(fields[i])
+                  utils.inputChanger( $(fieldInputs[i]),data[fields[i]])
                   if (edit) {
-                     $(field_inputs[i]).val(inputValues[parentText][fields[i]])  
+                    console.log()
+                    var fieldValue = inputValues[parentText][fields[i]]
+                    console.log(fieldValue)
+                    if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != ""){
+                        $(fieldInputs[i]).siblings("label").text(JSON.parse(fieldValue)[2])
+                    }
+                    else {
+                        $(fieldInputs[i]).val(fieldValue)  
+                    }
                   }
                 }
 
