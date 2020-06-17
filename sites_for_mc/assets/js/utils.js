@@ -51,3 +51,6 @@ export function inputChanger(inputElem,type) {
     }
 
 }
+
+export var base_url = "http://127.0.0.1:8000"
+export var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value 

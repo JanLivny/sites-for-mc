@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404, HttpResponse
 from creator.models import site, block_type, block, site_data_table, image
 import json
+import ast
 # Create your views here.
 
 def dash_view(request, *args, **kwargs):
@@ -27,18 +28,23 @@ def dash_view(request, *args, **kwargs):
 		}
 		if request.method == "POST":
 			post_data = request.POST
+			print(post_data)
 			if 'targetText' in post_data:
 				#get elems
 				site_name = post_data.getlist('targetText')[0]
-				target_elements = site.objects.get(name=site_name).elements
+				_site = site.objects.get(name=site_name)
+				target_elements = _site.elements
 				#get extra info 
 				bonus_site_data = site_data_table.objects.get(owner_site=site_name)
+				#get switch positions
+				privacy_setting = str(_site.active)
 				data_arr= [
 					bonus_site_data.real_name,
 					bonus_site_data.adress,
 					bonus_site_data.date_created,
 					bonus_site_data.owner,
 					bonus_site_data.views,
+					privacy_setting,
 					target_elements
 				]
 				return HttpResponse(str(data_arr))
@@ -61,7 +67,16 @@ def dash_view(request, *args, **kwargs):
 				block.objects.filter(owner_site=del_site_name).delete()
 				site_data_table.objects.filter(owner_site=del_site_name).delete()
 				image.objects.filter(owner_site=del_site_name).delete()
-
+			#change privacy preference
+			elif 'privacyData' in  post_data:
+				privacy_data = ast.literal_eval(post_data.getlist("privacyData")[0])
+				_site = site.objects.get(name=privacy_data[0])
+				if privacy_data[1] == "true":
+					_site.active = True
+				else:
+					_site.active = False
+				_site.save()
+				
 		return render(request,'dashboard.html',my_context)
 	else:
 		return redirect('http://127.0.0.1:8000/')

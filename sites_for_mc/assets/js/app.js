@@ -3,13 +3,13 @@ import * as newsite from "./newsite.js"
 import * as utils from "./utils.js"
 import * as edit from "./edit.js"
 import * as quickEdit from "./quick-edit.js"
+import * as dashManage from "./dash-manage.js"
+import * as dashboard from "./dashboard.js"
 
-//setup
-var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
 
 //CREATOR
 
-
+//setup
 $(document).foundation()
 $('.sortable').sortable()
 $(".editor-div").hide()
@@ -43,12 +43,14 @@ $(".dash-edit-confirm").on( "click", quickEdit.updateElems)
 $(".full-editor-link").on("click", quickEdit.fullEditor)
 
 //delete site
-$(".dash-delete").on("click", quickEdit.deleteSite)
+$(".dash-delete").on("click", dashManage.deleteSite)
+
+//change privacy setting
+$(".privacy-switch").on("change", dashManage.changeStatus)
 
 //prompt max sites reached
-$(".dash-create-site-button").on("click", quickEdit.checkSiteAmount)
+$(".dash-create-site-button").on("click", dashboard.checkSiteAmount)
 
 //show full adress 
-
-$(".adress-span a").on("click",   quickEdit.showAdress)
+$(".adress-span a").on("click", dashboard.showAdress)
 

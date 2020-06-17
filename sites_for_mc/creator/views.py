@@ -3,23 +3,39 @@ from creator.models import site, block_type, block, site_data_table, image
 from datetime import date
 import ast 
 import json
+from django.http import HttpResponseNotFound
 # Create your views here.
 def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
+#set up context 
 	my_context = {}
 	my_context["value_dict"]=value_dict
 	my_context["name"]=name
+#determine if editor or creator and set edit
+	edit = False
+	if bool(value_dict):
+		edit = True
+#check user authentication
 	if request.user.is_authenticated:
-		print(site.objects.filter(owner=request.user).count())
-		if site.objects.filter(owner=request.user).count() >= 5:
+#determine if amount of sites is max
+		if site.objects.filter(owner=request.user).count() >= 5 and not edit:
 			return redirect("http://127.0.0.1:8000/dashboard")
-
 #get primary block to display in creator
 		primary_block_dict = {}
-		primary_blocks = block_type.objects.filter(primary=True)
+		primary_blocks = []
+
+		#if edit get site blocks else get default primary blocks
+		if edit:
+			primary_blocks = site.objects.get(name = name).elements.split()
+		else:
+			primary_block_objects = block_type.objects.filter(primary=True)
+			for blk in primary_block_objects:   
+				primary_blocks.append(blk.type_name)
+
 		counter = 0
-		for x in primary_blocks:
-			primary_block_dict["block_"+ str(counter)]=x.type_name.replace("-"," ").capitalize()
+		for blk in primary_blocks:
+			primary_block_dict["block_"+ str(counter)]=blk.replace("-"," ").capitalize()
 			counter+=1
+
 		my_context["primary_block"]=primary_block_dict
 #if recieved ajax POST request	
 		if request.method == "POST":
@@ -52,7 +68,18 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 				elif name == "":
 					create = False
 					return HttpResponse('1')
-				#if site has to be created
+				#illegal name
+				else:
+					illegal_values = ["<", ">","#","%", '"',"{", "}","|","\\","^","`",";","/","?",":","@","&","=","+","$",","]
+					used_values = ""
+					for illegal_value in illegal_values:
+						if illegal_value in name:
+							create = False
+							used_values += illegal_value
+					if not create:
+						print(used_values)
+						return HttpResponse("4 "+used_values)
+				#if site has to be created 
 				if create:
 					elem_string = " "
 					for elem in elem_arr:
@@ -91,16 +118,14 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 				#make annex model
 										
 					if edit:
-						return HttpResponse(['3 ',name])
+						return HttpResponse(["3 ",name])
 					else:
 						return HttpResponse(["2 ",name])
 			#handle Imagez
 			elif bool(request.FILES):
-				print("imagez")
 				file_dict = request.FILES
 				image_keys = file_dict.keys()
 				for key in image_keys:
-					print("bazinga")
 					#temp fix look into in the future maybe?
 					p_key = eval(key.replace("%22","'"))
 					# solve with exists()
@@ -111,16 +136,9 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						image_obj.name = p_key[3]
 						image_obj.image = file_dict[key]
 						image_obj.save()
-						print("#######################image updated####################################")
-						print(p_key)
 					else:
-						print("#######################image created####################################")
-						print(p_key)
 						image(owner_site=p_key[0],element=p_key[1],field=p_key[2],name = p_key[3], image=file_dict[key]).save()
-
-			else:
-				print("dwdwddwwd")
-
+			
 		return render(request,'creator.html',my_context)
 	else:
 		return redirect('http://127.0.0.1:8000/')
@@ -128,6 +146,9 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 
 def page_view(request,site_name):
 	site_object = get_object_or_404(site,name=site_name)
+
+	if not site_object.active and str(request.user) != str(site_object.owner):
+		 return HttpResponseNotFound("Page doese not exist or Private")         
 
 	site_data = site_data_table.objects.get(owner_site=site_name)
 	site_real_name = site_data.real_name

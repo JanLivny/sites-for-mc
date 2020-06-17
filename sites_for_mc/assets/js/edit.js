@@ -1,6 +1,4 @@
 import * as utils from "./utils.js"
-// import * as quickEdit from "./quick-edit.js" 
-// import { collectElems } from "./newsite.js"
 
 //prep all values for editor
 if(window.location.href.includes("editor") ){
@@ -26,15 +24,14 @@ $(".creator-input").change(()=>{
     }
 })
 
-export function getFields() {
-    var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
+export function getFields() {  
     $(".editor-div").show()
     $(".not-editing-message").hide()
     $(".edit-input").val('')
 
     var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue)
     $.ajax({
-        headers: {'X-CSRFToken':csrf_token},
+        headers: {'X-CSRFToken':utils.csrf_token},
         type: "POST",
         url: "http://127.0.0.1:8000/creator/",
         data: {parentText},
@@ -46,7 +43,7 @@ export function getFields() {
             for(let i = 0; i < fieldSlots.length; i++){
                   $(fieldSlots[i]).text(fields[i])
                   utils.inputChanger( $(fieldInputs[i]),data[fields[i]])
-                  if (edit) {
+                  if (edit || parentText in inputValues) {
                     console.log()
                     var fieldValue = inputValues[parentText][fields[i]]
                     console.log(fieldValue)
@@ -67,7 +64,6 @@ export function getFields() {
 };
 
 export function confirmEdits() {
-    var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
     var currentInputs = {}
     var activeFields = $(".field")
     var sendFiles = false

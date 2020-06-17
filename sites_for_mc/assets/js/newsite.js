@@ -12,19 +12,17 @@ export function collectElems(lisClass) {
 }
 
 export function new_site(inputValues, files) { 
-    var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value  
     inputValues = JSON.stringify(inputValues)
     var name = $('.site-name-input').val()
     var innerlist=[name]
     innerlist = [].concat(innerlist, collectElems($(".editor-li")))
    $.ajax({
-        headers: {'X-CSRFToken':csrf_token},
+        headers: {'X-CSRFToken':utils.csrf_token},
         type: "POST",
         url: "http://127.0.0.1:8000/creator/",
         data: {innerlist, inputValues},
         success: (data) =>  {
-            data = data.split(" ")
-            console.log(data)
+            data = data.split(" ")  
 
             if (data[0]=="0"){
                 utils.popup(()=>{},()=>{},false,"Site name already in use please try again.")
@@ -33,7 +31,8 @@ export function new_site(inputValues, files) {
                 utils.popup(()=>{},()=>{},false,"You have not entered a site name, please enter one and try again.")
             }
             else if (data[0]=="4"){
-                //forbiden characters
+                console.log(data[1])
+                utils.popup(()=>{},()=>{},false,"Your name contains the forbiden character(s): "+data[1] +"</br> please enter one and try again.")
             }
             else if (data[0]=="2" || data[0] == "3") {
                 var notif_data = data
@@ -51,7 +50,7 @@ export function new_site(inputValues, files) {
                 console.log(sendFormData)
 
                 $.ajax({    
-                    headers: {'X-CSRFToken':csrf_token},
+                    headers: {'X-CSRFToken':utils.csrf_token},
                     type: "POST",
                     url: "http://127.0.0.1:8000/creator/",
                     data: sendFormData,
