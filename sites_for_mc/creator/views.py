@@ -95,12 +95,25 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 								content_dict[field] = content_arr[elem][field]
 							except:
 								content_dict[field] = ""
-						
+
+						r_content_dict = content_dict
 						content_dict=str(content_dict)
 						#try to edit block if error create block
 						if edit:
 							edit_block=block.objects.get(owner_site = name, block_type=elem)
 							edit_block.content = content_dict
+							#delete imagez if empty
+							for field in r_content_dict:
+								data_type = ast.literal_eval(block_type.objects.get(type_name = elem).fields)[field]
+								# print(data_type)
+								print(r_content_dict[field])
+								if data_type == "file" and eval(r_content_dict[field])[2] == "":
+									print("empty name")
+									image_obj = image.objects.filter(owner_site = name, element = elem, field = field)
+									if image_obj.exists():
+										print("image_deleted")
+										image_obj.delete()
+
 							edit_block.save()
 						else:
 							block(content=content_dict, owner_site=name, block_type=elem).save()
@@ -128,7 +141,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 				for key in image_keys:
 					#temp fix look into in the future maybe?
 					p_key = eval(key.replace("%22","'"))
-					# solve with exists()
+					
 					image_obj = image.objects.filter(owner_site=p_key[0],element=p_key[1],field=p_key[2])
 					if image_obj.exists():
 						print(file_dict)
@@ -178,9 +191,7 @@ def page_view(request,site_name):
 					owner_site=site_name, 
 					element=element, 
 					field=field_text)
-
 				if image_set.exists():
-					print(image_set[0].name)
 					image_url = image_set[0].image.url
 					image_html += ("<img src='"+image_url+"' class='user-image'>")
 				

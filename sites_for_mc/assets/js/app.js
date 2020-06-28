@@ -23,6 +23,8 @@ $( ".element-edit-link" ).on( "click",edit.getFields)
 //confirm edits
 $( ".confirm-edit-link" ).on( "click",()=>{edit.confirmEdits()})
 
+//clear file field 
+$(".clear-link").on("click", edit.ClearInput)
 //reset confiramntion indicator
 $(".edit-input").on( "click",() => $(".confirm-edit-link").text("Confirm"));
 

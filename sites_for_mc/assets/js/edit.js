@@ -4,6 +4,7 @@ import * as utils from "./utils.js"
 if(window.location.href.includes("editor") ){
     var edit = true
     var tempInputValues= JSON.parse($("#value-dict-span").text())
+    var permanentInputValues = JSON.parse($("#value-dict-span").text())
     $(".page-header").text("Editor")
     $(".site-create-button").text("Save changes")
     $(".site-name-input").attr('readonly', true);
@@ -28,8 +29,15 @@ export function getFields() {
     $(".editor-div").show()
     $(".not-editing-message").hide()
     $(".edit-input").val('')
-
     var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue)
+
+    var editorListItems = $(".editor-li")
+    for(let i = 0; i< editorListItems.length;i++){
+        $(editorListItems[i]).css("background-color","lightgray")
+    }
+
+    $(event.target).parent().css("background-color","white")
+
     $.ajax({
         headers: {'X-CSRFToken':utils.csrf_token},
         type: "POST",
@@ -44,11 +52,12 @@ export function getFields() {
                   $(fieldSlots[i]).text(fields[i])
                   utils.inputChanger( $(fieldInputs[i]),data[fields[i]])
                   if (edit || parentText in inputValues) {
-                    console.log()
                     var fieldValue = inputValues[parentText][fields[i]]
-                    console.log(fieldValue)
-                    if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != ""){
+                    if ($(fieldInputs[i]).attr("type")=="file" && JSON.parse(fieldValue)[2] != ""){
                         $(fieldInputs[i]).siblings("label").text(JSON.parse(fieldValue)[2])
+                    }
+                    else if ($(fieldInputs[i]).attr("type")=="file") {
+                        $(fieldInputs[i]).siblings("label").text("Select Image")
                     }
                     else {
                         $(fieldInputs[i]).val(fieldValue)  
@@ -70,15 +79,25 @@ export function confirmEdits() {
     var activeElem = utils.formatDB($(".editor-element-info").text())
     $(".edit-input").map((pos,input) => {
        
-        if($(input).attr("type")=="file" && $(input).val() != "") {
-                console.log($(input).val())
+        if($(input).attr("type")=="file") {
                 var files = $(input)[0].files[0]
-                var name =  $(input).siblings("label").text().split("\\").pop().trim() 
+                var name =  $(input).val().split("\\").pop().trim() 
                 var image_tag =JSON.stringify([activeElem ,$(activeFields[pos]).text(),name])
-                console.log(image_tag)
+                if($(input).val() == "") {
+                    if (JSON.parse(permanentInputValues[activeElem][$(activeFields[pos]).text()])[2] 
+                    != $(input).siblings("label").text()){
+                        formData.append(image_tag,"") 
+                    }
+                    else {
+                        image_tag = JSON.parse(image_tag)
+                        image_tag[2] = $(input).siblings("label").text()
+                        image_tag = JSON.stringify(image_tag)
+                    }
+                }
                 formData.append(image_tag,files);   
                 currentInputs[$(activeFields[pos]).text()] = image_tag
             }
+
         else{
             currentInputs[$(activeFields[pos]).text()] = $(input).val() 
         }
@@ -88,4 +107,10 @@ export function confirmEdits() {
    inputValues[$(".editor-element-info").text().trim().replace(" ", "-").toLowerCase()] = currentInputs
    $(".confirm-edit-link").text("Confirmed")
    console.log(inputValues)
+}
+
+export function ClearInput() {
+    var target = event.target
+    $(target).siblings("input").val('')
+    $(target).siblings("label").text("Select Image")
 }

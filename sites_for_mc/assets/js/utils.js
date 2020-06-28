@@ -43,9 +43,11 @@ export function inputChanger(inputElem,type) {
     $(inputElem).attr("type",type)
     $(inputElem).show()
     $(inputElem).siblings("label").hide()
+    $(inputElem).siblings('a').hide()
     if (type == "text") {
     }
     else if (type == "file"){
+        $(inputElem).siblings('a').show()
         $(inputElem).siblings("label").show()
         $(inputElem).hide()
     }

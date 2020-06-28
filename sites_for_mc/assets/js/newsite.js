@@ -39,10 +39,10 @@ export function new_site(inputValues, files) {
                 site_url = "http://127.0.0.1:8000/creator/"+data[1]
                 var sendFormData = new FormData()
                 for (let entry of files.entries()) {
-                    console.log(name)
+                    console.log(entry)
                     var file = entry[1]
                     var tag =$.parseJSON(entry[0])
-                    tag.unshift(name)
+                    tag.unshift(utils.formatDB(name))
                     tag = JSON.stringify(tag)
                     sendFormData.append(tag,file)
                 }
