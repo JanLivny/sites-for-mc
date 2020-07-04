@@ -83,7 +83,7 @@ export function confirmEdits() {
                 var files = $(input)[0].files[0]
                 var name =  $(input).val().split("\\").pop().trim() 
                 var image_tag =JSON.stringify([activeElem ,$(activeFields[pos]).text(),name])
-                if($(input).val() == "") {
+                if($(input).val() == "" && window.location.href.includes("editor") ) {
                     if (JSON.parse(permanentInputValues[activeElem][$(activeFields[pos]).text()])[2] 
                     != $(input).siblings("label").text()){
                         formData.append(image_tag,"") 

@@ -63,7 +63,7 @@ def dash_view(request, *args, **kwargs):
 			#delete site
 			elif 'delName' in post_data:
 				del_site_name = post_data.getlist('delName')[0]
-				site.objects.get(name=del_site_name).delete()
+				site.objects.filter(name=del_site_name).delete()
 				block.objects.filter(owner_site=del_site_name).delete()
 				site_data_table.objects.filter(owner_site=del_site_name).delete()
 				image.objects.filter(owner_site=del_site_name).delete()
