@@ -53,7 +53,7 @@ export function getFields() {
                   utils.inputChanger( $(fieldInputs[i]),data[fields[i]])
                   if (edit || parentText in inputValues) {
                     var fieldValue = inputValues[parentText][fields[i]]
-                    if ($(fieldInputs[i]).attr("type")=="file" && JSON.parse(fieldValue)[2] != ""){
+                    if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != "" &&JSON.parse(fieldValue)[2] != ""){
                         $(fieldInputs[i]).siblings("label").text(JSON.parse(fieldValue)[2])
                     }
                     else if ($(fieldInputs[i]).attr("type")=="file") {
@@ -84,8 +84,8 @@ export function confirmEdits() {
                 var name =  $(input).val().split("\\").pop().trim() 
                 var image_tag =JSON.stringify([activeElem ,$(activeFields[pos]).text(),name])
                 if($(input).val() == "" && window.location.href.includes("editor") ) {
-                    if (JSON.parse(permanentInputValues[activeElem][$(activeFields[pos]).text()])[2] 
-                    != $(input).siblings("label").text()){
+                    var perm_val = permanentInputValues[activeElem][$(activeFields[pos]).text()]
+                    if (perm_val !="" && JSON.parse(perm_val)[2] != $(input).siblings("label").text() ){
                         formData.append(image_tag,"") 
                     }
                     else {

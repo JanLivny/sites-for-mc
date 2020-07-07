@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'compressor',
     'signin',
     'dashboard',
-    'creator'
-
+    'creator',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [

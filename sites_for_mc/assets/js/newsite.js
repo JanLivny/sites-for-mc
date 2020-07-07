@@ -59,7 +59,7 @@ export function new_site(inputValues, files) {
                     success: (data) =>  {
                         if(notif_data[0]=="2"){
                             utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,
-                            "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link' onclick='redirect()'>"+site_url+"</a>")
+                            "Site created succesfully at:</br><a href='"+site_url+"' target ='_blank'class='popup-link'>"+site_url+"</a>")
                         }
                         else if(notif_data[0]=="3"){
                             utils.popup(()=>{utils.redirect("dashboard")},()=>{},false,"Changes to " + data[1] + " have been succesfully saved")
