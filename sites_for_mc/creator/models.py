@@ -7,6 +7,7 @@ class site(models.Model):
 	elements = models.TextField()
 	owner = models.TextField()
 	active = models.BooleanField()
+	final = models.BooleanField()
 
 class block_type(models.Model):
 	primary = models.BooleanField()

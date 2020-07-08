@@ -21,13 +21,14 @@ export function deleteSite() {
 
 export function changeStatus() {
     var target = $(event.target)
-    var privacyData  = JSON.stringify([target.attr('name'),JSON.stringify($(target).prop("checked"))])
-    console.log(privacyData)
+    var switchType = utils.formatDB($(event.target).attr('class').split(" ")[2])
+    console.log(switchType)
+    var statusData  = JSON.stringify([target.attr('name'),JSON.stringify($(target).prop("checked")),switchType])
     $.ajax({
         headers: {'X-CSRFToken':utils.csrf_token},    
         type: "POST",   
         url: "http://127.0.0.1:8000/dashboard/",
-        data: {privacyData},
+        data: {statusData},
         success: () => {},
         failure: () =>  console.log('ajax failure')
     })

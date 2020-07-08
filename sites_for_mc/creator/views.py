@@ -123,7 +123,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						edit_site.elements = elem_string
 						edit_site.save()
 					else:
-						newsite = site(name=name,elements=elem_string, owner = current_user, active=True)
+						newsite = site(name=name,elements=elem_string, owner = current_user, active=True,final=True)
 						newsite.save()
 						today  = date.today()
 						adress = "http://127.0.0.1:8000/creator/" + name

@@ -38,12 +38,15 @@ def dash_view(request, *args, **kwargs):
 				bonus_site_data = site_data_table.objects.get(owner_site=site_name)
 				#get switch positions
 				privacy_setting = str(_site.active)
+				production_setting = str(_site.final)
+				print("###############################\n"+production_setting+"\n#################################")
 				data_arr= [
 					bonus_site_data.real_name,
 					bonus_site_data.adress,
 					bonus_site_data.date_created,
 					bonus_site_data.owner,
 					bonus_site_data.views,
+					production_setting,
 					privacy_setting,
 					target_elements
 				]
@@ -68,15 +71,24 @@ def dash_view(request, *args, **kwargs):
 				site_data_table.objects.filter(owner_site=del_site_name).delete()
 				image.objects.filter(owner_site=del_site_name).delete()
 			#change privacy preference
-			elif 'privacyData' in  post_data:
-				privacy_data = ast.literal_eval(post_data.getlist("privacyData")[0])
-				_site = site.objects.get(name=privacy_data[0])
-				if privacy_data[1] == "true":
-					_site.active = True
-				else:
-					_site.active = False
-				_site.save()
-				
+			elif 'statusData' in  post_data:
+				status_data = ast.literal_eval(post_data.getlist("statusData")[0])
+				_site = site.objects.get(name=status_data[0])
+
+				if status_data[2] == "privacy-switch":
+					if status_data[1] == "true":
+						_site.active = True
+					else:
+						_site.active = False
+					_site.save()
+				elif status_data[2]	== "production-switch":
+					print(status_data[1])
+					if status_data[1] == "true":
+						_site.final = True
+					else:
+						_site.final = False
+					_site.save()
+
 		return render(request,'dashboard.html',my_context)
 	else:
 		return redirect('http://127.0.0.1:8000/')

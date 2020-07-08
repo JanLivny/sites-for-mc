@@ -48,7 +48,7 @@ $(".full-editor-link").on("click", quickEdit.fullEditor)
 $(".dash-delete").on("click", dashManage.deleteSite)
 
 //change privacy setting
-$(".privacy-switch").on("change", dashManage.changeStatus)
+$(".manage-switch").on("change", dashManage.changeStatus)
 
 //prompt max sites reached
 $(".dash-create-site-button").on("click", dashboard.checkSiteAmount)

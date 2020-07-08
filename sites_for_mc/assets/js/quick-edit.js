@@ -18,7 +18,9 @@ export function queryElems() {
                 var siteDataFields = $(target).siblings().find(".site-data-span")
                 data[1]= data[1].split('/')[0]+"//[...]/"+data[1].split('/').pop()
                 var privacyStatus = JSON.parse(data.pop().toLowerCase());
+                var productionStatus = JSON.parse(data.pop().toLowerCase());
                 target.siblings(".accordion-content").find(".privacy-switch").prop("checked",privacyStatus)
+                target.siblings(".accordion-content").find(".production-switch").prop("checked",productionStatus)
                 for(let i = 0; i <  5; i++) {
                     $(editElems[i]).text(siteElems[i])
                     $(siteDataFields[i]).text(data[i])                   
