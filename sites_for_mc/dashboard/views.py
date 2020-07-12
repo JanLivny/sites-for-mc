@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404, HttpResponse
+from django.shortcuts import render,get_object_or_404, HttpResponse, redirect
 from creator.models import site, block_type, block, site_data_table, image
 import json
 import ast
@@ -32,6 +32,13 @@ def dash_view(request, *args, **kwargs):
 			if 'targetText' in post_data:
 				#get elems
 				site_name = post_data.getlist('targetText')[0]
+
+				#SECURITY#
+				if not str(request.user) == site.objects.filter(name=site_name)[0].owner:
+					print("ddwddw")
+					return(redirect('http://127.0.0.1:8000/dashboard'))
+				#SECURITY#
+
 				_site = site.objects.get(name=site_name)
 				target_elements = _site.elements
 				#get extra info 
@@ -39,7 +46,6 @@ def dash_view(request, *args, **kwargs):
 				#get switch positions
 				privacy_setting = str(_site.active)
 				production_setting = str(_site.final)
-				print("###############################\n"+production_setting+"\n#################################")
 				data_arr= [
 					bonus_site_data.real_name,
 					bonus_site_data.adress,
@@ -55,6 +61,12 @@ def dash_view(request, *args, **kwargs):
 			elif 'updatedElems[]' in post_data:
 				elem_arr = post_data.getlist('updatedElems[]')
 				name= elem_arr.pop()
+
+				#SECURITY#
+				if not str(request.user) == site.objects.filter(name=name)[0].owner:
+					return(redirect("http://127.0.0.1:8000/dashboard"))
+				#SECURITY#
+
 				elem_string=''
 				for elem in elem_arr:
 						#create elem string
@@ -66,6 +78,12 @@ def dash_view(request, *args, **kwargs):
 			#delete site
 			elif 'delName' in post_data:
 				del_site_name = post_data.getlist('delName')[0]
+
+				#SECURITY#
+				if not str(request.user) == site.objects.filter(name=del_site_name)[0].owner:
+					return(redirect("http://127.0.0.1:8000/dashboard"))
+				#SECURITY#
+
 				site.objects.filter(name=del_site_name).delete()
 				block.objects.filter(owner_site=del_site_name).delete()
 				site_data_table.objects.filter(owner_site=del_site_name).delete()
@@ -75,6 +93,11 @@ def dash_view(request, *args, **kwargs):
 				status_data = ast.literal_eval(post_data.getlist("statusData")[0])
 				_site = site.objects.get(name=status_data[0])
 
+				#SECURITY#
+				if not str(request.user) == site.objects.filter(name=status_data[0])[0].owner:
+					return(redirect("http://127.0.0.1:8000/dashboard"))
+				#SECURITY#
+				
 				if status_data[2] == "privacy-switch":
 					if status_data[1] == "true":
 						_site.active = True
@@ -82,7 +105,6 @@ def dash_view(request, *args, **kwargs):
 						_site.active = False
 					_site.save()
 				elif status_data[2]	== "production-switch":
-					print(status_data[1])
 					if status_data[1] == "true":
 						_site.final = True
 					else:

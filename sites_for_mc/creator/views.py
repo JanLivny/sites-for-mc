@@ -4,6 +4,7 @@ from datetime import date
 import ast 
 import json
 from django.http import HttpResponseNotFound
+from dashboard.views import *
 # Create your views here.
 def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 #set up context 
@@ -106,8 +107,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 							for field in r_content_dict:
 								data_type = ast.literal_eval(block_type.objects.get(type_name = elem).fields)[field]
 								# print(data_type)
-								print(r_content_dict[field])
-								if data_type == "file" and eval(r_content_dict[field])[2] == "":
+								if data_type == "file" and r_content_dict[field] != "" and eval(r_content_dict[field])[2] == "":
 									print("empty name")
 									image_obj = image.objects.filter(owner_site = name, element = elem, field = field)
 									if image_obj.exists():
@@ -179,25 +179,47 @@ def page_view(request,site_name):
 		template =  ast.literal_eval(block_type_data.template)
 		fields = ast.literal_eval(block_type_data.fields)
 		elem_text = ""
-		elem_name = element.replace("-"," ").capitalize() 
+		elem_name = ""
 		image_html = ""
 		all_images = True
+		empty_field = True
 		for field_text in block_content.keys():
 			if fields[field_text] == "text":
-				elem_text+= template["pre_"+field_text] + block_content[field_text]
 				all_images = False
+
+				if block_content[field_text] == "":
+					if not site_object.final:
+						elem_text+= template["pre_"+field_text] + "[placeholder text]"
+						empty_field = False	
+						elem_name = element.replace("-"," ").capitalize() 
+						print(elem_name)
+				else:
+					elem_name = element.replace("-"," ").capitalize() 
+					elem_text+= template["pre_"+field_text] + block_content[field_text]
+					empty_field = False	
 			else:
+				addPlaceholder = False
+
 				image_set= image.objects.filter(
 					owner_site=site_name, 
 					element=element, 
 					field=field_text)
-				if image_set.exists():
+				if not site_object.final:
+					elem_name = element.replace("-"," ").capitalize()
+					if not image_set.exists():
+						addPlaceholder = True
+						image_set= image.objects.filter(
+							owner_site='#')
+						print(image_set)
+				if image_set.exists() or addPlaceholder:
 					image_url = image_set[0].image.url
 					image_html += ("<img src='"+image_url+"' class='user-image'>")
-				
+					elem_name = element.replace("-"," ").capitalize()
+					empty_field = False
+			
 
-		if not all_images:
-				elem_text += template["final"]
+		if not all_images and not empty_field:
+			elem_text += template["final"]
 
 		images["block"+str(block_num)] = image_html
 		content["block"+str(block_num)]=[elem_name,elem_text]
@@ -209,10 +231,13 @@ def page_view(request,site_name):
 	}
 	return render(request,'user_page.html',my_context)
 
-
 def editor_view(request, site_name):
+	if not str(request.user) == site.objects.filter(name=site_name)[0].owner:
+		return(redirect('http://127.0.0.1:8000/dashboard'))
+
 	values=block.objects.filter(owner_site=site_name)
 	value_dict={}
 	for value_block in values:
 		value_dict[value_block.block_type]=ast.literal_eval(value_block.content)		
 	return(creator_view(request,json.dumps(value_dict),site_name))
+		
