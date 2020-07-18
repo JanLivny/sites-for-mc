@@ -34,8 +34,8 @@ def dash_view(request, *args, **kwargs):
 				site_name = post_data.getlist('targetText')[0]
 
 				#SECURITY#
-				if not str(request.user) == site.objects.filter(name=site_name)[0].owner:
-					print("ddwddw")
+				if str(request.user) != site.objects.filter(name=site_name)[0].owner:
+					print("ddwddws")
 					return(redirect('http://127.0.0.1:8000/dashboard'))
 				#SECURITY#
 
@@ -63,7 +63,7 @@ def dash_view(request, *args, **kwargs):
 				name= elem_arr.pop()
 
 				#SECURITY#
-				if not str(request.user) == site.objects.filter(name=name)[0].owner:
+				if str(request.user) != site.objects.filter(name=name)[0].owner:
 					return(redirect("http://127.0.0.1:8000/dashboard"))
 				#SECURITY#
 
@@ -80,7 +80,7 @@ def dash_view(request, *args, **kwargs):
 				del_site_name = post_data.getlist('delName')[0]
 
 				#SECURITY#
-				if not str(request.user) == site.objects.filter(name=del_site_name)[0].owner:
+				if str(request.user) != site.objects.filter(name=del_site_name)[0].owner:
 					return(redirect("http://127.0.0.1:8000/dashboard"))
 				#SECURITY#
 
@@ -94,7 +94,7 @@ def dash_view(request, *args, **kwargs):
 				_site = site.objects.get(name=status_data[0])
 
 				#SECURITY#
-				if not str(request.user) == site.objects.filter(name=status_data[0])[0].owner:
+				if str(request.user) != site.objects.filter(name=status_data[0])[0].owner:
 					return(redirect("http://127.0.0.1:8000/dashboard"))
 				#SECURITY#
 				

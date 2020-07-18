@@ -11,9 +11,20 @@
 </header>
 
 <div class="grid-x creatorWrapper">
-  <div class="cell auto toolboxDiv">
-  <div class="creator-section">
+  <div class="cell auto ">
+  <div class="creator-section toolboxDiv">
       <h2>Toolbox</h2>
+      <div class="grid-x toolbox-headers">
+        <div class="cell auto first-toolbox-header toolbox-header">SFM Blocks</div>
+        <div class="cell auto toolbox-header">My Blocks</div>
+        <div class="cell auto toolbox-header">Top Blocks</div>
+        <div class="cell auto toolbox-header">Search</div>      
+      </div>
+      <div class="block-tray">
+        <ul class= 'sortable sortable-tray' id = "sortable-tray">
+          <!-- <li class='toolbox-li'><a class='element-edit-link'>edit</a></li> -->
+          </ul>
+      </div>
   </div>
   </div>
 
@@ -21,24 +32,24 @@
 
     <h2>Page</h2>
     <input class = "creator-input site-name-input" type="text" placeholder="name" value = {{name}}>
-    <ul class= 'sortable creator-section'>
-      <li class='editor-li'>
+    <ul class= 'sortable creator-section'  id = "sortable-main">
+      <li class='editor-li main-li'>
         {{primary_block.block_0}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li class='editor-li'>
+      <li class='editor-li  main-li'>
         {{primary_block.block_1}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li class='editor-li'>
+      <li class='editor-li  main-li'>
         {{primary_block.block_2}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li class='editor-li'>
+      <li class='editor-li  main-li'>
         {{primary_block.block_3}}
         <a class='element-edit-link'>edit</a>
       </li>
-      <li class='editor-li'>
+      <li class='editor-li  main-li'>
         {{primary_block.block_4}}
         <a class='element-edit-link'>edit</a>
       </li>

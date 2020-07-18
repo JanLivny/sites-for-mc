@@ -98,3 +98,33 @@
 	display: block;
 	margin-top:2px;
 }
+
+/* toolbox */
+.toolboxDiv {
+	width :400px; 
+}
+
+
+.toolbox-header {
+	border:black 1px solid;
+	border-left:none;
+	text-align: center;
+	cursor: pointer;
+}
+
+.toolbox-header:hover {
+	color:white;
+	background-color: black;
+}
+
+.first-toolbox-header {
+	border:black 1px solid;
+}
+
+.block-tray {
+	border: black 1px solid;
+	margin-top: 5px;
+	height: 386px;
+	padding-top: 10px;
+}
+

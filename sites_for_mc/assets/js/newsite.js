@@ -15,7 +15,7 @@ export function new_site(inputValues, files) {
     inputValues = JSON.stringify(inputValues)
     var name = $('.site-name-input').val()
     var innerlist=[name]
-    innerlist = [].concat(innerlist, collectElems($(".editor-li")))
+    innerlist = [].concat(innerlist, collectElems($("#sortable-main .editor-li")))
    $.ajax({
         headers: {'X-CSRFToken':utils.csrf_token},
         type: "POST",

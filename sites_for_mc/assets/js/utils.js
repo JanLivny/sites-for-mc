@@ -1,12 +1,17 @@
-export function sortLi() {
-    
-    var ul = $(".sortable");
-    var li = ul.children("li");
+export function sortLi(target) {
+    var sortUl =  $('#sortable-main')
+    if (sortUl.children().length > 5 ) {
+        if ($(target).next().length != 0){
+            $(target).next().remove()
+            console.log($(target))
+            $(target).clone().appendTo(".sortable-tray")
+        }
+        else{
+            sortUl.children().first().remove()
+        }
+}}
 
-    li.detach().sort();
-    ul.append(li);
-}
-export function redirect(location) {
+export function redirect(location) {   
     var link = 'http://127.0.0.1:8000/'+location+'/'
     window.location.href = link
 }
@@ -51,6 +56,20 @@ export function inputChanger(inputElem,type) {
         $(inputElem).siblings("label").show()
         $(inputElem).hide()
     }
+
+}
+
+export function colorInverter(targetElem, elemClass) {
+    $(elemClass).css({
+        'color' : 'black',
+        'background' : 'white',    
+    })
+
+    targetElem.css({
+        'color' : 'white',
+        'background' : 'black',    
+     })
+   
 
 }
 

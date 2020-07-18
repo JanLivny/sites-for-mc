@@ -41,12 +41,24 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 #if recieved ajax POST request	
 		if request.method == "POST":
 			post_data = request.POST	
+			print(post_data)
 			name = ''
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
 				parent_type = post_data['parentText']
 				parent_fields = block_type.objects.get(type_name=parent_type).fields
 				return HttpResponse(parent_fields)
+#if toolbox elements where requested
+			elif 'toolboxType' in post_data:
+				toolbox_type = post_data.getlist('toolboxType')[0]
+				if toolbox_type == "sfm-blocks":
+					toolbox_list = []
+					toolbox_blocks = block_type.objects.filter(official=True)
+					for blk in toolbox_blocks:
+						toolbox_list.append(blk.type_name) 
+
+					return HttpResponse(json.dumps(toolbox_list))
+					
 #if new site is to be created
 			elif 'innerlist[]' in post_data:
 				create = True
@@ -82,11 +94,23 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						return HttpResponse("4 "+used_values)
 				#if site has to be created 
 				if create:
+					#add counters to duplicate elements
+					elem_amount_dict = {}
 					elem_string = " "
 					for elem in elem_arr:
+						#####################
 						#create elem string
+						#####################
 						elem = str(elem).strip().replace(" ","-").lower()
-						elem_string += elem
+						c_elem = elem
+						if elem_arr.count(elem) > 1:
+							if not elem in elem_amount_dict:
+								elem_amount_dict[elem] = 0
+							else:
+								elem_amount_dict[elem] += 1
+							c_elem = elem + "|" + str(elem_amount_dict[elem])
+
+						elem_string += c_elem
 						elem_string += " " 
 						#add content
 						content_dict = {}
@@ -116,7 +140,8 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 
 							edit_block.save()
 						else:
-							block(content=content_dict, owner_site=name, block_type=elem).save()
+							_block  = block(content=content_dict, owner_site=name, block_type=elem)
+							_block.save()
 					#if edit edit site
 					if edit:
 						edit_site = site.objects.get(name = name)
@@ -174,7 +199,16 @@ def page_view(request,site_name):
 	images = {}
 
 	for element in elem_arr:
-		block_content = ast.literal_eval(block.objects.get(owner_site=site_name, block_type=element).content)
+		element = element.split("|")
+		print(len(element))
+		block_content = block.objects.filter(owner_site=site_name, block_type=element[0])
+		if len(element) > 1:
+			print('#####',element,'#####')
+			block_content = ast.literal_eval(block_content[int(element[1])].content)	
+		else:
+			block_content = ast.literal_eval(block_content[0].content)	
+		element = element[0]
+		# print(block_content)
 		block_type_data =block_type.objects.get(type_name=element)
 		template =  ast.literal_eval(block_type_data.template)
 		fields = ast.literal_eval(block_type_data.fields)
@@ -192,7 +226,6 @@ def page_view(request,site_name):
 						elem_text+= template["pre_"+field_text] + "[placeholder text]"
 						empty_field = False	
 						elem_name = element.replace("-"," ").capitalize() 
-						print(elem_name)
 				else:
 					elem_name = element.replace("-"," ").capitalize() 
 					elem_text+= template["pre_"+field_text] + block_content[field_text]
@@ -232,7 +265,7 @@ def page_view(request,site_name):
 	return render(request,'user_page.html',my_context)
 
 def editor_view(request, site_name):
-	if not str(request.user) == site.objects.filter(name=site_name)[0].owner:
+	if str(request.user) != site.objects.filter(name=site_name)[0].owner:
 		return(redirect('http://127.0.0.1:8000/dashboard'))
 
 	values=block.objects.filter(owner_site=site_name)

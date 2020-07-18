@@ -13,7 +13,9 @@ class block_type(models.Model):
 	primary = models.BooleanField()
 	type_name = models.CharField(max_length=30)
 	template = models.TextField()
-	fields = models.TextField()   
+	fields = models.TextField()  
+	owner = models.CharField(max_length=30)
+	official = models.BooleanField()
 	
 class block(models.Model):                                                                                                                                                                                                                                                                                                                                  
 	content = models.TextField()

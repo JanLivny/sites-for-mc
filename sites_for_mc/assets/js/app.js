@@ -5,32 +5,43 @@ import * as edit from "./edit.js"
 import * as quickEdit from "./quick-edit.js"
 import * as dashManage from "./dash-manage.js"
 import * as dashboard from "./dashboard.js"
+import * as toolbox from "./toolbox.js"
 
 
 //CREATOR
 
+
 //setup
 $(document).foundation()
-$('.sortable').sortable()
 $(".editor-div").hide()
 
-// sortable
-$('.sortable').sortable().bind('sortupdate', utils.sort)
+//sortable setup
+$( function() {
+    $( "#sortable-main, #sortable-tray" ).sortable({
+      connectWith: ".sortable"
+    }).disableSelection();
+});
+
+// sortable event
+$('#sortable-main').on('sortupdate', () => {utils.sortLi(event.target)})
 
 //get fields
-$( ".element-edit-link" ).on( "click",edit.getFields)
+$( ".sortable" ).on( "click",".element-edit-link", edit.getFields)
 
 //confirm edits
 $( ".confirm-edit-link" ).on( "click",()=>{edit.confirmEdits()})
 
 //clear file field 
 $(".clear-link").on("click", edit.ClearInput)
+
 //reset confiramntion indicator
 $(".edit-input").on( "click",() => $(".confirm-edit-link").text("Confirm"));
 
 //new site
 $( ".site-create-button" ).on( "click",()=> {newsite.new_site(edit.inputValues, edit.formData)})
 
+//fetch toolbox blocks
+$( ".toolbox-header" ).on( "click",()=> {toolbox.fetchBlocks(event.target)})
 
 //DASHBOARD
 
