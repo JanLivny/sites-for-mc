@@ -16,7 +16,6 @@ export function fetchBlocks(target) {
             data = JSON.parse(data)
             $.each(data, ( index, value ) => {
                 var toolboxLi = $(".toolbox-li")
-                console.log(toolboxLi)
                 value = value[0].toUpperCase() + value.slice(1)
                 $('#sortable-tray').append(
                     "<li class='toolbox-li editor-li'>"+value.replace("-", " ")+"<a class='element-edit-link'>edit</a></li>"
