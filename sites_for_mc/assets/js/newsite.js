@@ -6,8 +6,11 @@ export function collectElems(lisClass) {
     var innerlist=[]
     var lis = lisClass;
     for(let i = 0; i < lis.length; i++) {
-        innerlist.push(utils.formatDB($(lis[i]).contents().get(0).nodeValue))
-    }   
+        innerlist.push(utils.formatDB($(lis[i]).contents().filter(
+        function() {
+            return this.nodeType == Node.TEXT_NODE; 
+        }).text().trim()))
+    }    
     return innerlist
 }
 
@@ -16,6 +19,7 @@ export function new_site(inputValues, files) {
     var name = $('.site-name-input').val()
     var innerlist=[name]
     innerlist = [].concat(innerlist, collectElems($("#sortable-main .editor-li")))
+    console.log(innerlist)
    $.ajax({
         headers: {'X-CSRFToken':utils.csrf_token},
         type: "POST",

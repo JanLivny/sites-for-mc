@@ -22,8 +22,11 @@ $( function() {
     }).disableSelection();
 });
 
-// sortable event
+// sortable sortupdate
 $('#sortable-main').on('sortupdate', () => {utils.sortLi(event.target)})
+
+//sortable delete element 
+$( "#sortable-tray" ).sortable({receive: ( event, ui ) => {ui.item.remove()}});
 
 //get fields
 $( ".sortable" ).on( "click",".element-edit-link", edit.getFields)

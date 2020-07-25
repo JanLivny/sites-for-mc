@@ -1,5 +1,7 @@
 import * as utils from "./utils.js"
 
+//setup
+    var currentElem = ""
 //prep all values for editor
 if(window.location.href.includes("editor") ){
     var edit = true
@@ -30,7 +32,9 @@ export function getFields() {
     $(".not-editing-message").hide()
     $(".edit-input").val('')
     var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue)
-
+    currentElem= utils.formatDB($(event.target).parent().contents().filter(function() {
+        return this.nodeType == Node.TEXT_NODE; }).text().trim())
+    console.log(currentElem)
     var editorListItems = $(".editor-li")
     for(let i = 0; i< editorListItems.length;i++){
         $(editorListItems[i]).css("background-color","lightgray")
@@ -51,8 +55,8 @@ export function getFields() {
             for(let i = 0; i < fieldSlots.length; i++){
                   $(fieldSlots[i]).text(fields[i])
                   utils.inputChanger( $(fieldInputs[i]),data[fields[i]])
-                  if (edit || parentText in inputValues) {
-                    var fieldValue = inputValues[parentText][fields[i]]
+                  if (edit || currentElem in inputValues) {
+                    var fieldValue = inputValues[currentElem][fields[i]]
                     if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != "" &&JSON.parse(fieldValue)[2] != ""){
                         $(fieldInputs[i]).siblings("label").text(JSON.parse(fieldValue)[2])
                     }
@@ -103,8 +107,9 @@ export function confirmEdits() {
         }
     })
     
-
-   inputValues[$(".editor-element-info").text().trim().replace(" ", "-").toLowerCase()] = currentInputs
+    // CHANGE THIS TO GLOBAL VAR
+    //$(".editor-element-info").text().trim().replace(" ", "-").toLowerCase()
+   inputValues[currentElem] = currentInputs
    $(".confirm-edit-link").text("Confirmed")
    console.log(inputValues)
 }

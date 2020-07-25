@@ -21,6 +21,7 @@ class block(models.Model):
 	content = models.TextField()
 	owner_site = models.CharField(max_length=30)
 	block_type = models.CharField(max_length=30)
+	name = models.CharField(max_length=30)
 
 class site_data_table(models.Model):
 	owner_site = models.CharField(max_length=30)

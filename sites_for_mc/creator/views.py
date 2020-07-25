@@ -90,7 +90,6 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 							create = False
 							used_values += illegal_value
 					if not create:
-						print(used_values)
 						return HttpResponse("4 "+used_values)
 				#if site has to be created 
 				if create:
@@ -101,14 +100,15 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						#####################
 						#create elem string
 						#####################
-						elem = str(elem).strip().replace(" ","-").lower()
 						c_elem = elem
-						if elem_arr.count(elem) > 1:
-							if not elem in elem_amount_dict:
-								elem_amount_dict[elem] = 0
-							else:
-								elem_amount_dict[elem] += 1
-							c_elem = elem + "|" + str(elem_amount_dict[elem])
+						elem = elem.split("|")[0]
+						# elem = str(elem).strip().replace(" ","-").lower()		
+						# if elem_arr.count(elem) > 1:
+						# 	if not elem in elem_amount_dict:
+						# 		elem_amount_dict[elem] = 0
+						# 	else:
+						# 		elem_amount_dict[elem] += 1
+						# 	c_elem = elem + "|" + str(elem_amount_dict[elem])
 
 						elem_string += c_elem
 						elem_string += " " 
@@ -117,7 +117,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						fields = ast.literal_eval(block_type.objects.get(type_name=elem).fields).keys()
 						for field in fields:
 							try: 
-								content_dict[field] = content_arr[elem][field]
+								content_dict[field] = content_arr[c_elem][field]
 							except:
 								content_dict[field] = ""
 
@@ -125,22 +125,21 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						content_dict=str(content_dict)
 						#try to edit block if error create block
 						if edit:
-							edit_block=block.objects.get(owner_site = name, block_type=elem)
+							edit_block=block.objects.get(owner_site = name, name=c_elem, block_type = elem)
 							edit_block.content = content_dict
 							#delete imagez if empty
 							for field in r_content_dict:
 								data_type = ast.literal_eval(block_type.objects.get(type_name = elem).fields)[field]
 								# print(data_type)
 								if data_type == "file" and r_content_dict[field] != "" and eval(r_content_dict[field])[2] == "":
-									print("empty name")
 									image_obj = image.objects.filter(owner_site = name, element = elem, field = field)
 									if image_obj.exists():
-										print("image_deleted")
 										image_obj.delete()
 
 							edit_block.save()
 						else:
-							_block  = block(content=content_dict, owner_site=name, block_type=elem)
+							print(content_dict)
+							_block  = block(content=content_dict, owner_site=name, block_type=elem, name=c_elem)
 							_block.save()
 					#if edit edit site
 					if edit:
@@ -148,13 +147,13 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						edit_site.elements = elem_string
 						edit_site.save()
 					else:
-						newsite = site(name=name,elements=elem_string, owner = current_user, active=True,final=True)
+						newsite = site(name=name,elements=elem_string, owner = current_user, active=True,final=False)
 						newsite.save()
+						#make annex model
 						today  = date.today()
 						adress = "http://127.0.0.1:8000/creator/" + name
 						site_data_table(owner_site=name, real_name=real_name, adress=adress,date_created=today,owner=current_user,views=0).save()
-				#make annex model
-										
+								
 					if edit:
 						return HttpResponse(["3 ",name])
 					else:
@@ -197,17 +196,16 @@ def page_view(request,site_name):
 	content = {"name":site_real_name}
 	block_num = 0
 	images = {}
-
+	print(elem_arr)
 	for element in elem_arr:
-		element = element.split("|")
-		print(len(element))
-		block_content = block.objects.filter(owner_site=site_name, block_type=element[0])
-		if len(element) > 1:
-			print('#####',element,'#####')
-			block_content = ast.literal_eval(block_content[int(element[1])].content)	
-		else:
-			block_content = ast.literal_eval(block_content[0].content)	
-		element = element[0]
+		block_content = ast.literal_eval(block.objects.get(owner_site=site_name, name=element).content) 
+		print(block_content)
+		# if len(element) > 1:
+		# 	print('#####',element,'#####')
+		# 	block_content = ast.literal_eval(block_content[int(element[1])].content)	
+		# else:
+		# 	block_content = ast.literal_eval(block_content[0].content)	
+		element = element.split("|")[0]
 		# print(block_content)
 		block_type_data =block_type.objects.get(type_name=element)
 		template =  ast.literal_eval(block_type_data.template)
