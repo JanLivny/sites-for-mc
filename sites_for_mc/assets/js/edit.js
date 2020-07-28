@@ -80,7 +80,8 @@ export function confirmEdits() {
     var currentInputs = {}
     var activeFields = $(".field")
     var sendFiles = false
-    var activeElem = utils.formatDB($(".editor-element-info").text())
+    var activeElem = currentElem
+    //var activeElem = utils.formatDB($(".editor-element-info").text())
     $(".edit-input").map((pos,input) => {
        
         if($(input).attr("type")=="file") {

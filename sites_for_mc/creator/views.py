@@ -205,6 +205,7 @@ def page_view(request,site_name):
 		# 	block_content = ast.literal_eval(block_content[int(element[1])].content)	
 		# else:
 		# 	block_content = ast.literal_eval(block_content[0].content)	
+		c_element = element
 		element = element.split("|")[0]
 		# print(block_content)
 		block_type_data =block_type.objects.get(type_name=element)
@@ -230,10 +231,10 @@ def page_view(request,site_name):
 					empty_field = False	
 			else:
 				addPlaceholder = False
-
+				print(c_element)
 				image_set= image.objects.filter(
 					owner_site=site_name, 
-					element=element, 
+					element=c_element, 
 					field=field_text)
 				if not site_object.final:
 					elem_name = element.replace("-"," ").capitalize()
