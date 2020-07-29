@@ -31,7 +31,7 @@ export function getFields() {
     $(".editor-div").show()
     $(".not-editing-message").hide()
     $(".edit-input").val('')
-    var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue)
+    var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue).split("|")[0]
     currentElem= utils.formatDB($(event.target).parent().contents().filter(function() {
         return this.nodeType == Node.TEXT_NODE; }).text().trim())
     console.log(currentElem)
@@ -52,23 +52,28 @@ export function getFields() {
             var fields = Object.keys(data)
             var fieldSlots = $(".field")
             var fieldInputs =  $(".edit-input")
+            console.log(inputValues)
             for(let i = 0; i < fieldSlots.length; i++){
                   $(fieldSlots[i]).text(fields[i])
                   utils.inputChanger( $(fieldInputs[i]),data[fields[i]])
                   if (edit || currentElem in inputValues) {
+                    console.log(currentElem)
                     var fieldValue = inputValues[currentElem][fields[i]]
-                    if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != "" &&JSON.parse(fieldValue)[2] != ""){
+                    if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != "" && JSON.parse(fieldValue)[2] != ""){
                         $(fieldInputs[i]).siblings("label").text(JSON.parse(fieldValue)[2])
+                        console.log("1")
                     }
                     else if ($(fieldInputs[i]).attr("type")=="file") {
                         $(fieldInputs[i]).siblings("label").text("Select Image")
+                        console.log("2")
                     }
                     else {
-                        $(fieldInputs[i]).val(fieldValue)  
+                        $(fieldInputs[i]).val(fieldValue)
+                        console.log("3")  
                     }
                   }
                 }
-
+            
             $(".editor-element-info").text(" " + parentText +" ")
             $(".confirm-edit-link").text("Confirm")
         },
@@ -81,6 +86,7 @@ export function confirmEdits() {
     var activeFields = $(".field")
     var sendFiles = false
     var activeElem = currentElem
+    console.log(currentElem)
     //var activeElem = utils.formatDB($(".editor-element-info").text())
     $(".edit-input").map((pos,input) => {
        

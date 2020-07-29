@@ -132,7 +132,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 								data_type = ast.literal_eval(block_type.objects.get(type_name = elem).fields)[field]
 								# print(data_type)
 								if data_type == "file" and r_content_dict[field] != "" and eval(r_content_dict[field])[2] == "":
-									image_obj = image.objects.filter(owner_site = name, element = elem, field = field)
+									image_obj = image.objects.filter(owner_site = name, element = c_elem, field = field)
 									if image_obj.exists():
 										image_obj.delete()
 
@@ -268,8 +268,13 @@ def editor_view(request, site_name):
 		return(redirect('http://127.0.0.1:8000/dashboard'))
 
 	values=block.objects.filter(owner_site=site_name)
+	block_names = site.objects.get(name=site_name).elements.strip().split(" ")
 	value_dict={}
+	counter = 0
+	print(block_names)
 	for value_block in values:
-		value_dict[value_block.block_type]=ast.literal_eval(value_block.content)		
+		value_dict[block_names[counter]]=ast.literal_eval(value_block.content)
+		counter += 1
+	print(value_dict)	
 	return(creator_view(request,json.dumps(value_dict),site_name))
 		

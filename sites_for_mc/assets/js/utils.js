@@ -41,6 +41,7 @@ export function inputChanger(inputElem,type) {
     else if (type == "file"){
         $(inputElem).siblings('a').show()
         $(inputElem).siblings("label").show()
+        $(inputElem).siblings("label").text("Select Image")
         $(inputElem).hide()
     }
 
