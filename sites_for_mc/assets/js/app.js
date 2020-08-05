@@ -23,10 +23,13 @@ $( function() {
 });
 
 // sortable sortupdate
-$('#sortable-main').on('sortupdate', () => {utils.sortLi(event.target)})
+$('#sortable-main').sortable({receive: ( event, ui ) => {toolbox.sortLi(ui.item)}});
 
 //sortable delete element 
-$( "#sortable-tray" ).sortable({receive: ( event, ui ) => {ui.item.remove()}});
+$( "#sortable-tray" ).sortable({receive: ( event, ui ) => {toolbox.trayAdd(ui.item)}});
+
+//sortable reset elements
+//$(".sortable").on("sortupdate", toolbox.resetElems())
 
 //get fields
 $( ".sortable" ).on( "click",".element-edit-link", edit.getFields)

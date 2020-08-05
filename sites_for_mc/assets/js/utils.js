@@ -53,10 +53,17 @@ jQuery.fn.justText = function()  {
 			.remove()
 			.end()
             .text()
-            .trim();
+            .trim()
+            .split("|")[0];
 
 };
 
+jQuery.fn.concatText = function() {
+    return formatDB($(this).contents().filter(
+        function() {
+            return this.nodeType == Node.TEXT_NODE; 
+        }).text().trim())
+}
 export function colorInverter(targetElem, elemClass) {
     $(elemClass).css({
         'color' : 'black',
@@ -70,44 +77,7 @@ export function colorInverter(targetElem, elemClass) {
 }
 
 //move to toolbox
-var longTermNumDict = {}
-console.log(longTermNumDict)
-export function sortLi(target) {
-   
-    var sortUl =  $('#sortable-main')
-    if (sortUl.children().length > 5 ) {
 
-        if ($(target).next().length != 0){
-            $(target).next().remove()
-            $(target).clone().appendTo(".sortable-tray")
-        }
-        else{
-            sortUl.children().first().remove()
-        }
-
-        var elemNumDict = {}
-        $.each(sortUl.children(), ( index, value ) => {
-            var text = $(value).justText().split("|")[0]
-            if (text in elemNumDict){
-                if (!($(value).text().includes("|"))){
-                    elemNumDict[text] ++
-                    var txt = document.createTextNode("|"+elemNumDict[text])
-                    $(value).append(txt)
-                }   
-            }else{
-                if ([text] in longTermNumDict) {
-                    elemNumDict[text] = longTermNumDict[text]
-                }
-                else {
-                    elemNumDict[text] = 1
-                }
-            }
-        })
-        longTermNumDict = elemNumDict
-        console.log(longTermNumDict)
-    }
-
-}
 
 export var base_url = "http://127.0.0.1:8000"
 export var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value 
