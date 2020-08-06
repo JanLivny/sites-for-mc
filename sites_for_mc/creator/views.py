@@ -58,7 +58,27 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						toolbox_list.append(blk.type_name) 
 
 					return HttpResponse(json.dumps(toolbox_list))
-					
+#if preview was requested
+			elif 'previewName' in post_data:
+				preview_elem = post_data.getlist('previewName')[0]	
+				preview_type = block_type.objects.get(type_name = preview_elem)
+				template = ast.literal_eval(preview_type.template)
+				fields = ast.literal_eval(preview_type.fields)	
+				template_text = ""
+				image_arr = []
+				counter = len(fields.keys())
+				for key in fields:
+					counter -= 1
+					if fields[key] == "text":
+						template_text += template["pre_"+ key]
+						print(counter)
+						template_text += "["+key+"]"
+						if not counter > 0:
+							template_text +=template["final"] 
+					else:
+						image_arr.append(key)
+
+				return HttpResponse(str(json.dumps([template_text,image_arr])))
 #if new site is to be created
 			elif 'innerlist[]' in post_data:
 				create = True

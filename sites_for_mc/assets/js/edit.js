@@ -27,9 +27,41 @@ $(".creator-input").change(()=>{
     }
 })
 
+export function selectEdit(target) {
+    var targetId = $(target).attr('id')
+    utils.colorInverter($(target),".selector-link")
+    if (targetId.includes("fields")){
+        $(".preview-div").text("")
+        $(".preview-image-div").remove()
+        $(".preview-div").hide()
+        $(".editor-div").show()
+    }else if(targetId.includes("preview")){
+        $(".preview-div").show()
+        $(".editor-div").hide()
+        var previewName = currentElem
+        $.ajax({
+            headers: {'X-CSRFToken':utils.csrf_token},
+            type: "POST",
+            url: "http://127.0.0.1:8000/creator/",
+            data: {previewName},
+            success: (data) => {
+                data = JSON.parse(data)
+                $(".preview-div").text(data[0])
+                var imageArr = data[1]
+                $(".preview-div").append("<div class='preview-image-div'> </div>")
+                $.each(imageArr, (index, value)=>{
+                    $(".preview-image-div").append("<div class='image-preview-div'>" + value + "<div>")
+                })
+            
+            },
+            failure: () => {}
+        })
+}}
+
 export function getFields() {  
-    $(".editor-div").show()
+    selectEdit($("#selector-fields"))
     $(".not-editing-message").hide()
+    $(".editor-button-div").show()
     $(".edit-input").val('')
     var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue).split("|")[0]
     currentElem= utils.formatDB($(event.target).parent().contents().filter(function() {
@@ -114,12 +146,11 @@ export function confirmEdits() {
         }
     })
     
-    // CHANGE THIS TO GLOBAL VAR
-    //$(".editor-element-info").text().trim().replace(" ", "-").toLowerCase()
    inputValues[currentElem] = currentInputs
    $(".confirm-edit-link").text("Confirmed")
    console.log(inputValues)
 }
+
 
 export function ClearInput() {
     var target = event.target

@@ -61,7 +61,7 @@
 	margin: auto;
 	width:100px;
 	display: block;
-	margin-top:50px;
+	margin-top:30px;
 	font-size:20px;	
 	text-align: center;
 	
@@ -129,3 +129,51 @@
 	overflow-y: auto;
 }
 
+//selector div
+.selector-div {
+	margin:auto;
+	text-align: center;
+	margin-top: 25px;
+}
+
+.selector-link {
+	display: inline-block;
+	border:black 1px solid; 	
+	text-align: center;
+	cursor: pointer;
+	padding:1px 5px;
+	width: 85px;
+}
+
+.selector-link:hover {
+	color:white;
+	background-color: black;
+	text-decoration: none;
+}
+
+
+//preview-div
+
+.preview-div {
+	text-align: center;
+	border:1px black solid;
+	margin: auto;
+	padding: 5px;
+	height: 211px;
+	width: 360px;
+	overflow: auto;
+}
+
+.image-preview-div {
+	margin: 5px;
+	display: inline-block;
+	background: black;
+	width: 150px;
+	height: 120px;
+	color:white;
+	line-height: 120px;
+}
+
+.preview-image-div {
+	margin-top: 10px;
+}

@@ -13,7 +13,10 @@ import * as toolbox from "./toolbox.js"
 
 //setup
 $(document).foundation()
+
 $(".editor-div").hide()
+$(".editor-button-div").hide()
+$(".preview-div").hide()
 
 //sortable setup
 $( function() {
@@ -48,6 +51,9 @@ $( ".site-create-button" ).on( "click",()=> {newsite.new_site(edit.inputValues, 
 
 //fetch toolbox blocks
 $( ".toolbox-header" ).on( "click",()=> {toolbox.fetchBlocks(event.target)})
+
+//preview selector
+$( ".selector-link" ).on( "click",()=> {edit.selectEdit(event.target)})
 
 //DASHBOARD
 
