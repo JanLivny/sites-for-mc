@@ -3,6 +3,7 @@ import { inputValues } from "./edit.js"
 
 export function resetElems() {
     $(".editor-div").hide()
+    $(".editor-button-div").hide()
     $(".not-editing-message").show()
     var editorListItems = $(".editor-li")
     for(let i = 0; i< editorListItems.length;i++){

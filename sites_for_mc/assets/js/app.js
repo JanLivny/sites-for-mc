@@ -28,7 +28,7 @@ $( function() {
 // sortable sortupdate
 $('#sortable-main').sortable({receive: ( event, ui ) => {toolbox.sortLi(ui.item)}});
 
-//sortable delete element 
+//sortable Tray Add
 $( "#sortable-tray" ).sortable({receive: ( event, ui ) => {toolbox.trayAdd(ui.item)}});
 
 //sortable reset elements

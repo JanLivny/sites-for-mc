@@ -38,7 +38,7 @@ export function selectEdit(target) {
     }else if(targetId.includes("preview")){
         $(".preview-div").show()
         $(".editor-div").hide()
-        var previewName = currentElem
+        var previewName = currentElem.split("|")[0]
         $.ajax({
             headers: {'X-CSRFToken':utils.csrf_token},
             type: "POST",
@@ -93,15 +93,12 @@ export function getFields() {
                     var fieldValue = inputValues[currentElem][fields[i]]
                     if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != "" && JSON.parse(fieldValue)[2] != ""){
                         $(fieldInputs[i]).siblings("label").text(JSON.parse(fieldValue)[2])
-                        console.log("1")
                     }
                     else if ($(fieldInputs[i]).attr("type")=="file") {
                         $(fieldInputs[i]).siblings("label").text("Select Image")
-                        console.log("2")
                     }
                     else {
                         $(fieldInputs[i]).val(fieldValue)
-                        console.log("3")  
                     }
                   }
                 }
