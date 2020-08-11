@@ -60,9 +60,14 @@ export function selectEdit(target) {
 
 export function getFields() {  
     selectEdit($("#selector-fields"))
-    $(".not-editing-message").hide()
+    
     $(".editor-button-div").show()
+    $(".not-editing-message").hide()
+    $(".dynamic-field").remove()
     $(".edit-input").val('')
+
+    
+  
     var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue).split("|")[0]
     currentElem= utils.formatDB($(event.target).parent().contents().filter(function() {
         return this.nodeType == Node.TEXT_NODE; }).text().trim())
@@ -82,9 +87,25 @@ export function getFields() {
         success: (data) => {
             data = JSON.parse(data)
             var fields = Object.keys(data)
+            var fieldsLength = fields.length - 1
+
+            for(let k=2; k < fieldsLength + 2   ; k++){
+                var remeberME = "file-input-1"
+                var appendDiv = $(".editorDiv").first().clone()
+
+                appendDiv.children("form").prop("id","form"+k)
+                appendDiv.find("input").prop("id","file-input-"+k)
+                appendDiv.find("label").prop("for","file-input-"+k)
+             
+                let cls = appendDiv.prop("class")
+                cls += " dynamic-field"
+                appendDiv.prop("class",cls)
+                appendDiv.appendTo($(".editor-div"))
+            }
+
             var fieldSlots = $(".field")
             var fieldInputs =  $(".edit-input")
-            console.log(inputValues)
+
             for(let i = 0; i < fieldSlots.length; i++){
                   $(fieldSlots[i]).text(fields[i])
                   utils.inputChanger( $(fieldInputs[i]),data[fields[i]])

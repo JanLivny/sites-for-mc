@@ -13,6 +13,9 @@ import * as toolbox from "./toolbox.js"
 
 //setup
 $(document).foundation()
+if(window.location.href.includes("editor") || window.location.href.includes("creator")){
+  toolbox.fetchBlocks(".first-toolbox-header")
+}
 
 $(".editor-div").hide()
 $(".editor-button-div").hide()
@@ -55,6 +58,8 @@ $( ".toolbox-header" ).on( "click",()=> {toolbox.fetchBlocks(event.target)})
 //preview selector
 $( ".selector-link" ).on( "click",()=> {edit.selectEdit(event.target)})
 
+//toolbox search
+$(".block-search").on("input", toolbox.searchBlocks)
 //DASHBOARD
 
 

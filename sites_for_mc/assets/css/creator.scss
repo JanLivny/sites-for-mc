@@ -129,6 +129,19 @@
 	overflow-y: auto;
 }
 
+.block-search {
+	width:360px;
+	border: 1px solid black;
+	height:44px;
+	padding:8px;
+	margin-left:19px;
+}
+
+.empty-search-message {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+}
 //selector div
 .selector-div {
 	margin:auto;
@@ -159,7 +172,7 @@
 	border:1px black solid;
 	margin: auto;
 	padding: 5px;
-	height: 211px;
+	height: 300px;
 	width: 360px;
 	overflow: auto;
 }
@@ -176,4 +189,11 @@
 
 .preview-image-div {
 	margin-top: 10px;
+}
+
+//other
+
+.editor-div{
+	height:300px;
+	overflow: auto;
 }

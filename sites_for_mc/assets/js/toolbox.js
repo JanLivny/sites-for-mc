@@ -10,8 +10,12 @@ export function resetElems() {
         $(editorListItems[i]).css("background-color","lightgray")
 }}
 
-export function fetchBlocks(target) {
+var toolboxElems = []
+var toolboxSection = ""
+
+export function fetchBlocks(target, overideElems = "") {
     target = $(target)
+    toolboxSection = target
     utils.colorInverter(target,".toolbox-header")
     var toolboxType = utils.formatDB(target.text())
     $('#sortable-tray').html("")
@@ -22,8 +26,12 @@ export function fetchBlocks(target) {
         url: "http://127.0.0.1:8000/creator/",
         data: {toolboxType},
         success: (data) => { 
-            console.log(data)   
-            data = JSON.parse(data)
+            if (overideElems == ""){
+                data = JSON.parse(data)
+            }else{
+                data = overideElems
+            }
+            toolboxElems = data
             $.each(data, ( index, value ) => {
                 var toolboxLi = $(".toolbox-li")
                 value = value[0].toUpperCase() + value.slice(1)
@@ -125,4 +133,29 @@ export function trayAdd(target) {
             }
         }
     })
+}
+
+export function searchBlocks() {
+    var searchVal = utils.formatDB($(".block-search").val())
+    var matchingBlocks = []
+    $('.empty-search-message').remove()
+
+    if (searchVal != ""){
+        $.each(toolboxElems, ( index, value ) => {
+        if (value.includes(searchVal)){
+            matchingBlocks.push(value)
+        }
+        })
+        if (matchingBlocks.length != 0){
+            fetchBlocks(toolboxSection, matchingBlocks)
+        }
+        else {
+            $('#sortable-tray').html( "<p class = 'empty-search-message'> Sorry, no blocks match your search. </p>")
+    
+        }
+
+    }else{
+        fetchBlocks(toolboxSection)
+    }
+  
 }
