@@ -6,6 +6,7 @@ import * as quickEdit from "./quick-edit.js"
 import * as dashManage from "./dash-manage.js"
 import * as dashboard from "./dashboard.js"
 import * as toolbox from "./toolbox.js"
+import * as blockCreator from "./block-creator.js"
 
 
 //CREATOR
@@ -13,7 +14,7 @@ import * as toolbox from "./toolbox.js"
 
 //setup
 $(document).foundation()
-if(window.location.href.includes("editor") || window.location.href.includes("creator")){
+if((window.location.href.includes("editor") || window.location.href.includes("creator")) && ! window.location.href.includes("block-creator")){
   toolbox.fetchBlocks(".first-toolbox-header")
 }
 
@@ -85,3 +86,12 @@ $(".dash-create-site-button").on("click", dashboard.checkSiteAmount)
 //show full adress 
 $(".adress-span a").on("click", dashboard.showAdress)
 
+//BLOCK CREATOR
+
+// add new block line
+
+$(".block").on("click",".bl-add-link", blockCreator.addLine)
+
+$(".block").on("click",".bl-remove-link",blockCreator.removeLine)
+
+$(".create-block-button").on("click",blockCreator.newBlock)

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from signin.views import home_view
 from dashboard.views import dash_view
+from block_creator.views import block_creator_view
 from creator.views import creator_view, page_view, editor_view
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
@@ -27,6 +28,7 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('dashboard/', dash_view, name='dashboard'),
     path('creator/', creator_view, name='creator'),
+    path('block-creator/',block_creator_view, name = "block_creator"),
     path('editor/<str:site_name>/', editor_view),
     path('creator/<str:site_name>/', page_view)
      

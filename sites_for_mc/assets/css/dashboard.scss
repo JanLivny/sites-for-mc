@@ -1,3 +1,4 @@
+
 //accordion
 .accordion {
 	width:60%;
@@ -19,7 +20,18 @@
 }
 
 //dash styles
+.dash-header{
+	//border: 3px solid black;
+	width: 300px;
+	margin: auto;
+	color: white;
+	background: black;
+}
 
+#block-header {
+	margin-top: 100px;
+	margin-bottom:100px;
+}
 //quick edit
 .dash-columb {
 	text-align: center;

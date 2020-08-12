@@ -1,0 +1,49 @@
+// block layer styles
+.block-layer {
+    border: black solid 1px;
+    width: 788px;
+    height: 50px;
+    margin: auto;
+    line-height: 48px;
+    padding-left:5px;
+    margin-bottom: 30px;
+}
+
+//dropdown
+.bl-input-type-selector {
+    width: 110px;
+    margin: 0px;
+    height: 39px;
+    line-height: 20px;
+}
+
+.bl-input-type-selector option{
+    text-align: center;
+}
+
+.bl-field-inputs {
+    display: inline-block;
+    border-right:1px solid black;
+    border-left:1px solid black;
+    padding:0px 5px;
+    height: 49px;
+}
+
+.bl-input{
+    display: inline-block;
+    width: 110px;
+    margin: 0px;
+}
+
+.bl-input-main {
+    width: 150px;
+}
+
+.bl-link {
+    border-left:1px solid black;
+    display: inline-block;
+    text-align: center;
+    width: 113px;
+    height: 49px;
+    
+}

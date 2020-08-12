@@ -1,0 +1,34 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<header class="bc-header">
+    <h1 class="page-header">Block Creator</h1>
+    <nav class="horizontal-layout  ">
+      <a class='nav-element' href = 'http://127.0.0.1:8000/'> Home </a>
+      <a class='nav-element' href = 'http://127.0.0.1:8000/dashboard'> Dashboard </a>
+      <a class='nav-element' href = ''> Account </a> 
+    </nav>
+</header>
+
+<div class="block">
+
+    <div class="block-layer">
+        <input placeholder = "Pre input text" type="text" class="bl-input  bl-input-main">
+        <span class="bl-field-inputs">
+            <select class="bl-input-type-selector">
+                <option value="0">Input type:</option>
+                <option value="1">text</option>
+                <option value="2">file</option>
+            </select>
+            <input placeholder = "Field name" type="text" class="bl-input field-name-input">
+        </span>
+        <input placeholder = "Post input text" type="text" class="bl-input  bl-input-main">
+        <a class="bl-add-link bl-link">Add line</a>
+        <a class="bl-remove-link bl-link">Remove</a>
+    </div>
+    
+</div>
+
+<button class = 'big-button create-block-button'>create new block</button>
+
+{% endblock content%}
