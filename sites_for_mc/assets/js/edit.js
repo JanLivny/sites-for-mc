@@ -21,10 +21,10 @@ export var inputValues = tempInputValues
 // update file upload labels
 export var formData = new FormData();
 
-$(".creator-input").change(()=>{
+$( ".editor-div" ).on( "input",".creator-input",()=>{
     if($(event.target).attr("type") =="file") {
         $(event.target).siblings("label").text($(event.target).val().split("\\").pop())
-    }
+    }   
 })
 
 export function selectEdit(target) {
@@ -65,9 +65,9 @@ export function getFields() {
     $(".not-editing-message").hide()
     $(".dynamic-field").remove()
     $(".edit-input").val('')
-
-    
-  
+    if ($(event.target).parent().parent().prop("id") == "sortable-tray"){
+        $(".confirm-edit-link").hide()
+    }else{ $(".confirm-edit-link").show()}
     var parentText = utils.formatDB($(event.target).parent().contents().get(0).nodeValue).split("|")[0]
     currentElem= utils.formatDB($(event.target).parent().contents().filter(function() {
         return this.nodeType == Node.TEXT_NODE; }).text().trim())

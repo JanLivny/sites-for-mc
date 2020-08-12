@@ -44,7 +44,8 @@ $( ".sortable" ).on( "click",".element-edit-link", edit.getFields)
 $( ".confirm-edit-link" ).on( "click",()=>{edit.confirmEdits()})
 
 //clear file field 
-$(".clear-link").on("click", edit.ClearInput)
+
+$( ".editor-div" ).on( "click",".clear-link", edit.ClearInput)
 
 //reset confiramntion indicator
 $(".edit-input").on( "click",() => $(".confirm-edit-link").text("Confirm"));
