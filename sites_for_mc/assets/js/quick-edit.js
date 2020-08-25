@@ -50,9 +50,14 @@ export function updateElems() {
 
 export function fullEditor() {
     var target = $(event.target)
-    var statusData = target.attr('name')
-  
-    
-    utils.redirect("editor/"+statusData)
+    var name = target.attr('name')
+    if(target.parent().attr("class") == "dash-edit-buttons"){
+        utils.redirect("editor/"+name)
+    }else{
+        name = target.parent().siblings("span").text()
+        console.log(name)
+        utils.redirect("block-editor/"+name)
+    }
+ 
 }
 

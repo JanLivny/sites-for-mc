@@ -6,6 +6,16 @@ import json
 from django.http import HttpResponseNotFound
 from dashboard.views import *
 # Create your views here.
+def str_character_check(string):
+	legal_name = True
+	illegal_values = ["<", ">","#","%", '"',"{", "}","|","\\","^","`",";","/","?",":","@","&","=","+","$",","]
+	used_values = ""
+	for illegal_value in illegal_values:
+		if illegal_value in string:
+			legal_name = False
+			used_values += illegal_value
+	return legal_name, used_values
+
 def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 #set up context 
 	my_context = {}
@@ -46,18 +56,23 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
 				parent_type = post_data['parentText']
+				print(parent_type)
 				parent_fields = block_type.objects.get(type_name=parent_type).fields
 				return HttpResponse(parent_fields)
 #if toolbox elements where requested
 			elif 'toolboxType' in post_data:
 				toolbox_type = post_data.getlist('toolboxType')[0]
-				if toolbox_type == "sfm-blocks":
-					toolbox_list = []
-					toolbox_blocks = block_type.objects.filter(official=True)
-					for blk in toolbox_blocks:
-						toolbox_list.append(blk.type_name) 
+				toolbox_list = []
+				toolbox_blocks = ""
 
-					return HttpResponse(json.dumps(toolbox_list))
+				if toolbox_type == "sfm-blocks":
+					toolbox_blocks = block_type.objects.filter(official=True)
+				elif toolbox_type == "user-blocks":
+					toolbox_blocks = block_type.objects.filter(official=False)
+				for blk in toolbox_blocks:
+					toolbox_list.append(blk.type_name) 
+
+				return HttpResponse(json.dumps(toolbox_list))
 #if preview was requested
 			elif 'previewName' in post_data:
 				preview_elem = post_data.getlist('previewName')[0]	
@@ -66,15 +81,15 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 				fields = ast.literal_eval(preview_type.fields)	
 				template_text = ""
 				image_arr = []
-				counter = len(fields.keys())
+				# counter = len(fields.keys())
 				for key in fields:
-					counter -= 1
+					# counter -= 1
 					if fields[key] == "text":
 						template_text += template["pre_"+ key]
-						print(counter)
 						template_text += "["+key+"]"
-						if not counter > 0:
-							template_text +=template["final"] 
+						template_text += template["post_"+ key]
+						# if not counter > 0:
+						# 	template_text +=template["final"] 
 					else:
 						image_arr.append(key)
 
@@ -91,24 +106,19 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 				name = real_name.strip().replace(" ","-").lower()
 				#if name duped
 				if site.objects.filter(name=name).exists():
-					#if name is already in use by user edit protocol
-					if site.objects.get(name=name).owner == str(current_user):
-						edit = True
-					else:
-						create = False
-						return HttpResponse('0')
+					# #if name is already in use by user edit protocol
+					# if site.objects.get(name=name).owner == str(current_user):
+					# 	edit = True
+					# else:
+					create = False
+					return HttpResponse('0')
 				#if empty name
 				elif name == "":
 					create = False
 					return HttpResponse('1')
 				#illegal name
 				else:
-					illegal_values = ["<", ">","#","%", '"',"{", "}","|","\\","^","`",";","/","?",":","@","&","=","+","$",","]
-					used_values = ""
-					for illegal_value in illegal_values:
-						if illegal_value in name:
-							create = False
-							used_values += illegal_value
+					create, used_values = str_character_check(name)
 					if not create:
 						return HttpResponse("4 "+used_values)
 				#if site has to be created 
@@ -242,12 +252,12 @@ def page_view(request,site_name):
 
 				if block_content[field_text] == "":
 					if not site_object.final:
-						elem_text+= template["pre_"+field_text] + "[placeholder text]"
+						elem_text+= template["pre_"+field_text] + "[placeholder text]" +  template["post_"+field_text]
 						empty_field = False	
 						elem_name = element.replace("-"," ").capitalize() 
 				else:
 					elem_name = element.replace("-"," ").capitalize() 
-					elem_text+= template["pre_"+field_text] + block_content[field_text]
+					elem_text+= template["pre_"+field_text] + block_content[field_text] + template["post_"+field_text]
 					empty_field = False	
 			else:
 				addPlaceholder = False
@@ -270,8 +280,8 @@ def page_view(request,site_name):
 					empty_field = False
 			
 
-		if not all_images and not empty_field:
-			elem_text += template["final"]
+		# if not all_images and not empty_field:
+		# 	elem_text += template["final"]
 
 		images["block"+str(block_num)] = image_html
 		content["block"+str(block_num)]=[elem_name,elem_text]

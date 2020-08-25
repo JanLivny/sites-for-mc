@@ -1,15 +1,22 @@
 import * as utils from "./utils.js"
 
 export function deleteSite() {
+    console.log("ddw")
     var target = $(event.target)
-    var delName = target.attr('name')
+    var delType = "site"
+    var delName = "";
+    console.log(target.parent().attr("class"))
+    if (target.parent().attr("class") == "block-drawer-buttons"){delType = "block"; delName = target.parent().siblings().text()}
+    else{ delName =target.attr('name')}
+    var delInfo = JSON.stringify([delName,delType])
+    console.log(delInfo)
     utils.popup(()=>{$.ajax({
         headers: {'X-CSRFToken':utils.csrf_token},    
         type: "POST",   
         url: "http://127.0.0.1:8000/dashboard/",
-        data: {delName},
+        data: {delInfo},
         success: () => {
-            utils.popup(()=>{location.reload();},()=>{},false,"Site deleted Succesfully")     
+            utils.popup(()=>{location.reload();},()=>{},false,"Item deleted Succesfully")     
         },
         failure: () =>  console.log('ajax failure')
         })

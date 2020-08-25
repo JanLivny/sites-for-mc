@@ -20,3 +20,15 @@ export function showAdress() {
     var adress = utils.base_url +"/creator/"+ shortAdress.pop()
     utils.popup(()=>{},()=>{},false,adress)
 }
+
+if(window.location.href.includes("dashboard") ){
+    var blockArr = $(".block_name_span").text().split(" ")
+    blockArr.pop()
+    $.each(blockArr, (index, value) => {
+        var drawer = $(".block-drawers").find(".block-drawer").first().clone()
+        drawer.find(".block-drawer-name").text(value)
+        console.log(drawer)
+        drawer.appendTo($(".block-drawers"))
+    })
+    $(".block-drawer").first().hide()
+}

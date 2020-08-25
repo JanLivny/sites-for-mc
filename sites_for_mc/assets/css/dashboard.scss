@@ -30,7 +30,7 @@
 
 #block-header {
 	margin-top: 100px;
-	margin-bottom:100px;
+	margin-bottom:50px;
 }
 //quick edit
 .dash-columb {
@@ -148,4 +148,21 @@
 .all-switches {
 	padding-bottom: 0px;
 	height:115px;
+}
+
+.block-drawer {
+	border: 1px solid black;
+	width: 828px;
+	height: 61px;
+	margin: auto;
+	font-size: 20px;
+	padding: 0px 16px;
+	line-height: 61px;
+	margin-bottom:10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.block-drawer-buttons a{
+	margin-left: 15px;
 }

@@ -17,15 +17,23 @@ def dash_view(request, *args, **kwargs):
 
 		counter = 0
 		user_site_urls={}
+		block_name_arr = ""
+
+		user_blocks = block_type.objects.filter(owner = current_user)
+		for block in user_blocks:
+			block_name_arr += block.type_name + " "
+
+
 		for user_site in site.objects.filter(owner = current_user):
 			user_sites["site_"+str(counter)]=user_site.name
 			user_site_urls["site_"+str(counter)] = "http://127.0.0.1:8000/creator/" + user_site.name
 			counter+=1
-
 		my_context = {
 			"user_sites":user_sites,
-			"user_site_urls":user_site_urls
+			"user_site_urls":user_site_urls,
+			"block_name_arr":block_name_arr
 		}
+
 		if request.method == "POST":
 			post_data = request.POST
 			print(post_data)
@@ -76,18 +84,19 @@ def dash_view(request, *args, **kwargs):
 				user_site.elements = elem_string
 				user_site.save()
 			#delete site
-			elif 'delName' in post_data:
-				del_site_name = post_data.getlist('delName')[0]
+			elif 'delInfo' in post_data:
+				del_info = ast.literal_eval(post_data.getlist('delInfo')[0])
+				del_name = del_info[0]
+				del_type = del_info[1]
 
-				#SECURITY#
-				if str(request.user) != site.objects.filter(name=del_site_name)[0].owner:
-					return(redirect("http://127.0.0.1:8000/dashboard"))
-				#SECURITY#
-
-				site.objects.filter(name=del_site_name).delete()
-				block.objects.filter(owner_site=del_site_name).delete()
-				site_data_table.objects.filter(owner_site=del_site_name).delete()
-				image.objects.filter(owner_site=del_site_name).delete()
+				if del_type == "site":
+					if str(request.user) == site.objects.filter(name=del_name)[0].owner:
+						site.objects.filter(name=del_name).delete()
+						block.objects.filter(owner_site=del_name).delete()
+						site_data_table.objects.filter(owner_site=del_name).delete()
+						image.objects.filter(owner_site=del_name).delete()
+				elif str(request.user) == block_type.objects.filter(type_name=del_name)[0].owner:
+					block_type.objects.filter(type_name=del_name).delete()
 			#change privacy preference
 			elif 'statusData' in  post_data:
 				status_data = ast.literal_eval(post_data.getlist("statusData")[0])

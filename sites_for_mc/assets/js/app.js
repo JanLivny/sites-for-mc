@@ -86,12 +86,18 @@ $(".dash-create-site-button").on("click", dashboard.checkSiteAmount)
 //show full adress 
 $(".adress-span a").on("click", dashboard.showAdress)
 
+//redirect to blockcreator
+
+$(".dash-create-block-button").on("click", ()=>{utils.redirect("block-creator")})
 //BLOCK CREATOR
 
 // add new block line
 
+//add line
 $(".block").on("click",".bl-add-link", blockCreator.addLine)
 
+//remove line
 $(".block").on("click",".bl-remove-link",blockCreator.removeLine)
 
+//create Block
 $(".create-block-button").on("click",blockCreator.newBlock)
