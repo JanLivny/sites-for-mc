@@ -120,17 +120,13 @@ li.sortable-placeholder {
     border: 4px solid black;
 	background: black;
     position: absolute;
-    top:0;
     left:0;
     right: 0;
-	bottom:0;
+	bottom:50%;
 }
 
-.popup-links{
-	display: flex;
-	justify-content: space-between;
+.popup-link{
 	margin: auto;
-	width:150px;
 	text-align: center;
 }
 .popup-link {
@@ -139,6 +135,14 @@ li.sortable-placeholder {
 
 .popup-link:hover {
 	color:lightgray;
+}
+.popup-links {
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+	margin: auto;
+	width: 150px;
+
 }
 .popup-content{
 	height:60%;

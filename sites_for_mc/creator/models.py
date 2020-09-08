@@ -15,7 +15,7 @@ class block_type(models.Model):
 	template = models.TextField()
 	fields = models.TextField()  
 	owner = models.CharField(max_length=30)
-	official = models.BooleanField()
+	modifier_type = models.CharField(max_length=30)
 	
 class block(models.Model):                                                                                                                                                                                                                                                                                                                                  
 	content = models.TextField()

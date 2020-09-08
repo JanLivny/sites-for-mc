@@ -69,6 +69,7 @@ export function fetchBlocks(target, overideElems = "") {
         url: "http://127.0.0.1:8000/creator/",
         data: {toolboxType},
         success: (data) => { 
+            console.log(data)
             if (overideElems == ""){
                 data = JSON.parse(data)
             }else{

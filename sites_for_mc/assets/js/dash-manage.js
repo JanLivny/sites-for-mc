@@ -15,8 +15,10 @@ export function deleteSite() {
         type: "POST",   
         url: "http://127.0.0.1:8000/dashboard/",
         data: {delInfo},
-        success: () => {
-            utils.popup(()=>{location.reload();},()=>{},false,"Item deleted Succesfully")     
+        success: (data) => {
+            if (data != "false"){
+                utils.popup(()=>{location.reload();},()=>{},false,"Item deleted Succesfully")   
+            }else{ utils.popup(()=>{},()=>{},false,"block may not be deleted as it is in use")}//popup not dissapearing
         },
         failure: () =>  console.log('ajax failure')
         })

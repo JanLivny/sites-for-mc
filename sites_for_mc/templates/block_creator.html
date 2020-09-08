@@ -13,7 +13,7 @@
 <div class="block">
 
     <div class="block-layer">
-        <input placeholder = "Pre input text" type="text" class="bl-input  bl-input-main">
+        <input placeholder = "Pre input text" type="text" class="bl-input  bl-input-main pre-input">
         <span class="bl-field-inputs">
             <select class="bl-input-type-selector">
                 <option value="0">Input type:</option>
@@ -22,7 +22,7 @@
             </select>
             <input placeholder = "Field name" type="text" class="bl-input field-name-input">
         </span>
-        <input placeholder = "Post input text" type="text" class="bl-input  bl-input-main">
+        <input placeholder = "Post input text" type="text" class="bl-input  bl-input-main post-input">
         <a class="bl-add-link bl-link">Add line</a>
         <a class="bl-remove-link bl-link">Remove</a>
     </div>
@@ -31,4 +31,5 @@
 
 <button class = 'big-button create-block-button'>create new block</button>
 
+<span style="display: none;" class="block-data-span">{{edit_dict}}</span>
 {% endblock content%}

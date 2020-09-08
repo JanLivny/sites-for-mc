@@ -3,7 +3,7 @@ import * as utils from "./utils.js"
 //setup
     var currentElem = ""
 //prep all values for editor
-if(window.location.href.includes("editor") ){
+if(window.location.href.includes("site-editor")){
     var edit = true
     var tempInputValues= JSON.parse($("#value-dict-span").text())
     var permanentInputValues = JSON.parse($("#value-dict-span").text())
@@ -109,8 +109,10 @@ export function getFields() {
             for(let i = 0; i < fieldSlots.length; i++){
                   $(fieldSlots[i]).text(fields[i])
                   utils.inputChanger( $(fieldInputs[i]),data[fields[i]])
-                  if (edit || currentElem in inputValues) {
+                  if (currentElem in inputValues) {
+                    // if (edit || currentElem in inputValues) {
                     console.log(currentElem)
+                    console.log(inputValues)
                     var fieldValue = inputValues[currentElem][fields[i]]
                     if ($(fieldInputs[i]).attr("type")=="file" && fieldValue != "" && JSON.parse(fieldValue)[2] != ""){
                         $(fieldInputs[i]).siblings("label").text(JSON.parse(fieldValue)[2])

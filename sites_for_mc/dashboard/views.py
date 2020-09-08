@@ -20,8 +20,8 @@ def dash_view(request, *args, **kwargs):
 		block_name_arr = ""
 
 		user_blocks = block_type.objects.filter(owner = current_user)
-		for block in user_blocks:
-			block_name_arr += block.type_name + " "
+		for x in user_blocks:
+			block_name_arr += x.type_name + " "
 
 
 		for user_site in site.objects.filter(owner = current_user):
@@ -91,12 +91,25 @@ def dash_view(request, *args, **kwargs):
 
 				if del_type == "site":
 					if str(request.user) == site.objects.filter(name=del_name)[0].owner:
-						site.objects.filter(name=del_name).delete()
 						block.objects.filter(owner_site=del_name).delete()
+						#^^^^^^Line that crashes^^^^^^^^^^^^^
 						site_data_table.objects.filter(owner_site=del_name).delete()
 						image.objects.filter(owner_site=del_name).delete()
+						site.objects.filter(name=del_name).delete()
+
 				elif str(request.user) == block_type.objects.filter(type_name=del_name)[0].owner:
-					block_type.objects.filter(type_name=del_name).delete()
+					if not block.objects.filter(block_type = del_name).exists():
+						block_type.objects.filter(type_name=del_name).delete()
+					else:
+						return HttpResponse("false")
+					# _site = site.objects.get(name = block.objects.filter(block_type=del_name)[0].owner_site)
+					# new_elems = ""
+					# for element in _site.elements.split(" "):
+					# 	if not del_name in element:
+					# 		new_elems += elements + " "
+					# 	else:
+					# 		new_elems += "deleted" + " "
+					# block.objects.filter(type_name=del_name).delete()
 			#change privacy preference
 			elif 'statusData' in  post_data:
 				status_data = ast.literal_eval(post_data.getlist("statusData")[0])

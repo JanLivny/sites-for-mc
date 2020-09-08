@@ -52,7 +52,7 @@ export function fullEditor() {
     var target = $(event.target)
     var name = target.attr('name')
     if(target.parent().attr("class") == "dash-edit-buttons"){
-        utils.redirect("editor/"+name)
+        utils.redirect("site-editor/"+name)
     }else{
         name = target.parent().siblings("span").text()
         console.log(name)

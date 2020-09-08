@@ -5,7 +5,7 @@
     background: black;
     color: white;
     margin: auto;
-    width: 10%;
+    width: 20%;
 }
 
 .user-block-text{
@@ -13,20 +13,39 @@
     margin:20px 0;
 }
 
+.user-blocks div {
+    width:1000px;
+    margin: auto;
+    min-height: 150px;
+    margin-bottom: 20px;
+    padding:50px 0px ;
+}
+
 //iamge styles
 
 .user-image{
     display: block;
-    width:200px;
-    margin:auto;
-    margin-bottom: 20px;
-    border:3px solid black;
+    height:300px;
+    margin-bottom: 2px;
+    margin-right: 2px;
     display: inline-block;
-    margin:20px;
 }
 
 .user-image-div {
     margin: auto;
-    width : 480px; 
+    width : 1350px; 
     text-align: center;
+}
+
+//body
+
+.user-body {
+    margin-bottom:50px;
+    
+}
+
+
+#block-2, #block-4 {
+    background: black;
+    color: white;
 }

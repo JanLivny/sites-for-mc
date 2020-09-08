@@ -47,28 +47,31 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 			primary_block_dict["block_"+ str(counter)]=blk.replace("-"," ").capitalize()
 			counter+=1
 
-		my_context["primary_block"]=primary_block_dict
+		my_context["primary_block"]=primary_block_dict		
 #if recieved ajax POST request	
+		print("hello world")
 		if request.method == "POST":
+			print("request is post")
 			post_data = request.POST	
-			print(post_data)
 			name = ''
 #if edit was pressed on one of the elements
 			if 'parentText' in post_data:
 				parent_type = post_data['parentText']
-				print(parent_type)
 				parent_fields = block_type.objects.get(type_name=parent_type).fields
 				return HttpResponse(parent_fields)
 #if toolbox elements where requested
 			elif 'toolboxType' in post_data:
+				print("dddw")
 				toolbox_type = post_data.getlist('toolboxType')[0]
 				toolbox_list = []
 				toolbox_blocks = ""
 
 				if toolbox_type == "sfm-blocks":
-					toolbox_blocks = block_type.objects.filter(official=True)
+					toolbox_blocks = block_type.objects.filter(modifier_type="official")
 				elif toolbox_type == "user-blocks":
-					toolbox_blocks = block_type.objects.filter(official=False)
+					toolbox_blocks = block_type.objects.filter(modifier_type="user")
+				elif  toolbox_type == "my-blocks":
+					toolbox_blocks = block_type.objects.filter(owner = request.user)
 				for blk in toolbox_blocks:
 					toolbox_list.append(blk.type_name) 
 
@@ -106,12 +109,12 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 				name = real_name.strip().replace(" ","-").lower()
 				#if name duped
 				if site.objects.filter(name=name).exists():
-					# #if name is already in use by user edit protocol
-					# if site.objects.get(name=name).owner == str(current_user):
-					# 	edit = True
-					# else:
-					create = False
-					return HttpResponse('0')
+					#if name is already in use by user edit protocol
+					if site.objects.get(name=name).owner == str(current_user):
+						edit = True
+					else:
+						create = False
+						return HttpResponse('0')
 				#if empty name
 				elif name == "":
 					create = False
@@ -155,8 +158,13 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						content_dict=str(content_dict)
 						#try to edit block if error create block
 						if edit:
-							edit_block=block.objects.get(owner_site = name, name=c_elem, block_type = elem)
-							edit_block.content = content_dict
+							if elem in site.objects.get(name=name).elements:
+								edit_block=block.objects.get(owner_site = name, name=c_elem, block_type = elem)
+								edit_block.content = content_dict
+							else:
+								block.objects.filter(owner_site = name, name=c_elem, block_type = elem).delete()
+								_block  = block(content=content_dict, owner_site=name, block_type=elem, name=c_elem)
+								_block.save()
 							#delete imagez if empty
 							for field in r_content_dict:
 								data_type = ast.literal_eval(block_type.objects.get(type_name = elem).fields)[field]
@@ -168,7 +176,6 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 
 							edit_block.save()
 						else:
-							print(content_dict)
 							_block  = block(content=content_dict, owner_site=name, block_type=elem, name=c_elem)
 							_block.save()
 					#if edit edit site
@@ -198,7 +205,6 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 					
 					image_obj = image.objects.filter(owner_site=p_key[0],element=p_key[1],field=p_key[2])
 					if image_obj.exists():
-						print(file_dict)
 						image_obj = image.objects.get(owner_site=p_key[0],element=p_key[1],field=p_key[2])
 						image_obj.name = p_key[3]
 						image_obj.image = file_dict[key]
@@ -228,7 +234,10 @@ def page_view(request,site_name):
 	images = {}
 	print(elem_arr)
 	for element in elem_arr:
-		block_content = ast.literal_eval(block.objects.get(owner_site=site_name, name=element).content) 
+		try:
+			block_content = ast.literal_eval(block.objects.get(owner_site=site_name, name=element).content) 
+		except: 
+			block_content = {"deleted":""}
 		print(block_content)
 		# if len(element) > 1:
 		# 	print('#####',element,'#####')
@@ -294,6 +303,7 @@ def page_view(request,site_name):
 	return render(request,'user_page.html',my_context)
 
 def editor_view(request, site_name):
+	print("editor_view")
 	if str(request.user) != site.objects.filter(name=site_name)[0].owner:
 		return(redirect('http://127.0.0.1:8000/dashboard'))
 
@@ -301,10 +311,8 @@ def editor_view(request, site_name):
 	block_names = site.objects.get(name=site_name).elements.strip().split(" ")
 	value_dict={}
 	counter = 0
-	print(block_names)
 	for value_block in values:
 		value_dict[block_names[counter]]=ast.literal_eval(value_block.content)
 		counter += 1
-	print(value_dict)	
 	return(creator_view(request,json.dumps(value_dict),site_name))
 		

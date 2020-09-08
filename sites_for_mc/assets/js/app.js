@@ -14,7 +14,7 @@ import * as blockCreator from "./block-creator.js"
 
 //setup
 $(document).foundation()
-if((window.location.href.includes("editor") || window.location.href.includes("creator")) && ! window.location.href.includes("block-creator")){
+if((window.location.href.includes("site-editor") || window.location.href.includes("creator"))){
   toolbox.fetchBlocks(".first-toolbox-header")
 }
 
@@ -24,6 +24,7 @@ $(".preview-div").hide()
 
 //sortable setup
 $( function() {
+    $( ".sortable" ).sortable();
     $( "#sortable-main, #sortable-tray" ).sortable({
       connectWith: ".sortable"
     }).disableSelection();
