@@ -21,7 +21,8 @@ def block_creator_view(request, edit_dict = "", *args, **kwargs):
 		if 'blockData' in post_data:
 			block_data = ast.literal_eval(post_data.getlist('blockData')[0])
 
-			block_name = block_data.pop()
+			block_name = block_data.pop().strip().replace(" ","-").lower()
+
 			if block_name == "":
 				return HttpResponse('0')
 

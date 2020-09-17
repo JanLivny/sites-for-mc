@@ -133,8 +133,9 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						#####################
 						#create elem string
 						#####################
-						c_elem = elem
-						elem = elem.split("|")[0]
+						c_elem = elem.strip().replace(" ","-").lower()
+						print(c_elem)
+						elem = elem.split("|")[0].strip().replace(" ","-").lower()
 						# elem = str(elem).strip().replace(" ","-").lower()		
 						# if elem_arr.count(elem) > 1:
 						# 	if not elem in elem_amount_dict:
@@ -147,6 +148,7 @@ def creator_view(request, value_dict = {}, name = "", *args, **kwargs):
 						elem_string += " " 
 						#add content
 						content_dict = {}
+						print(elem)
 						fields = ast.literal_eval(block_type.objects.get(type_name=elem).fields).keys()
 						for field in fields:
 							try: 

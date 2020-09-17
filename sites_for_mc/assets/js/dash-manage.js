@@ -16,9 +16,13 @@ export function deleteSite() {
         url: "http://127.0.0.1:8000/dashboard/",
         data: {delInfo},
         success: (data) => {
-            if (data != "false"){
-                utils.popup(()=>{location.reload();},()=>{},false,"Item deleted Succesfully")   
-            }else{ utils.popup(()=>{},()=>{},false,"block may not be deleted as it is in use")}//popup not dissapearing
+            console.log(data)
+            if (data == "false"){  
+                utils.popup(()=>{location.reload()},()=>{},false,"block may not be deleted as it is in use") 
+            }
+            else { 
+                utils.popup(()=>{location.reload();},()=>{},false,"Item deleted Succesfully")
+            }//popup not dissapearing
         },
         failure: () =>  console.log('ajax failure')
         })
